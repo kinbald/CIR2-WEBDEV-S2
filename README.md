@@ -1,1 +1,10 @@
-slim3
+# Projet web-dev CIR-2
+
+Projet de developpement web de CIR-2 à l'ISEN-Toulon pour l'année universitaire 2016-2017,
+
+Projet réalisée par 
+- [ARTRU Thomas](https://github.com/Thoril)
+- [BILLAUD William](https://github.com/william-billaud)
+- [DESRUMAUX Guillaume](https://github.com/kinbald)
+- [HERRENSCHMIDT Felix](https://github.com/Felix83000)
+- [MEZIANE Yanis](https://github.com/mistermania)
