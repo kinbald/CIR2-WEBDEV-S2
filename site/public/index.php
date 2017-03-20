@@ -16,6 +16,6 @@ $app = new Slim\App([
 
 $app->any('/[salut[/{nom}]]', function (\Slim\Http\Request $request,\Slim\Http\Response $response,$args){
     var_dump($args);
-    return $response->getBody()->write('BONJOUR A TOUS'.$args['re']);
+    return $response->getBody()->write('BONJOUR A TOUS');
 });
 $app->run();
