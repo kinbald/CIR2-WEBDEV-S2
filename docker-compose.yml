@@ -1,0 +1,7 @@
+web:
+  image: billwilliam/apache-php
+  ports:
+    - "80:80"
+  volumes:
+    - ./site:/var/www/html
+  container_name: slim

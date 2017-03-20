@@ -1,1 +1,1 @@
-CIR2-WEBDEV-S2
+slim3
