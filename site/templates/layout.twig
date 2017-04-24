@@ -7,19 +7,33 @@
         <title>{% block title %} {{ titre }} {% endblock %}</title>
         {% block header_js %} {% endblock %}
         {% block css %}
-            <link rel="stylesheet" href="{{ base_url() }}/css/app.css">
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+                  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+                  crossorigin="anonymous">
+            <link rel="stylesheet" href="{{ base_url() }}/css/bootflat.css">
         {% endblock %}
     {% endblock %}
 </head>
 {% block body %}
-   <p>du contenu</p>
+    <p>du contenu</p>
 {% endblock %}
-<footer>
-        {% block footer %}
-            <div id="footer">
-                    copyright Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
-            </div>
-        {% endblock %}
+<footer >
+    {% block footer %}
+        <div id="footer" class="footer-copyright">
+            <i class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></i>copyright 2017 Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
+        </div>
+    {% endblock %}
 </footer>
+{% block script_footer %}
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script src="{{ base_url() }}/js/icheck.min.js"></script>
+    <script src="{{ base_url() }}/js/jquery.fs.selecter.min.js"></script>
+    <script src="{{ base_url() }}/js/jquery.fs.stepper.min.js"></script>
+
+{% endblock %}
 </html>
 
