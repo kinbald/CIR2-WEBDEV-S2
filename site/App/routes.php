@@ -12,3 +12,8 @@ $app->get('/b', function (\Slim\Http\Request $request,\Slim\Http\Response  $resp
     // Render index view
     return $this->view->render($response, 'layout.twig', $args);
 });
+
+$app->get('/index', function (\Slim\Http\Request $request,\Slim\Http\Response  $response, $args) {
+    // Render index view
+    return $this->view->render($response, 'index.twig', $args);
+});
