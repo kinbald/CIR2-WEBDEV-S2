@@ -6,7 +6,9 @@
         <meta lang="fr">
         <title>{% block title %} {{ titre }} {% endblock %}</title>
         {% block header_js %} {% endblock %}
-        {% block css %} {% endblock %}
+        {% block css %}
+            <link rel="stylesheet" href="{{ base_url() }}/css/app.css">
+        {% endblock %}
     {% endblock %}
 </head>
 {% block body %}
@@ -15,7 +17,7 @@
 <footer>
         {% block footer %}
             <div id="footer">
-                    footer
+                    copyright Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
             </div>
         {% endblock %}
 </footer>

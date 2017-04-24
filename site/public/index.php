@@ -8,16 +8,12 @@
 
 ini_set('display_errors', 'On');
 require '../vendor/autoload.php';
-$app = new Slim\App([
-    'settings' =>[
-        'displayErrorDetails' => true
-    ]
-]);
+$settings = require __DIR__ . '/../App/settings.php';
+$app = new \Slim\App($settings);
 
 // Fetch DI Container
 $container = $app->getContainer();
-
-
+require __DIR__.'/../App/routes.php';
 // Register Twig View helper
 $container['view'] = function ($c) {
     $view = new \Slim\Views\Twig('../templates', [
@@ -30,12 +26,5 @@ $container['view'] = function ($c) {
 
     return $view;
 };
-
-$app->get('/[salut[/{nom}]]', function (\Slim\Http\Request $request,\Slim\Http\Response $response,$args){
-    return $this->view->render($response,'test.twig', [
-        'nom' => $args['nom'],
-        'titre'=>'Un titre'
-    ]);
-});
 $app->run();
 
