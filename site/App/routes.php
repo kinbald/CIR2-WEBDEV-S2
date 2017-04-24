@@ -1,10 +1,14 @@
 <?php
 // Routes
 
-$app->get('/[{name}]', function ($request, $response, $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
+$app->get('/salut[/{nom}]', function (\Slim\Http\Request $request,\Slim\Http\Response $response,$args){
+    return $this->view->render($response,'test.twig', [
+        'nom' => $args['nom'],
+        'titre'=>'Un titre'
+    ]);
+});
 
+$app->get('/b', function (\Slim\Http\Request $request,\Slim\Http\Response  $response, $args) {
     // Render index view
-    return $this->renderer->render($response, 'index.phtml', $args);
+    return $this->view->render($response, 'layout.twig', $args);
 });
