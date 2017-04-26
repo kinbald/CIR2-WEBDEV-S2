@@ -1,0 +1,7 @@
+{% macro css(nom) %}
+    <link rel="stylesheet" href="{{ base_url() }}/css/{{ nom }}">
+{% endmacro css %}
+
+{% macro js(nom) %}
+    <script src="{{ base_url() }}/js/{{ nom }}"></script>
+{% endmacro js %}
