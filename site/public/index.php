@@ -26,5 +26,8 @@ $container['view'] = function ($c) {
 
     return $view;
 };
+//load routes
+require __DIR__.'/../App/routes.php';
+//run app
 $app->run();
 
