@@ -1,5 +1,10 @@
 {% extends "layout.twig" %}
 
 {% block body %}
-<h1 class="radio">Bonjour {{ nom }}</h1>
+    {# permet d'inclure la navabar #}
+    {{ include('navbar.twig') }}
+
+    <h1 class="radio">Bonjour {{ nom|capitalize }}</h1>
+    {# permet de créer un lien vers une page salut avec comme parametre de nom bob ( nom de la routes dans routes.php #}
+    <li><a href="{{ path_for('salut',{'nom':'bob'}) }}">Bonjour bob!</a></li>
 {% endblock %}

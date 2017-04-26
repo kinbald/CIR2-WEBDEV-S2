@@ -4,6 +4,7 @@
     {% block header %}
         <meta charset="utf-8">
         <meta lang="fr">
+        <link rel="icon" type="image/png" href="{{ base_url() }}/favicon.png" />
         <title>{% block title %} {{ titre }} {% endblock %}</title>
         {% block header_js %} {% endblock %}
         {% block css %}
@@ -11,7 +12,7 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
                   integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
                   crossorigin="anonymous">
-            <link rel="stylesheet" type="text/css" href="css/bootflat.min.css">
+            <link rel="stylesheet" type="text/css" href="{{ base_url() }}/css/bootflat.min.css">
             <link rel="stylesheet" href="{{ base_url() }}/css/bootflat.css">
         {% endblock %}
     {% endblock %}
