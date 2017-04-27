@@ -11,6 +11,9 @@ use Psr\Container\ContainerInterface;
 
 class Controllers
 {
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
     public function __construct(ContainerInterface $container) {

@@ -6,8 +6,18 @@ return [
 
         //TWIG settings
         'twig'=>[
-            'cache'=>false
+            'path'=>[
+                '../templates/','../templates/pages'
+                ],
+            'g'=>[
+                'cache'=>false,
+            ],
+        ],
+        'database'=>[
+            'name'=>'bdd',
+            'user'=>'william',
+            'password'=>'root',
+            'host'=>'db_postgres',
         ]
-
     ],
 ];

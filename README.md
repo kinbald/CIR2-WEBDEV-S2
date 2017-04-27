@@ -13,3 +13,9 @@ Projet réalisé par
 - [DESRUMAUX Guillaume](https://github.com/kinbald)
 - [HERRENSCHMIDT Felix](https://github.com/Felix83000)
 - [MEZIANE Yanis](https://github.com/mistermania)
+
+potentiel validateur
+ [GUMP](https://github.com/Wixel/GUMP)
+ 
+ //accès terminal bdd
+ docker run -it --rm --link db_postgres:postgres postgres psql -h postgres -U postgres

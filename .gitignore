@@ -4,3 +4,4 @@
 /.idea/
 composer.lock
 site/composer.phar
+/data/

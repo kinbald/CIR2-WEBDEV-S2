@@ -1,7 +1,20 @@
 web:
-  image: billwilliam/apache-php
+  image: billwilliam/apache-php:pgsql
   ports:
     - "80:80"
   volumes:
     - ./site:/var/www/html
+  links:
+    - db_postgres:db_postgres
   container_name: slim
+
+db_postgres:
+  image: postgres
+  ports:
+    - "5432:5432"
+  environment:
+    - POSTGRES_PASSWORD=root
+    - PGDATA=/var/lib/postgresql/data/pgdata
+  volumes:
+    - ./data:/var/lib/postgresql/data/pgdata
+  container_name: db_postgres
