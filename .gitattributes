@@ -1,0 +1,7 @@
+*.twig linguist-language=twig
+site/public/css/bootflat.css linguist-vendored
+site/public/css/bootflat.css.map linguist-vendored
+site/public/css/bootflat.min.css linguist-vendored
+site/public/js/icheck.min.js linguist-vendored
+site/public/js/jquery.fs.selecter.min.js linguist-vendored
+site/public/js/jquery.fs.stepper.min.js
