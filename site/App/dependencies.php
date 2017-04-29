@@ -17,7 +17,7 @@ $container['view'] = function (Psr\Container\ContainerInterface $c) {
 
 //Override the default Not Found Handler
 //ERREUR 404 not found
-$container['notFoundHandler'] = function ($c) {
+$container['notFoundHandler'] = function (Psr\Container\ContainerInterface $c) {
     return function ($request, $response) use ($c) {
         return $c['view']->render($response->withStatus(404),'error/404.twig');
     };
@@ -33,7 +33,11 @@ $container['pdo']=function ($c){
     }catch (PDOException $e)
     {
         //uniquement en dev
-        echo $e->getMessage();
+        if($c->get('settings')['debug']==1)
+        {
+            echo $e->getMessage();
+        }
+
     }
     return $db;
 };
