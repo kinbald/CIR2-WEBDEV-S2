@@ -18,6 +18,7 @@ return [
             'user'=>'william',
             'password'=>'root',
             'host'=>'db_postgres',
-        ]
+        ],
+        'debug'=>1,
     ],
 ];

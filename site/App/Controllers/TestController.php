@@ -15,4 +15,11 @@ class TestController extends Controllers
         $args['titre']="super page";
         return $this->view->render($response, 'layout.twig', $args);
     }
+
+    public function salut($request,$response,$args)
+    {
+        $args['titre']='Un titre';
+        return $this->view->render($response,'test.twig', $args);
+    }
+
 }
