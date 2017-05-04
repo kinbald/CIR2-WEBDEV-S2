@@ -9,6 +9,7 @@
 ini_set('display_errors', 'On');
 require '../vendor/autoload.php';
 $settings = require __DIR__ . '/../App/settings.php';
+session_start();
 $app = new \Slim\App($settings);
 
 // Set up dependencies
