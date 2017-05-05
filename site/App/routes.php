@@ -10,3 +10,5 @@ $app->get('/index', function (\Slim\Http\Request $request,\Slim\Http\Response  $
     // Render index view
     return $this->view->render($response, 'index.twig', $args);
 })->setName("index");
+
+$app->get('/excel[/]',\App\Controllers\TestController::class.':excel');
