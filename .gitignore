@@ -5,3 +5,5 @@
 composer.lock
 site/composer.phar
 /data/
+
+*.xls
