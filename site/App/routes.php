@@ -12,3 +12,5 @@ $app->get('/index', function (\Slim\Http\Request $request,\Slim\Http\Response  $
 })->setName("index");
 
 $app->get('/excel[/]',\App\Controllers\TestController::class.':excel');
+
+$app->get('/mail[/]',\App\Controllers\TestController::class.':mail');
