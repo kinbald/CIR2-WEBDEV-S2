@@ -9,6 +9,10 @@
 namespace App\Controllers;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class Controllers
+ * @package App\Controllers
+ */
 class Controllers
 {
     /**
@@ -16,11 +20,20 @@ class Controllers
      */
     protected $container;
 
+    /**
+     * Controllers constructor.
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
     }
 
-    //permet d'eviter de devoir faire $this->container
+    /**
+     * @param $name
+     * @return mixed
+     *
+     * permet d'eviter de devoir faire $this->container
+     */
     public function __get($name)
     {
         return $this->container->$name;

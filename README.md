@@ -6,6 +6,8 @@ Projet de developpement web de CIR-2 à l'ISEN-Toulon pour l'année universitair
 lien utiles :
 - [TWIG](https://twig.sensiolabs.org/doc/2.x/)
 - [SLIM](https://www.slimframework.com/)
+- [SWIFT](http://swiftmailer.org/docs/introduction.html)
+
 
 Projet réalisé par 
 - [ARTRU Thomas](https://github.com/Thoril)

@@ -5,3 +5,7 @@
 composer.lock
 site/composer.phar
 /data/
+
+*.xls
+
+site/App/private_settings\.php
