@@ -12,7 +12,7 @@ use PDOException;
 use Psr\Container\ContainerInterface;
 
 
-class Models
+abstract class Models
 {
     /**
      * @var ContainerInterface
@@ -54,12 +54,12 @@ class Models
     }
 
     /**
-     * @param $data
+     * @param mixed $data : string à ajouter après SELECT * FROM nom-classes WHERE ou array sous la forme "nom_colonne"=> valeur qui deviendras nom_colonne = valeur
      * @param string $order
      * @param int $limit
      * @return array
      */
-    public function insert($data,$order="",$limit=0){
+    public function select($data,$order="",$limit=0){
         $sql='SELECT * FROM '.get_class($this);
         $a_cond = array();
         if (isset($data)) {
@@ -87,5 +87,9 @@ class Models
         }
 
         return $this->execute($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function insert($data){
+        $sql_d='INSERT INTO '.get_class($this);
     }
 }

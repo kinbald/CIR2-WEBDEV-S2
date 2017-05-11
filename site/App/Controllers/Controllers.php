@@ -17,6 +17,8 @@ class Controllers
 {
     /**
      * @var ContainerInterface
+     *
+     * variable permettant de stocker le container, et tout ce à quoi il permet d'accéder
      */
     protected $container;
 
