@@ -25,6 +25,12 @@ abstract class Models
     protected $pdo;
 
     /**
+     * @var array contenant les noms des champs et le type sous la formes nom_champ=>type;
+     *
+     */
+    protected $champs;
+
+    /**
      * Models constructor.
      * @param ContainerInterface $container
      */
@@ -60,9 +66,9 @@ abstract class Models
      * @param int $limit
      * @return array
      */
-    public function select($data, $order = "", $limit = 0)
+    protected function select($data, $order = "", $limit = 0)
     {
-        $sql = 'SELECT * FROM ' . get_class($this);
+        $sql = 'SELECT * FROM ' . (new \ReflectionClass($this))->getShortName();
         $a_cond = array();
         if (isset($data)) {
             $sql .= ' WHERE ';
@@ -79,7 +85,7 @@ abstract class Models
                 $sql .= $data;
             }
         }
-        // echo $sql.'<br>';
+        //echo $sql.'<br>';
         if ($order != "") {
             $sql .= " ORDER BY " . $order;
         }
@@ -92,22 +98,29 @@ abstract class Models
 
     /**
      * @param array $data tableau contenant les valeurs sous la formes "nom_colonne"=>"valeurs"
-     * @return \PDOStatement
+     * @return bool|\PDOStatement
      *
      * les valeurs sont quoté avant d'être insérée, pas les nom des colonne
      */
-    public function insert($data)
+    protected function insert($data)
     {
         // (new \ReflectionClass($this))->getShortName() permet d'obtenir le nom sans le namespace
         $sql = 'INSERT INTO ' . (new \ReflectionClass($this))->getShortName();
         foreach ($data as $k => $v) {
+            //verifie que le champs correspond au type attend et qu'il existe dans la table
+            if(!Validateur::estValide($v,$this->champs[$k]))
+            {
+                echo $v;
+                return false;
+            }
             $data[$k] = $this->pdo->quote($v);
         }
         // implode keys of $data...
-        $sql .= " (" . implode("`, `", array_keys($data)) . ")";
+        $sql .= " (" . implode(",", array_keys($data)) . ")";
 
         // implode values of $data
-        $sql .= " VALUES (" . implode("', '", $data) . ") ";
+        $sql .= " VALUES (" . implode(",", $data) . ") ";
+        echo $sql;
         //execute la commande
         return $this->execute($sql);
     }

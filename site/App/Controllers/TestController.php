@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\Admin;
 use PDO;
 use PDOException;
 use PHPExcel;
@@ -25,7 +26,7 @@ class TestController extends Controllers
      */
     public function __invoke($request, $response, $args)
     {
-        $args['titre'] = "super page";
+        var_dump((new Admin($this->container))->authentification_admin("billaudwilliam@gmail.com","root"));
         return $this->view->render($response, 'layout.twig', $args);
     }
 
