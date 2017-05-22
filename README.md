@@ -20,4 +20,4 @@ potentiel validateur
  [GUMP](https://github.com/Wixel/GUMP)
  
  //accès terminal bdd
- docker run -it --rm --link db_postgres:postgres postgres psql -h postgres -U postgres
+ `docker run -it --rm --link db_postgres:postgres postgres psql -h postgres -U postgres`
