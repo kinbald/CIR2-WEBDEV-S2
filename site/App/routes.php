@@ -1,5 +1,6 @@
 <?php
 // Routes
+use App\Controllers\TestController;
 
 $app->get('/b',\App\Controllers\TestController::class)->setName('test');
 
@@ -11,9 +12,9 @@ $app->get('/index', function (\Slim\Http\Request $request,\Slim\Http\Response  $
     return $this->view->render($response, 'index.twig', $args);
 })->setName("index");
 
-$app->get('/excel[/]',\App\Controllers\TestController::class.':excel');
+$app->get('/excel[/]',TestController::class.':excel');
 
-$app->get('/mail[/]',\App\Controllers\TestController::class.':mail');
+$app->get('/mail[/]',TestController::class.':mail');
 
 
 /**

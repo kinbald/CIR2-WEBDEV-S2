@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\Admin;
+use App\Models\Token_responsable_legal;
 use PDO;
 use PDOException;
 use PHPExcel;
@@ -26,7 +27,7 @@ class TestController extends Controllers
      */
     public function __invoke($request, $response, $args)
     {
-        var_dump((new Admin($this->container))->authentification_admin("billaudwilliam@gmail.com","root"));
+        (new Token_responsable_legal($this->container))->verifyRememberMe();
         return $this->view->render($response, 'layout.twig', $args);
     }
 

@@ -32,7 +32,6 @@ class Authentification
             //verifie co utilisateur lambda
         }
         $response = $next($request, $response);
-        $response->getBody()->write('AFTER');
         //après
         return $response;
     }
