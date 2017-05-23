@@ -3,22 +3,19 @@
  * Created by PhpStorm.
  * User: billaud
  * Date: 23/05/17
- * Time: 16:46
- *
- * https://www.owasp.org/index.php/PHP_Security_Cheat_Sheet#Remember_Me
+ * Time: 19:03
  */
 
 namespace App\Models;
 
 
-class Token_responsable_legal extends Models
+class Token_Admin extends Models
 {
-
     protected $champs =array(
-        "verifier_rl"=>"string",
-        "selector_rl"=>"string",
-        "id_responsable_legal"=>"integer",
-        "date_expiration_rl"=>"string",
+        "verifier_admin"=>"string",
+        "selector_admin"=>"string",
+        "id_admin"=>"integer",
+        "date_expiration_admin"=>"string",
     );
 
     /**
@@ -32,12 +29,12 @@ class Token_responsable_legal extends Models
         $validator=utf8_encode(random_bytes(250));
         $hash_c=hash("sha384",$validator);
         $dateExpiration=time()+24*60*60*10;
-        setcookie("rememberme",$selector." | ".$validator,$dateExpiration,null,null,null,true);
+        setcookie("remembermeA",$selector." | ".$validator,$dateExpiration,null,null,null,true);
         $this->insert(array(
-            "verifier_rl"=>$hash_c,
-            "selector_rl"=>$selector,
-            "date_expiration_rl"=> date("d/m/Y",$dateExpiration),
-            "id_responsable_legal"=>$id,
+            "verifier_admin"=>$hash_c,
+            "selector_admin"=>$selector,
+            "date_expiration_admin"=> date("d/m/Y",$dateExpiration),
+            "id_admin"=>$id,
         ));
     }
 
@@ -50,14 +47,14 @@ class Token_responsable_legal extends Models
      */
     public function verifyRememberMe()
     {
-        $rememberme=$_COOKIE["rememberme"];
+        $rememberme=$_COOKIE["remembermeA"];
         $a=explode(" | ",$rememberme);
         $res=$this->select(array(
-            "selector_rl"=>$a[0]
+            "selector_admin"=>$a[0]
         ));
         if(hash("sha384",$a[1]==$res[0]["verifier_rl"]))
         {
-            return $res[0]["id_responsable_legal"];
+            return $res[0]["id_admin"];
         }else{
             return false;
         }
@@ -73,16 +70,16 @@ class Token_responsable_legal extends Models
         if($this->verifyRememberMe())
         {
             //suppression du cookie dans la base de donnée
-            $rememberme=$_COOKIE["rememberme"];
+            $rememberme=$_COOKIE["remembermeA"];
             $a=explode(" | ",$rememberme);
             $this->delete(array(
-                "selector_rl"=>$a[0]
+                "selector_admin"=>$a[0]
             ));
             //suppression du cookie dans le naviguateur
             //https://www.owasp.org/index.php/PHP_Security_Cheat_Sheet#Proper_Deletion
-            setcookie ("rememberme", "", 1);
-            setcookie ("rememberme", false);
-            unset($_COOKIE["rememberme"]);
+            setcookie ("remembermeA", "", 1);
+            setcookie ("remembermeA", false);
+            unset($_COOKIE["remembermeA"]);
             return true;
         }else{
             return false;
@@ -97,7 +94,7 @@ class Token_responsable_legal extends Models
     public function unsetAllRememberMe($id)
     {
         $this->delete(array(
-            "id_responsable_legal"=>$id
+            "id_admin"=>$id
         ));
     }
 }

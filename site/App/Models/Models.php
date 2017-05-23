@@ -120,8 +120,34 @@ abstract class Models
 
         // implode values of $data
         $sql .= " VALUES (" . implode(",", $data) . ") ";
-        echo $sql;
         //execute la commande
+        return $this->execute($sql);
+    }
+
+    /**
+     * @param $data: string à ajouter après DELETE FROM nom-classes WHERE ou array sous la forme "nom_colonne"=> valeur qui deviendras nom_colonne = valeur
+     * @return \PDOStatement
+     *
+     * permet de supprimer les colonne du tables
+     */
+    protected function delete($data){
+        $sql = 'DELETE FROM ' . (new \ReflectionClass($this))->getShortName();
+        $a_cond = array();
+        if (isset($data)) {
+            $sql .= ' WHERE ';
+            if (is_array($data)) {
+                foreach ($data as $k => $v) {
+                    //if (!is_numeric($v)) {
+                    $v = $this->pdo->quote($v);
+                    //}
+                    $a_cond[] = "$k = $v";
+                }
+                $sql .= implode(' AND ', $a_cond);
+
+            } else {
+                $sql .= $data;
+            }
+        }
         return $this->execute($sql);
     }
 }

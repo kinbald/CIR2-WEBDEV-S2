@@ -9,7 +9,7 @@
 namespace App\Models;
 
 
-class Responsable_legal
+class Responsable_legal extends Models
 {
 
     protected $champs=array(

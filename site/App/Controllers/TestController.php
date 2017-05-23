@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\Admin;
+use App\Models\Token_Admin;
 use App\Models\Token_responsable_legal;
 use PDO;
 use PDOException;
@@ -27,7 +28,7 @@ class TestController extends Controllers
      */
     public function __invoke($request, $response, $args)
     {
-        (new Token_responsable_legal($this->container))->verifyRememberMe();
+        (new Token_Admin($this->container))->unsetAllRememberMe(1);
         return $this->view->render($response, 'layout.twig', $args);
     }
 
