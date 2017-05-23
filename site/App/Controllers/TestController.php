@@ -80,7 +80,6 @@ class TestController extends Controllers
      * @return mixed
      */
     public function mail($request, $response, $args){
-        echo getcwd();
         try {
             $message = Swift_Message::newInstance()
                 //emetteur

@@ -53,6 +53,7 @@ abstract class Models
     protected function execute(string $sql)
     {
         $req = $this->pdo->prepare($sql);
+        var_dump($sql);
         try {
             $req->execute();
         } catch (PDOException $e) {
@@ -72,7 +73,7 @@ abstract class Models
      * @param int $limit
      * @return array
      */
-    protected function select($data, $order = "", $limit = 0)
+    public function select($data, $order = "", $limit = 0)
     {
         $sql = 'SELECT * FROM ' . (new \ReflectionClass($this))->getShortName();
         $a_cond = array();
@@ -108,7 +109,7 @@ abstract class Models
      *
      * les valeurs sont quoté avant d'être insérée, pas les nom des colonne
      */
-    protected function insert($data)
+    public function insert($data)
     {
         // (new \ReflectionClass($this))->getShortName() permet d'obtenir le nom sans le namespace
         $sql = 'INSERT INTO ' . (new \ReflectionClass($this))->getShortName();

@@ -26,3 +26,7 @@ $app->get('/mail[/]',TestController::class.':mail');
  */
 $app->get('/login', 'AuthController:getLogin')->setName("login.get");
 $app->post('/login', 'AuthController:postLogin')->setName('login.post');
+$app->get('/logout',App\Controllers\AuthController::class.':logout')->setName("logout");
+$app->get('/recover',App\Controllers\AuthController::class.':recover')->setName("recover.get");
+$app->post('/recover',App\Controllers\AuthController::class.':sendRecover')->setName("recover.post");
+$app->any('/recover/{token}',App\Controllers\AuthController::class.':token')->setName("recoverToken");

@@ -25,15 +25,15 @@ class Token_Admin extends Models
      */
     public function setRememberMe($id)
     {
-        $selector=utf8_encode(random_bytes(250));
-        $validator=utf8_encode(random_bytes(250));
+        $selector=bin2hex(random_bytes(250));
+        $validator=bin2hex(random_bytes(250));
         $hash_c=hash("sha384",$validator);
         $dateExpiration=time()+24*60*60*10;
         setcookie("remembermeA",$selector." | ".$validator,$dateExpiration,null,null,null,true);
         $this->insert(array(
             "verifier_admin"=>$hash_c,
             "selector_admin"=>$selector,
-            "date_expiration_admin"=> date("d/m/Y",$dateExpiration),
+            "date_expiration_admin"=> date("Y/m/d",$dateExpiration),
             "id_admin"=>$id,
         ));
     }
