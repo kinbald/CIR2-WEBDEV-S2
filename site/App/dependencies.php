@@ -52,3 +52,8 @@ $container['mailer']=function (Psr\Container\ContainerInterface $c){
     ;
     return  Swift_Mailer::newInstance($transport);
 };
+
+// Gestion du contrôleur d'authentification
+$container['AuthController'] = function ($container) {
+    return new App\Controllers\AuthController($container);
+};

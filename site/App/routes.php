@@ -14,3 +14,10 @@ $app->get('/index', function (\Slim\Http\Request $request,\Slim\Http\Response  $
 $app->get('/excel[/]',\App\Controllers\TestController::class.':excel');
 
 $app->get('/mail[/]',\App\Controllers\TestController::class.':mail');
+
+
+/**
+ * Routes de base pour la page de connexion
+ */
+$app->get('/login', 'AuthController:getLogin')->setName("login.get");
+$app->post('/login', 'AuthController:postLogin')->setName('login.post');

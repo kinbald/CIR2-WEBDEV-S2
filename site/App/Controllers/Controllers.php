@@ -8,6 +8,8 @@
 
 namespace App\Controllers;
 use Psr\Container\ContainerInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Class Controllers
