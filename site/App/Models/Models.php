@@ -157,4 +157,19 @@ abstract class Models
         }
         return $this->execute($sql);
     }
+
+    public function update($data,$cond)
+    {
+        $sql=' UPDATE '.(new \ReflectionClass($this))->getShortName().' SET ';
+        $a_cond = array();
+        foreach ($data as $k => $v) {
+            //if (!is_numeric($v)) {
+            $v = $this->pdo->quote($v);
+            //}
+            $a_cond[] = "$k = $v";
+        }
+        $sql .= implode(',', $a_cond);
+        $sql.=" WHERE ".$cond;
+        return $this->execute($sql);
+    }
 }

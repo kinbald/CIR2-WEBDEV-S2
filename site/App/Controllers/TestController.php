@@ -40,8 +40,8 @@ class TestController extends Controllers
      */
     public function salut($request, $response, $args)
     {
-        $args['titre'] = 'Un titre';
 
+        (new Admin())->update(array("type_droit"=>1),"id_admin =1");
         return $this->view->render($response, 'test.twig', $args);
     }
 
