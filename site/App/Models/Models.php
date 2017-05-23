@@ -31,11 +31,17 @@ abstract class Models
     protected $champs;
 
     /**
-     * Models constructor.
-     * @param ContainerInterface $container
+     * @var ContainerInterface permet de stocker le dernier container utiliser;
      */
-    function __construct(ContainerInterface $container)
+    public static $Scontainer;
+
+    /**
+     * Models constructor.
+     */
+    function __construct()
     {
+
+        $container = Models::$Scontainer;
         $this->pdo = $container->pdo;
         $this->container = $container;
     }
@@ -108,8 +114,7 @@ abstract class Models
         $sql = 'INSERT INTO ' . (new \ReflectionClass($this))->getShortName();
         foreach ($data as $k => $v) {
             //verifie que le champs correspond au type attend et qu'il existe dans la table
-            if(!Validateur::estValide($v,$this->champs[$k]))
-            {
+            if (!Validateur::estValide($v, $this->champs[$k])) {
                 echo $v;
                 return false;
             }
@@ -125,12 +130,13 @@ abstract class Models
     }
 
     /**
-     * @param $data: string à ajouter après DELETE FROM nom-classes WHERE ou array sous la forme "nom_colonne"=> valeur qui deviendras nom_colonne = valeur
+     * @param $data : string à ajouter après DELETE FROM nom-classes WHERE ou array sous la forme "nom_colonne"=> valeur qui deviendras nom_colonne = valeur
      * @return \PDOStatement
      *
      * permet de supprimer les colonne du tables
      */
-    protected function delete($data){
+    protected function delete($data)
+    {
         $sql = 'DELETE FROM ' . (new \ReflectionClass($this))->getShortName();
         $a_cond = array();
         if (isset($data)) {

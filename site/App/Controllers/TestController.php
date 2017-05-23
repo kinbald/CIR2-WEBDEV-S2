@@ -28,7 +28,7 @@ class TestController extends Controllers
      */
     public function __invoke($request, $response, $args)
     {
-        (new Token_Admin($this->container))->unsetAllRememberMe(1);
+        (new Token_Admin())->unsetAllRememberMe(1);
         return $this->view->render($response, 'layout.twig', $args);
     }
 
@@ -56,7 +56,7 @@ class TestController extends Controllers
 
         $objPHPExcel = new PHPExcel();
         $objWorksheet = $objPHPExcel->getActiveSheet();
-        $req=$this->pdo->prepare("SELECT * FROM test");
+        $req=$this->pdo->prepare("SELECT * FROM admin");
         try {
             $req->execute();
         } catch (PDOException $e) {

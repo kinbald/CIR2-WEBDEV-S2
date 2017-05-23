@@ -10,6 +10,8 @@ namespace App\Middleware;
 
 
 use App\Models\Admin;
+use App\Models\Token_Admin;
+use App\Models\Token_responsable_legal;
 
 class Authentification
 {
@@ -22,14 +24,26 @@ class Authentification
         //verifier type co : admin/normal
         //pour transmettre valeurs :
         //$request->withAttribute('cle','valeur');
-        if($_SESSION["admin"]==true)
+        if($_SESSION["admin"]>0)
         {
             //verification
-
-
-        }else if($_SESSION["RL"]==true)
+        }else if($_SESSION["RL"]>0)
         {
             //verifie co utilisateur lambda
+        }else
+        {
+            //verifie si les cookies permettent une connection automatique
+            $rl=(new Token_responsable_legal())->verifyRememberMe();
+            $admin=(new Token_Admin())->verifyRememberMe();
+            if($rl)
+            {
+                $_SESSION["RL"]=$rl;
+            }else if($admin){
+                $_SESSION["admin"]=$admin;
+            }else
+            {
+                return $response->withHeader('Location','/login');
+            }
         }
         $response = $next($request, $response);
         //après

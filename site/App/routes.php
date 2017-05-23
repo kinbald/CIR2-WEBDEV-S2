@@ -1,7 +1,8 @@
 <?php
 // Routes
 use App\Controllers\TestController;
-
+$app->group('',function () use ($app)
+{
 $app->get('/b',\App\Controllers\TestController::class)->setName('test');
 
 $app->get('/salut[/{nom}]',\App\Controllers\TestController::class.':salut')->setName("salut");
@@ -15,6 +16,9 @@ $app->get('/index', function (\Slim\Http\Request $request,\Slim\Http\Response  $
 $app->get('/excel[/]',TestController::class.':excel');
 
 $app->get('/mail[/]',TestController::class.':mail');
+
+
+})->add(new \App\Middleware\Authentification());
 
 
 /**

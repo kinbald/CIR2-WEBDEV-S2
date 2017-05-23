@@ -23,6 +23,13 @@ class Responsable_legal extends Models
         "mot_de_passe_rl"=>"string"
     );
 
+    /**
+     * @param string $email de l'utilisateur
+     * @param string $mot_de_passe saisie par l'utilisateur
+     * @return int -2 si l'adresse n'est pas dans le base de donnée
+     * @return int -1 si le mot de passe n'est pas le bon
+     * @return int >0 l'id du responsable legal
+     */
     public function authentification_rl($email,$mot_de_passe)
     {
         $hash=$this->select(array("adresse_mail_rl"=>$email));

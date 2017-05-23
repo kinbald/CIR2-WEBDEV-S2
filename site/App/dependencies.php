@@ -22,6 +22,8 @@ $container['notFoundHandler'] = function (Psr\Container\ContainerInterface $c) {
     };
 };
 
+\App\Models\Models::$Scontainer=$container;
+
 //mise en place de la connection avec la base de donnée
 $container['pdo']=function (Psr\Container\ContainerInterface $c){
     $settings = $c->get('settings')['database'];
