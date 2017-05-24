@@ -48,13 +48,12 @@ class AuthController extends Controllers
                         (new Token_responsable_legal())->setRememberMe($_SESSION["RL"]);
                     }
                     //il est redirige vers l'index
-                    // return $response->withHeader('Location', 'index');
+                    return $response->withHeader('Location', 'index');
 
                 }
             }
         }
-        die();
-        //return $this->view->render($response, 'login.twig');
+        return $this->view->render($response, 'login.twig');
     }
 
     /**

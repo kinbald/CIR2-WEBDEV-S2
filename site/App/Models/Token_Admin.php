@@ -25,8 +25,8 @@ class Token_Admin extends Models
      */
     public function setRememberMe($id)
     {
-        $selector=bin2hex(random_bytes(250));
-        $validator=bin2hex(random_bytes(250));
+        $selector=bin2hex(random_bytes(20));
+        $validator=bin2hex(random_bytes(20));
         $hash_c=hash("sha384",$validator);
         $dateExpiration=time()+24*60*60*10;
         setcookie("remembermeA",$selector." | ".$validator,$dateExpiration,null,null,null,true);

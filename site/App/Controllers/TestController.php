@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\Admin;
 use App\Models\Token_Admin;
 use App\Models\Token_responsable_legal;
+use App\Models\Validateur;
 use PDO;
 use PDOException;
 use PHPExcel;
@@ -28,7 +29,9 @@ class TestController extends Controllers
      */
     public function __invoke($request, $response, $args)
     {
-        (new Token_Admin())->unsetAllRememberMe(1);
+        var_dump(Validateur::estValidePassword("williamBill"));
+        var_dump($_SESSION);
+        var_dump($_COOKIE);
         return $this->view->render($response, 'layout.twig', $args);
     }
 

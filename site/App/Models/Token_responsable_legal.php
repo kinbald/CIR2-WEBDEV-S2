@@ -31,8 +31,8 @@ class Token_responsable_legal extends Models
      */
     public function setRememberMe($id)
     {
-        $selector = bin2hex(random_bytes(250));
-        $validator = bin2hex(random_bytes(250));
+        $selector = bin2hex(random_bytes(20));
+        $validator = bin2hex(random_bytes(20));
         $hash_c = hash("sha384", $validator);
         $dateExpiration = time() + 24 * 60 * 60 * 10;
         setcookie("rememberme", $selector . " | " . $validator, $dateExpiration, null, null, null, true);
@@ -114,7 +114,7 @@ class Token_responsable_legal extends Models
         if ($info[0]["id_responsable_legal"] > 0) {
 
             //generation du token
-            $token = bin2hex(random_bytes(50));
+            $token = bin2hex(random_bytes(20));
 
             //ajout du token dans la base de données
             $this->insert(array(
