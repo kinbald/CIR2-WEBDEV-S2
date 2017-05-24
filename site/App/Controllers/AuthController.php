@@ -48,7 +48,7 @@ class AuthController extends Controllers
                         (new Token_responsable_legal())->setRememberMe($_SESSION["RL"]);
                     }
                     //il est redirige vers l'index
-                   // return $response->withHeader('Location', 'index');
+                    // return $response->withHeader('Location', 'index');
 
                 }
             }
@@ -79,7 +79,7 @@ class AuthController extends Controllers
     public function recover(Request $request, Response $response, $args)
     {
         //envoie un mail avec le token de regeneration du mot de passe
-        return $this->view->render($response,'recover.twig');
+        return $this->view->render($response, 'recover.twig');
     }
 
 
@@ -87,15 +87,37 @@ class AuthController extends Controllers
     public function sendRecover(Request $request, Response $response, $args)
     {
         (new Token_responsable_legal())->setTokenRecovery($request->getParam('email'));
-        //genère le token
-        //envoie mail si mail dans BDD
-        //insère BDD
-        $args["send"]=true;
-        return $this->view->render($response,'recover.twig',$args);
+        $args["send"] = true;
+        return $this->view->render($response, 'recover.twig', $args);
     }
 
     public function token(Request $request, Response $response, $args)
     {
-        return $this->view->render($response,'index.twig',$args);
+        return $this->view->render($response, 'newPassword.twig', $args);
+    }
+
+    public function tokenValidation(Request $request, Response $response, $args)
+    {
+        var_dump($args);
+        //todo ->solidité mot de passe?
+        if ($request->getParam('password') != $request->getParam('confirmation')) {
+            $args["statut"] = "motDePasseDifferent";
+        } else {
+            var_dump($request->getParams());
+            $id = (new Token_responsable_legal())->existeTokenRecover($args["token"]);
+            if ($id > 0) {
+                (new Responsable_legal())->update(array(
+                    "mot_de_passe_rl" => password_hash($request->getParam('password'), PASSWORD_DEFAULT)
+                ), "id_responsable_legal =" . $id);
+                (new Token_responsable_legal())->unsetAllRememberMe($id);
+                $args["statut"] = "ok";
+            } else {
+                $args["statut"] = "tokenAbsent";
+            }
+        }
+
+        //update mot de passe
+
+        return $this->view->render($response, 'newPassword.twig', $args);
     }
 }

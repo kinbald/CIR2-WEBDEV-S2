@@ -103,6 +103,11 @@ class Token_responsable_legal extends Models
         ));
     }
 
+    /**
+     * @param string $email de l'utilisateur voulant reinitialiser son mot de passe
+     * @return bool false si l'email n'existe pas dans la base de donnée
+     * @return true si l'email existe dans la base de donnée
+     */
     public function setTokenRecovery($email)
     {
         $info = (new Responsable_legal())->select(array("adresse_mail_rl" => $email));
@@ -138,6 +143,26 @@ class Token_responsable_legal extends Models
                 echo $e;
             }
         } else {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param string $token permet de verifier si un token permettant de reinitialiser son mot de passe exste dans la base de donnée
+     * @return bool|int false si le token n'existe pas, l'id de l'utilisateur si il existe
+     */
+    public function existeTokenRecover($token)
+    {
+        $args=array(
+            "selector_rl"=>"recover",
+            "verifier_rl"=>$token,
+        );
+        $res=$this->select($args);
+        if($res[0]["id_responsable_legal"]>0)
+        {
+            return $res[0]["id_responsable_legal"];
+        }else{
             return false;
         }
     }

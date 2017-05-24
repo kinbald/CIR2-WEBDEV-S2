@@ -29,4 +29,5 @@ $app->post('/login', 'AuthController:postLogin')->setName('login.post');
 $app->get('/logout',App\Controllers\AuthController::class.':logout')->setName("logout");
 $app->get('/recover',App\Controllers\AuthController::class.':recover')->setName("recover.get");
 $app->post('/recover',App\Controllers\AuthController::class.':sendRecover')->setName("recover.post");
-$app->any('/recover/{token}',App\Controllers\AuthController::class.':token')->setName("recoverToken");
+$app->get('/recover/{token}',App\Controllers\AuthController::class.':token')->setName("recoverToken.get");
+$app->post('/recover/{token}',App\Controllers\AuthController::class.':tokenValidation')->setName("recoverToken.post");
