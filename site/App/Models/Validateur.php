@@ -34,7 +34,7 @@ class Validateur
     }
 
     /**
-     * @param string$password mot de passe a tester
+     * @param string $password mot de passe a tester
      * @return bool true si le mot de passe est assez solide, false si il est trop faible
      *
      * le mot de passe doit faire au moins 8 charactère,

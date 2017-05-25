@@ -30,30 +30,39 @@ class AuthController extends Controllers
      */
     public function postLogin(Request $request, Response $response)
     {
-        var_dump($request->getParams());
+        // Tableau qui contiendra les erreurs
+        $errors = array(null);
+        // Récupération des paramètres
         $post = $request->getParams();
+
         if (isset($post['email']) && isset($post['password'])) {
             if (!empty($post['email']) && !empty($post['password'])) {
                 $etat = (new Responsable_legal())->authentification_rl($post['email'], $post['password']);
                 if ($etat == -1) {
                     // Le mot de passe est incorect
-                    return $this->view->render($response, 'login.twig');
+                    $errors['password'] = "Le mot de passe est incorrect.";
                 } elseif ($etat == -2) {
                     // L'utilisateur n'existe pas
-                    return $this->view->render($response, 'login.twig');
+                    $errors['email'] = "Cet utilisateur n'existe pas.";
                 } elseif ($etat > 0) {
-                    //reussi
+                    // Connexion réussie
                     $_SESSION["RL"] = $etat;
                     if ($post["remember"]) {
                         (new Token_responsable_legal())->setRememberMe($_SESSION["RL"]);
                     }
-                    //il est redirige vers l'index
-                    return $response->withHeader('Location', 'index');
-
+                    // Redirection vers l'index
+                    return $response->withRedirect($this->router->pathFor('index'));
                 }
             }
+            else
+            {
+                $errors['champs'] = "Les champs doivent être remplis.";
+            }
         }
-        return $this->view->render($response, 'login.twig');
+        // Il y a des erreurs donc on les garde dans la session pour l'affichage
+        $_SESSION['errors'] = $errors;
+        // Redirection vers le formulaire
+        return $response->withRedirect($this->router->pathFor('login.get'));
     }
 
     /**
@@ -67,6 +76,13 @@ class AuthController extends Controllers
         return $this->view->render($response, 'login.twig');
     }
 
+    /**
+     * Fonction permettant de déconnecter un utilisateur
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return ResponseInterface
+     */
     public function logout(Request $request, Response $response, $args)
     {
         (new Token_responsable_legal())->unsetRememberMe();
@@ -74,15 +90,26 @@ class AuthController extends Controllers
         return $response->withHeader('Location', 'index');
     }
 
-    //affiche la page pour rentrer son mail pour pouvoir récuperer son mot de passe
+    /**
+     * Fonction qui affiche la page de récupération de mot de passe
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return ResponseInterface
+     */
     public function recover(Request $request, Response $response, $args)
     {
-        //envoie un mail avec le token de regeneration du mot de passe
+        // Envoi d'un mail avec le token de regénération du mot de passe
         return $this->view->render($response, 'recover.twig');
     }
 
-
-    //envoie le mail et insère le token dans la base de donnée pour pouvoir retrouver son mot de passe.
+    /**
+     * Fonction qui envoie le mail et insère le token dans la base de données pour pouvoir retrouver son mot de passe
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return ResponseInterface
+     */
     public function sendRecover(Request $request, Response $response, $args)
     {
         (new Token_responsable_legal())->setTokenRecovery($request->getParam('email'));
@@ -90,11 +117,25 @@ class AuthController extends Controllers
         return $this->view->render($response, 'recover.twig', $args);
     }
 
+    /**
+     * TODO Add comments
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return ResponseInterface
+     */
     public function token(Request $request, Response $response, $args)
     {
         return $this->view->render($response, 'newPassword.twig', $args);
     }
 
+    /**
+     * TODO Add comments
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return ResponseInterface
+     */
     public function tokenValidation(Request $request, Response $response, $args)
     {
         var_dump($args);
@@ -114,9 +155,7 @@ class AuthController extends Controllers
                 $args["statut"] = "tokenAbsent";
             }
         }
-
-        //update mot de passe
-
+        // Mise à jour du mot de passe
         return $this->view->render($response, 'newPassword.twig', $args);
     }
 }

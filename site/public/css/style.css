@@ -30,9 +30,11 @@ padding: 15px;
 .row.content {height:auto;} 
 }
 
-/* Correction problème alignenement checkbox sur login.twig */
+/* Correction problème alignement checkbox sur login.twig */
 .checkbox input[type=checkbox] {
+    position: relative;
     margin-left: 0;
+    top: 0.1rem;
 }
 
 /* Page de connexion */

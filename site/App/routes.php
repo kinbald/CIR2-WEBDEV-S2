@@ -24,8 +24,14 @@ $app->get('/mail[/]',TestController::class.':mail');
 /**
  * Routes de base pour la page de connexion
  */
-$app->get('/login', 'AuthController:getLogin')->setName("login.get");
-$app->post('/login', 'AuthController:postLogin')->setName('login.post');
+$app->group('', function () use ($app)
+{
+    $app->get('/login', 'AuthController:getLogin')->setName("login.get");
+    $app->post('/login', 'AuthController:postLogin')->setName('login.post');
+})->add(new \App\Middleware\ValidationErreursMiddleware($container))
+    ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
+
+
 $app->get('/logout',App\Controllers\AuthController::class.':logout')->setName("logout");
 $app->get('/recover',App\Controllers\AuthController::class.':recover')->setName("recover.get");
 $app->post('/recover',App\Controllers\AuthController::class.':sendRecover')->setName("recover.post");
