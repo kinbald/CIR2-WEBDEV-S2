@@ -54,7 +54,14 @@ class Token_responsable_legal extends Models
      */
     public function verifyRememberMe()
     {
-        $rememberme = $_COOKIE["rememberme"];
+        if(isset($_COOKIE["rememberme"]))
+        {
+            $rememberme = $_COOKIE["rememberme"];
+        }
+    else
+        {
+            return false;
+        }
         $a = explode(" | ", $rememberme);
         $res = $this->select(array(
             "selector_rl" => $a[0]

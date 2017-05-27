@@ -7,9 +7,8 @@
  */
 
 namespace App\Controllers;
+use App\Session;
 use Psr\Container\ContainerInterface;
-use Slim\Http\Request;
-use Slim\Http\Response;
 
 /**
  * Class Controllers
@@ -25,11 +24,17 @@ class Controllers
     protected $container;
 
     /**
+     * @var Session Instance de session
+     */
+    protected $sessionInstance;
+
+    /**
      * Controllers constructor.
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
+        $this->sessionInstance = Session::getInstance();
     }
 
     /**

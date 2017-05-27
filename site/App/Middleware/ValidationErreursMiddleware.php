@@ -28,9 +28,9 @@ class ValidationErreursMiddleware extends Middleware
     public function __invoke(Request $request, Response $response, callable $next)
     {
         // On ajoute dans le container les erreurs récupérées dans la session
-        $this->view->getEnvironment()->addGlobal('errors', $_SESSION['errors']);
+        $this->view->getEnvironment()->addGlobal('errors', $this->sessionInstance->read('errors'));
         // On vide la session du tableau d'erreurs
-        unset($_SESSION['errors']);
+        $this->sessionInstance->delete('errors');
         return $next($request, $response);
     }
 }

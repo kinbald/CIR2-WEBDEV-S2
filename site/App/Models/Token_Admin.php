@@ -47,7 +47,14 @@ class Token_Admin extends Models
      */
     public function verifyRememberMe()
     {
-        $rememberme=$_COOKIE["remembermeA"];
+        if(isset($_COOKIE["remembermeA"]))
+        {
+            $rememberme=$_COOKIE["remembermeA"];
+        }
+        else
+        {
+            return false;
+        }
         $a=explode(" | ",$rememberme);
         $res=$this->select(array(
             "selector_admin"=>$a[0]

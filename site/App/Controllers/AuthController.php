@@ -13,11 +13,13 @@ use Psr\Http\Message\ResponseInterface;
 use App\Models\Token_responsable_legal;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Router;
 use Slim\Views\Twig;
 
 /**
  * Class AuthController
  * @property Twig view
+ * @property Router router
  * @package App\Controllers
  */
 class AuthController extends Controllers
@@ -39,16 +41,16 @@ class AuthController extends Controllers
             if (!empty($post['email']) && !empty($post['password'])) {
                 $etat = (new Responsable_legal())->authentification_rl($post['email'], $post['password']);
                 if ($etat == -1) {
-                    // Le mot de passe est incorect
+                    // Le mot de passe est incorrect
                     $errors['password'] = "Le mot de passe est incorrect.";
                 } elseif ($etat == -2) {
                     // L'utilisateur n'existe pas
                     $errors['email'] = "Cet utilisateur n'existe pas.";
                 } elseif ($etat > 0) {
                     // Connexion réussie
-                    $_SESSION["RL"] = $etat;
+                    $this->connectUser($etat);
                     if ($post["remember"]) {
-                        (new Token_responsable_legal())->setRememberMe($_SESSION["RL"]);
+                        (new Token_responsable_legal())->setRememberMe($etat);
                     }
                     // Redirection vers l'index
                     return $response->withRedirect($this->router->pathFor('index'));
@@ -63,6 +65,7 @@ class AuthController extends Controllers
         $_SESSION['errors'] = $errors;
         // Redirection vers le formulaire
         return $response->withRedirect($this->router->pathFor('login.get'));
+        //return $this->view->render($response, 'login.twig'/*, ['errors' => $errors]*/);
     }
 
     /**
@@ -86,8 +89,8 @@ class AuthController extends Controllers
     public function logout(Request $request, Response $response, $args)
     {
         (new Token_responsable_legal())->unsetRememberMe();
-        unset($_SESSION["RL"]);
-        return $response->withHeader('Location', 'index');
+        $this->sessionInstance->delete("RL");
+        return $response->withRedirect($this->router->pathFor('index'));
     }
 
     /**
@@ -112,8 +115,15 @@ class AuthController extends Controllers
      */
     public function sendRecover(Request $request, Response $response, $args)
     {
-        (new Token_responsable_legal())->setTokenRecovery($request->getParam('email'));
-        $args["send"] = true;
+        if ($request->getParam('email'))
+        {
+            if(!empty($request->getParam('email')))
+            {
+                (new Token_responsable_legal())->setTokenRecovery($request->getParam('email'));
+                $args["send"] = true;
+            }
+        }
+        $args["send"] = false;
         return $this->view->render($response, 'recover.twig', $args);
     }
 
@@ -157,5 +167,17 @@ class AuthController extends Controllers
         }
         // Mise à jour du mot de passe
         return $this->view->render($response, 'newPassword.twig', $args);
+    }
+
+    /**
+     * Fonction permettant de connecter un utilisateur dans la session
+     * @param int $etat
+     */
+    public function connectUser($etat)
+    {
+        if($etat)
+        {
+            $this->sessionInstance->write("RL", $etat);
+        }
     }
 }

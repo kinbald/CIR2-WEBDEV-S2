@@ -16,7 +16,7 @@ class Responsable_legal extends Models
         "id_responsable_legal"=>"integer",
         "nom_rl"=>"string",
         "prenom_rl"=>"string",
-        "adresse_mail_rl"=>"mail",
+        "adresse_mail_rl"=>"string",
         "ville"=>"string",
         "code_postal"=>"integer",
         "complement_d_adresse"=>"string",

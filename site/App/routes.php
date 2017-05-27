@@ -18,15 +18,14 @@ $app->get('/excel[/]',TestController::class.':excel');
 $app->get('/mail[/]',TestController::class.':mail');
 
 
-})->add(new \App\Middleware\Authentification());
-
+})->add(new \App\Middleware\Authentification($container));
 
 /**
  * Routes de base pour la page de connexion
  */
 $app->group('', function () use ($app)
 {
-    $app->get('/login', 'AuthController:getLogin')->setName("login.get");
+    $app->get('/login', 'AuthController:getLogin')->setName('login.get');
     $app->post('/login', 'AuthController:postLogin')->setName('login.post');
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));

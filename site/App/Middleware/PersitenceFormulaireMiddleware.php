@@ -30,12 +30,12 @@ class PersitenceFormulaireMiddleware extends Middleware
     public function __invoke(Request $request, Response $response, callable $next)
     {
         // On ajoute au container les anciens champs du formulaire
-        $this->view->getEnvironment()->addGlobal('old', $_SESSION['old']);
+        $this->view->getEnvironment()->addGlobal('old', $this->sessionInstance->read('old'));
         /* On ajoute dans la session ces champs
          * Cette ligne est avant afin d'être utilisée au passage dans le
          * middleware après validation du formulaire
          */
-        $_SESSION['old'] = $request->getParams();
+        $this->sessionInstance->write('old', $request->getParams()['email']);
         return $next($request, $response);
     }
 }

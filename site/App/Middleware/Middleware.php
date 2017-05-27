@@ -9,6 +9,7 @@
 namespace App\Middleware;
 
 
+use App\Session;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -23,12 +24,18 @@ class Middleware
     protected $container;
 
     /**
+     * @var Session Instance de session
+     */
+    protected $sessionInstance;
+
+    /**
      * Middleware constructor.
      * @param ContainerInterface $container
      */
     public function __construct($container)
     {
         $this->container = $container;
+        $this->sessionInstance = Session::getInstance();
     }
 
     /**
