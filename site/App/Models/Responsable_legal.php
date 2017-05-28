@@ -23,6 +23,11 @@ class Responsable_legal extends Models
         "mot_de_passe_rl"=>"string"
     );
 
+    protected $champsMany=array(
+        "id_enfant"=>"integer",
+        "id_responsable_legal"=>"integer"
+    );
+
     /**
      * @param string $email de l'utilisateur
      * @param string $mot_de_passe saisie par l'utilisateur
@@ -43,6 +48,16 @@ class Responsable_legal extends Models
         }else{
             return -1;
         }
+    }
+
+    /**
+     * Fonction qui permet de trouver les id des enfants liés au responsable légal
+     * @param int $id_rl
+     * @return array
+     */
+    public function trouve_enfants($id_rl)
+    {
+        return $this->execute("SELECT id_enfant FROM est_responsable_de WHERE id_responsable_legal = $id_rl")->fetchAll();
     }
 
 }
