@@ -25,11 +25,23 @@ abstract class Models
     protected $pdo;
 
     /**
-     * Models constructor.
-     * @param ContainerInterface $container
+     * @var array contenant les noms des champs et le type sous la formes nom_champ=>type;
+     *
      */
-    function __construct(ContainerInterface $container)
+    protected $champs;
+
+    /**
+     * @var ContainerInterface permet de stocker le dernier container utiliser;
+     */
+    public static $Scontainer;
+
+    /**
+     * Models constructor.
+     */
+    function __construct()
     {
+
+        $container = Models::$Scontainer;
         $this->pdo = $container->pdo;
         $this->container = $container;
     }
@@ -41,6 +53,7 @@ abstract class Models
     protected function execute(string $sql)
     {
         $req = $this->pdo->prepare($sql);
+        var_dump($sql);
         try {
             $req->execute();
         } catch (PDOException $e) {
@@ -62,7 +75,7 @@ abstract class Models
      */
     public function select($data, $order = "", $limit = 0)
     {
-        $sql = 'SELECT * FROM ' . get_class($this);
+        $sql = 'SELECT * FROM ' . (new \ReflectionClass($this))->getShortName();
         $a_cond = array();
         if (isset($data)) {
             $sql .= ' WHERE ';
@@ -79,7 +92,7 @@ abstract class Models
                 $sql .= $data;
             }
         }
-        // echo $sql.'<br>';
+        //echo $sql.'<br>';
         if ($order != "") {
             $sql .= " ORDER BY " . $order;
         }
@@ -92,7 +105,7 @@ abstract class Models
 
     /**
      * @param array $data tableau contenant les valeurs sous la formes "nom_colonne"=>"valeurs"
-     * @return \PDOStatement
+     * @return bool|\PDOStatement
      *
      * les valeurs sont quoté avant d'être insérée, pas les nom des colonne
      */
@@ -101,14 +114,62 @@ abstract class Models
         // (new \ReflectionClass($this))->getShortName() permet d'obtenir le nom sans le namespace
         $sql = 'INSERT INTO ' . (new \ReflectionClass($this))->getShortName();
         foreach ($data as $k => $v) {
+            //verifie que le champs correspond au type attend et qu'il existe dans la table
+            if (!Validateur::estValide($v, $this->champs[$k])) {
+                echo $v;
+                return false;
+            }
             $data[$k] = $this->pdo->quote($v);
         }
         // implode keys of $data...
-        $sql .= " (" . implode("`, `", array_keys($data)) . ")";
+        $sql .= " (" . implode(",", array_keys($data)) . ")";
 
         // implode values of $data
-        $sql .= " VALUES (" . implode("', '", $data) . ") ";
+        $sql .= " VALUES (" . implode(",", $data) . ") ";
         //execute la commande
+        return $this->execute($sql);
+    }
+
+    /**
+     * @param $data : string à ajouter après DELETE FROM nom-classes WHERE ou array sous la forme "nom_colonne"=> valeur qui deviendras nom_colonne = valeur
+     * @return \PDOStatement
+     *
+     * permet de supprimer les colonne du tables
+     */
+    protected function delete($data)
+    {
+        $sql = 'DELETE FROM ' . (new \ReflectionClass($this))->getShortName();
+        $a_cond = array();
+        if (isset($data)) {
+            $sql .= ' WHERE ';
+            if (is_array($data)) {
+                foreach ($data as $k => $v) {
+                    //if (!is_numeric($v)) {
+                    $v = $this->pdo->quote($v);
+                    //}
+                    $a_cond[] = "$k = $v";
+                }
+                $sql .= implode(' AND ', $a_cond);
+
+            } else {
+                $sql .= $data;
+            }
+        }
+        return $this->execute($sql);
+    }
+
+    public function update($data,$cond)
+    {
+        $sql=' UPDATE '.(new \ReflectionClass($this))->getShortName().' SET ';
+        $a_cond = array();
+        foreach ($data as $k => $v) {
+            //if (!is_numeric($v)) {
+            $v = $this->pdo->quote($v);
+            //}
+            $a_cond[] = "$k = $v";
+        }
+        $sql .= implode(',', $a_cond);
+        $sql.=" WHERE ".$cond;
         return $this->execute($sql);
     }
 }

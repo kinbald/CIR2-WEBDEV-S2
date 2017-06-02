@@ -1,5 +1,16 @@
 <?php
 include __DIR__.'/private_settings.php';
+
+/**
+ * Taille des mots de passe à générer
+ */
+define("PASSWORD_SIZE", 8);
+
+/**
+ * Base pour la génération des mots de passe
+ */
+define("SEED", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production

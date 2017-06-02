@@ -1,25 +1,25 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: billaud
- * Date: 26/04/17
- * Time: 19:27
+ * Created by IntelliJ IDEA.
+ * User: Kinbald
+ * Date: 25/05/17
+ * Time: 18:08
  */
 
-namespace App\Controllers;
+namespace App\Middleware;
+
+
 use App\Session;
 use Psr\Container\ContainerInterface;
 
 /**
- * Class Controllers
- * @package App\Controllers
+ * Class Middleware
+ * @package App\Middleware
  */
-class Controllers
+class Middleware
 {
     /**
      * @var ContainerInterface
-     *
-     * variable permettant de stocker le container, et tout ce à quoi il permet d'accéder
      */
     protected $container;
 
@@ -29,19 +29,19 @@ class Controllers
     protected $sessionInstance;
 
     /**
-     * Controllers constructor.
+     * Middleware constructor.
      * @param ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container) {
+    public function __construct($container)
+    {
         $this->container = $container;
         $this->sessionInstance = Session::getInstance();
     }
 
     /**
+     * Permet d'éviter de devoir faire $this->container
      * @param $name
      * @return mixed
-     *
-     * permet d'eviter de devoir faire $this->container
      */
     public function __get($name)
     {

@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\Admin;
+use App\Models\Token_Admin;
+use App\Models\Token_responsable_legal;
+use App\Models\Validateur;
 use PDO;
 use PDOException;
 use PHPExcel;
@@ -25,7 +29,9 @@ class TestController extends Controllers
      */
     public function __invoke($request, $response, $args)
     {
-        $args['titre'] = "super page";
+        var_dump(Validateur::estValidePassword("williamBill"));
+        var_dump($_SESSION);
+        var_dump($_COOKIE);
         return $this->view->render($response, 'layout.twig', $args);
     }
 
@@ -37,8 +43,8 @@ class TestController extends Controllers
      */
     public function salut($request, $response, $args)
     {
-        $args['titre'] = 'Un titre';
 
+        (new Admin())->update(array("type_droit"=>1),"id_admin =1");
         return $this->view->render($response, 'test.twig', $args);
     }
 
@@ -53,7 +59,7 @@ class TestController extends Controllers
 
         $objPHPExcel = new PHPExcel();
         $objWorksheet = $objPHPExcel->getActiveSheet();
-        $req=$this->pdo->prepare("SELECT * FROM test");
+        $req=$this->pdo->prepare("SELECT * FROM admin");
         try {
             $req->execute();
         } catch (PDOException $e) {
@@ -77,7 +83,6 @@ class TestController extends Controllers
      * @return mixed
      */
     public function mail($request, $response, $args){
-        echo getcwd();
         try {
             $message = Swift_Message::newInstance()
                 //emetteur

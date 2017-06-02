@@ -1,0 +1,28 @@
+{% extends "layout.twig" %}
+{% import "macro.twig" as m %}
+
+{% block css %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}
+    mot de passe oublie
+{% endblock %}
+
+{% block body %}
+    {{ include('navbar.twig') }}
+
+    <form role="form" action="{{ path_for('recover.post') }}" method="post">
+        <fieldset>
+            <div class="form-group">
+                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-lg btn-success btn-block" type="submit" value="Envoyer">
+            </div>
+        </fieldset>
+    </form>
+    {% if send == true %}
+        <p>Si l'adresse est dans notre base de donnée, un mail a été envoyé</p>
+    {% endif %}
+{% endblock %}
