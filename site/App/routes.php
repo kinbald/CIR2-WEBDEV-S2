@@ -1,4 +1,4 @@
-<?php
++<?php
 // Routes
 use App\Controllers\TestController;
 $app->group('',function () use ($app)
