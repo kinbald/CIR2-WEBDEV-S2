@@ -60,7 +60,12 @@ class Responsable_legal extends Models
         return $this->execute("SELECT id_enfant FROM est_responsable_de WHERE id_responsable_legal = $id_rl")->fetchAll();
     }
 
-
+    /**
+     *fonction peremettant de réxuperer les information dur un RL
+     *
+     * @param int $id du responsable legal
+     * @return array contenant les, les clés sont les noms des colonnes
+     */
     public function  recupèreInfoParent($id){
         return ($this->select(array("id_responsable_legal"=>$id)))[0];
     }
