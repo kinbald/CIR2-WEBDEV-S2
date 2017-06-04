@@ -17,10 +17,8 @@
                          <h3 class="panel-title">Enfants à Charge</h3>
                      </div>
                      <div class="panel-body">
-                         todo: lister les enfants
-                         avec un href vers leurs gestion
-                         {% for nom in noms_enfants %}
-                             {{ nom }}
+                         {% for enfant in enfants %}
+                             {{ enfant.prenom }}<br>
                          {% endfor %}
                      </div>
                  </div>
@@ -50,11 +48,6 @@
                 <p><a href="#">Link</a></p>
             </div> -->
             <div class="col-sm-8 text-left">
-               <!-- <p>Enfants :
-                    {% for nom in noms_enfants %}
-                        {{ nom }}
-                    {% endfor %}
-                </p>-->
                 <CENTER><h1>Bienvenue</h1></CENTER>
                 <p>Ce site vous permet de gérer l'emploie du temps de vos enfants en ligne.
                 S'il s'agit de votre première connexion, il est fortement conseillé

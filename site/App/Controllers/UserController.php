@@ -9,6 +9,7 @@
 namespace App\Controllers;
 
 use App\Models\Enfant;
+use App\Models\est_responsable_de;
 use App\Models\Responsable_legal;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -27,17 +28,19 @@ class UserController extends Controllers
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function getIndex(Request $request, Response $response,$args)
+    public function getIndex(Request $request, Response $response, $args)
     {
         $user = $this->sessionInstance->read("RL");
-        $RLModel = new Responsable_legal();
-        $EnfantsModel = new Enfant();
-        $childs = $RLModel->trouve_enfants($user);
+        $childs = (new est_responsable_de())->id_enfant_depuis_id_rl($user);
         $childs_names = array();
         foreach ($childs as $child => $key) {
-            $childs_names[$key['id_enfant']] = $EnfantsModel->getPrenom($key['id_enfant']);
+            $info["prenom"]=(new Enfant())->getPrenom($key);
+            $info["id"]=$key;
+            $childs_names[]=$info;
         }
-        $args["infoUtilisateur"]=(new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
-        return $this->view->render($response, 'index.twig',$args );
+        $args['enfants'] = $childs_names;
+        $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
+        var_dump($args);
+        return $this->view->render($response, 'index.twig', $args);
     }
 }

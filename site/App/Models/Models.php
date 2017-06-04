@@ -53,7 +53,9 @@ abstract class Models
     protected function execute(string $sql)
     {
         $req = $this->pdo->prepare($sql);
-        var_dump($sql);
+        if ($this->container->get('settings')["debug"] > 1) {
+            var_dump($sql);
+        }
         try {
             $req->execute();
         } catch (PDOException $e) {
