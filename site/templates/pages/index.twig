@@ -30,8 +30,12 @@
                          <h3 class="panel-title">Mes Informations</h3>
                      </div>
                      <div class="panel-body">
-                        {{ infoUtilisateur.nom_rl }}
+                         {{ infoUtilisateur.nom_rl |capitalize }}
+                         {{ infoUtilisateur.prenom_rl |capitalize}} </br>
+                         {{ infoUtilisateur.adresse_mail_rl }} </br>
+                         {{ infoUtilisateur.complement_d_adresse }}, </br>
 
+                         {{ infoUtilisateur.code_postal }}  {{ infoUtilisateur.ville }}
 
                      </div>
                  </div>
