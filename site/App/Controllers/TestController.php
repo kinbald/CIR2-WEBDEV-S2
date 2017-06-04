@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\Admin;
+use App\Models\Responsable_legal;
 use App\Models\Token_Admin;
 use App\Models\Token_responsable_legal;
 use App\Models\Validateur;
@@ -29,9 +30,7 @@ class TestController extends Controllers
      */
     public function __invoke($request, $response, $args)
     {
-        var_dump(Validateur::estValidePassword("williamBill"));
-        var_dump($_SESSION);
-        var_dump($_COOKIE);
+        var_dump();
         return $this->view->render($response, 'layout.twig', $args);
     }
 

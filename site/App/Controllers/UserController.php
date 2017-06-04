@@ -27,7 +27,7 @@ class UserController extends Controllers
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function getIndex(Request $request, Response $response)
+    public function getIndex(Request $request, Response $response,$args)
     {
         $user = $this->sessionInstance->read("RL");
         $RLModel = new Responsable_legal();
@@ -37,6 +37,7 @@ class UserController extends Controllers
         foreach ($childs as $child => $key) {
             $childs_names[$key['id_enfant']] = $EnfantsModel->getPrenom($key['id_enfant']);
         }
-        return $this->view->render($response, 'index.twig', ['noms_enfants' => $childs_names] );
+        $args["infoUtilisateur"]=(new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
+        return $this->view->render($response, 'index.twig',$args );
     }
 }
