@@ -28,6 +28,10 @@ class Validateur
             case "password":
                 return Validateur::estValidePassword($value);
                 break;
+            case "date":
+                $d = \DateTime::createFromFormat('Y-m-d H:i:s', $value);
+                return $d && $d->format('Y-m-d H:i:s') == $value;
+                break;
             default:
                 return false;
         }
