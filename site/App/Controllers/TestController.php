@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\Admin;
+use App\Models\Responsable_legal;
 use App\Models\Token_Admin;
 use App\Models\Token_responsable_legal;
 use App\Models\Validateur;
@@ -29,9 +31,6 @@ class TestController extends Controllers
      */
     public function __invoke($request, $response, $args)
     {
-        var_dump(Validateur::estValidePassword("williamBill"));
-        var_dump($_SESSION);
-        var_dump($_COOKIE);
         return $this->view->render($response, 'layout.twig', $args);
     }
 
@@ -44,7 +43,7 @@ class TestController extends Controllers
     public function salut($request, $response, $args)
     {
 
-        (new Admin())->update(array("type_droit"=>1),"id_admin =1");
+        (new Admin())->update(array("type_droit" => 1), "id_admin =1");
         return $this->view->render($response, 'test.twig', $args);
     }
 
@@ -59,11 +58,11 @@ class TestController extends Controllers
 
         $objPHPExcel = new PHPExcel();
         $objWorksheet = $objPHPExcel->getActiveSheet();
-        $req=$this->pdo->prepare("SELECT * FROM admin");
+        $req = $this->pdo->prepare("SELECT * FROM admin");
         try {
             $req->execute();
         } catch (PDOException $e) {
-            if ($this->container->get('settings')["debug"]>0) {
+            if ($this->container->get('settings')["debug"] > 0) {
                 echo $e->getMessage();
             } else {
                 echo 'bdd indispo';
@@ -82,7 +81,8 @@ class TestController extends Controllers
      * @param $args
      * @return mixed
      */
-    public function mail($request, $response, $args){
+    public function mail($request, $response, $args)
+    {
         try {
             $message = Swift_Message::newInstance()
                 //emetteur
@@ -100,8 +100,7 @@ class TestController extends Controllers
                 //piece joint
                 ->attach(\Swift_Attachment::fromPath('excel/excel.xls'));
             $this->mailer->send($message);
-        }catch (Swift_IoException $e)
-        {
+        } catch (Swift_IoException $e) {
             echo $e;
         }
         return $this->view->render($response, 'layout.twig', $args);
