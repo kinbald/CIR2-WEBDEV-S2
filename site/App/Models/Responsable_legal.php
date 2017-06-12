@@ -70,4 +70,8 @@ class Responsable_legal extends Models
         return ($this->select(array("id_responsable_legal"=>$id)))[0];
     }
 
+
+
+
+
 }

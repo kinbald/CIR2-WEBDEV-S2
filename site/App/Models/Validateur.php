@@ -28,6 +28,10 @@ class Validateur
             case "password":
                 return Validateur::estValidePassword($value);
                 break;
+            case "date":
+                //todo case date Validateur
+                return true;
+                break;
             default:
                 return false;
         }

@@ -27,7 +27,8 @@ $app->group('', function () use ($app)
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
 
-
+$app->get('/importData',\App\Controllers\ImportDataController::class.':getImportData')->setName("importData.get");
+$app->post('/importData',\App\Controllers\ImportDataController::class.':postImportData')->setName("importData.post");
 $app->get('/logout',App\Controllers\AuthController::class.':logout')->setName("logout");
 $app->get('/recover',App\Controllers\AuthController::class.':recover')->setName("recover.get");
 $app->post('/recover',App\Controllers\AuthController::class.':sendRecover')->setName("recover.post");

@@ -36,4 +36,6 @@ class est_responsable_de extends Models
         }
         return $enfants;
     }
+
+
 }
