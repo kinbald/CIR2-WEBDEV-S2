@@ -8,6 +8,8 @@
 
 namespace App\Models;
 
+use Swift_IoException;
+use Swift_Message;
 
 class Token_Admin extends Models
 {
@@ -103,5 +105,69 @@ class Token_Admin extends Models
         $this->delete(array(
             "id_admin"=>$id
         ));
+    }
+
+    /**
+     * @param string $email de l'utilisateur voulant reinitialiser son mot de passe
+     * @return bool false si l'email n'existe pas dans la base de donnée
+     * @return true si l'email existe dans la base de donnée
+     */
+    public function setTokenRecovery($email)
+    {
+        $info = (new Admin())->select(array("adresse_mail" => $email));
+        if ($info[0]["id_admin"] > 0) {
+
+            //generation du token
+            $token = bin2hex(random_bytes(20));
+
+            //ajout du token dans la base de données
+            $this->insert(array(
+                "selector_admin" => "recover-admin",
+                "verifier_admin" => $token,
+                "date_expiration_admin" => (new \DateTime())->add(new \DateInterval('P1D'))->format("Y/m/d"),
+                "id_admin" => $info[0]["id_admin"],
+            ));
+
+            //envoie du mél
+            try {
+                $message = Swift_Message::newInstance()
+                    //emetteur
+                    ->setFrom(array('testleasen@gmail.com' => 'leasen'))
+                    //destinataire
+                    ->setTo($email)
+                    //sujet
+                    ->setSubject('Mot de passe oublié')
+                    //corp du text
+                    ->setBody("<div> Voici le lien sur lequel vous devez cliquer : 
+                   <a href=\"127.0.0.1/recover-admin/" . $token . "\">127.0.0.1/recover-admin/" . $token . "</a> <br></div>")
+                    //header necessaire pour pouvoir cliquer sur le lien
+                    ->setContentType("text/html; charset=\"UTF-8\"");
+                $this->container->mailer->send($message);
+            } catch (Swift_IoException $e) {
+                echo $e;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param string $token permet de verifier si un token permettant de reinitialiser son mot de passe exste dans la base de donnée
+     * @return bool|int false si le token n'existe pas, l'id de l'utilisateur si il existe
+     */
+    public function existeTokenRecover($token)
+    {
+        $args=array(
+            "selector_admin"=>"recover-admin",
+            "verifier_admin"=>$token,
+        );
+        $res=$this->select($args);
+        if($res[0]["id_admin"]>0)
+        {
+            return $res[0]["id_admin"];
+        }else{
+            return false;
+        }
     }
 }
