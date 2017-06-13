@@ -10,6 +10,9 @@ $app->get('/salut[/{nom}]',\App\Controllers\TestController::class.':salut')->set
 // setName permet d'appeler path_for('nom_route',{param}) dans twig
 $app->get('/index', \App\Controllers\UserController::class.':getIndex')->setName("index");
 
+$app->get('/contact', \App\Controllers\ContactController::class.':getContact')->setName("contact.get");
+$app->post('/contact', \App\Controllers\ContactController::class.':postContact')->setName("contact.post");
+
 $app->get('/excel[/]',TestController::class.':excel');
 
 $app->get('/mail[/]',TestController::class.':mail');
