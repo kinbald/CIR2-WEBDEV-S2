@@ -27,9 +27,16 @@ $app->group('', function () use ($app)
 {
     $app->get('/login', 'AuthController:getLogin')->setName('login.get');
     $app->post('/login', 'AuthController:postLogin')->setName('login.post');
+    $app->get('/login-admin', App\Controllers\AuthAdminController::class.':getLoginAd')->setName('login-admin.get');
+    $app->post('/login-admin', App\Controllers\AuthAdminController::class.':postLoginAd')->setName('login-admin.post');
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
 
+$app->get('/logout-admin',App\Controllers\AuthAdminController::class.':logoutAd')->setName("logout-admin");
+$app->get('/recover-admin',App\Controllers\AuthAdminController::class.':recoverAd')->setName("recover-admin.get");
+$app->post('/recover-admin',App\Controllers\AuthAdminController::class.':sendRecoverAd')->setName("recover-admin.post");
+$app->get('/recover-admin/{token}',App\Controllers\AuthAdminController::class.':tokenAd')->setName("recoverToken-admin.get");
+$app->post('/recover-admin/{token}',App\Controllers\AuthAdminController::class.':tokenValidationAd')->setName("recoverToken-admin.post");
 
 $app->get('/logout',App\Controllers\AuthController::class.':logout')->setName("logout");
 $app->get('/recover',App\Controllers\AuthController::class.':recover')->setName("recover.get");
