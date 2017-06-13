@@ -249,21 +249,30 @@ $.fn.zabuto_calendar = function (options) {
 
                         var $dayElement = $('<div id="' + dayId + '" class="day" >' + currDayOfMonth + '</div>');
                         $dayElement.data('day', currDayOfMonth);
+                        $dayElement.addClass('dropdown-toggle');
+                        $dayElement.attr("data-toggle" , "dropdown");
+                        $dayElement.attr("aria-haspopup", "true");
+                        $dayElement.attr("aria-expanded", "true");
 
                         var $dowElement = $('<td id="' + dateId + '"></td>');
+                        $dowElement.addClass('dropdown');
+                        $dowElement.addClass('dow-clickable');
                         $dowElement.append($dayElement);
+
+                        var $dayUL = $('<ul id="' + dayId + '_ul" class="dropdown-menu" ></ul>');
+                        $dayUL.attr("aria-labelledby", dayId + "_ul");
+                        $dowElement.append($dayUL);
+
+                        var $Li = $('<li><a href="#">Garderie</a></li><li><a href="#">JIS</a></li>');
+                        $dayUL.append($Li);
 
                         $dowElement.data('date', dateAsString(year, month, currDayOfMonth));
                         $dowElement.data('hasEvent', false);
 
-                        if (typeof($calendarElement.data('actionFunction')) === 'function') {
-                            $dowElement.addClass('dow-clickable');
-                            $dowElement.click(function () {
-                                //todo le on click
-                                $calendarElement.data('selectedDate', $(this).data('date'));
-                            });
-                            $dowElement.click($calendarElement.data('actionFunction'));
-                        }
+                        /**$dowElement.addClass('dow-clickable');
+                        $dowElement.click(function (e) {
+                            //TODO click
+                        });*/
 
                         $dowRow.append($dowElement);
 
