@@ -36,4 +36,16 @@ class est_responsable_de extends Models
         }
         return $enfants;
     }
+    
+    public function estReponsable($id_parent, $id_enfant)
+    {
+        $enfants = $this->select(array('id_parent' => $id_parent));
+        foreach ($enfants as $enfant) {
+            if($enfant['id_enfant'] == $id_enfant)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

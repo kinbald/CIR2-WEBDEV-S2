@@ -11,6 +11,7 @@
     
     use App\Models\Activite;
     use App\Models\Creneau;
+    use App\Models\est_responsable_de;
     use Slim\Http\Request;
     use Slim\Http\Response;
     use Slim\Router;
@@ -52,7 +53,6 @@
             return $response;
         }
         
-        
         private function checkInput($params, $name)
         {
             return isset($params[$name]) && !empty($params[$name]);
@@ -61,5 +61,26 @@
         public function calendrier(Request $request, Response $response, $args)
         {
             return $this->view->render($response,'calendrier.twig');
+        }
+        
+        public function modifieCreneau(Request $request, Response $response)
+        {
+            $params = $request->getParams();
+            if( $this->checkInput($params, 'date') && $this->checkInput($params, 'id_enfant') && $this->checkInput($params, 'id_activite') )
+            {
+                if( isset($_SESSION['RL']))
+                {
+                    $id_parent = $this->sessionInstance->read('RL');
+                    if( (new est_responsable_de())->estReponsable($id_parent, $params['id_enfant']) )
+                    {
+                        $Creneau = new Creneau();
+                        if($Creneau->ajouteCreneauEnfant($params['id_enfant'], $params['date'], $params['id_activite']) != false)
+                        {
+                            return $response->withJson(array('Error' => 'false'));
+                        }
+                    }
+                }
+            }
+            return $response->withJson(array('Error' => 'true'));
         }
     }

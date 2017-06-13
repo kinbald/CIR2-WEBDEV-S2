@@ -19,12 +19,13 @@
             "id_activite"=>"integer",
             "date_journee"=>"date",
         );
-        
+    
         /**
          * Fonction permettant d'ajouter un créneau pour un enfant
          * @param $id_enfant
          * @param $date_journee
          * @param $id_activite
+         * @return bool|\PDOStatement
          */
         public function ajouteCreneauEnfant($id_enfant, $date_journee, $id_activite)
         {
@@ -32,7 +33,7 @@
             {
                 if( (new Enfant())->estExistant($id_enfant) )
                 {
-                    $this->insert(array(
+                    return $this->insert(array(
                         "id_enfant" => $id_enfant,
                         "date_journee" => $date_journee,
                         "id_activite" => $id_activite
