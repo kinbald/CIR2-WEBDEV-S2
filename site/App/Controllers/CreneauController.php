@@ -74,13 +74,16 @@
                     if( (new est_responsable_de())->estReponsable($id_parent, $params['id_enfant']) )
                     {
                         $Creneau = new Creneau();
-                        if($Creneau->ajouteCreneauEnfant($params['id_enfant'], $params['date'], $params['id_activite']) != false)
+                        if($Creneau->ajouteCreneauEnfant( intval($params['id_enfant']), $params['date'], intval($params['id_activite']) ) != false)
                         {
                             return $response->withJson(array('Error' => 'false'));
                         }
+                        return $response->withJson(array('Error' => "true"));
                     }
+                    return $response->withJson(array('Error' => "Cet enfant n'est pas lié à votre compte"));
                 }
+                return $response->withJson(array('Error' => "Vous n'êtes pas connecté"));
             }
-            return $response->withJson(array('Error' => 'true'));
+            return $response->withJson(array('Error' => 'Erreur de requête'));
         }
     }

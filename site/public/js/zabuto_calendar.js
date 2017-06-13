@@ -263,16 +263,32 @@ $.fn.zabuto_calendar = function (options) {
                         $dayUL.attr("aria-labelledby", dayId + "_ul");
                         $dowElement.append($dayUL);
 
-                        var $Li = $('<li><a href="#">Garderie</a></li><li><a href="#">JIS</a></li>');
-                        $dayUL.append($Li);
+                        //TODO ajout liste des options de façon automatique
+                        var Activite =
+                            {
+                                "1" : "Garderie",
+                                "2" : "JIS"
+                            };
+                        for(var key in Activite)
+                        {
+                            var $Li = $('<li></li>');
+                            var $a = $('<a id="' + key + '_' + dateAsString(year, month, currDayOfMonth) + '" href="#">'+ Activite[key] +'</a>');
+                            $a.click(function (event) {
+                                event.preventDefault();
+                                var $id = $(this).attr('id');
+                                var type = $id.split("_")[0];
+                                var date = $id.split("_")[1];
+                                var tabLocation = window.location.href.split('/');
+                                var id_enfant = tabLocation[tabLocation.length - 1];
+                                ajaxInsert($calendarElement, id_enfant, type, date);
+                            });
+                            $Li.append($a);
+                            $dayUL.append($Li);
+                        }
+                        //END TODO
 
                         $dowElement.data('date', dateAsString(year, month, currDayOfMonth));
                         $dowElement.data('hasEvent', false);
-
-                        /**$dowElement.addClass('dow-clickable');
-                        $dowElement.click(function (e) {
-                            //TODO click
-                        });*/
 
                         $dowRow.append($dowElement);
 
@@ -288,13 +304,28 @@ $.fn.zabuto_calendar = function (options) {
             return $tableObj;
         }
 
+        function ajaxInsert($calendarElement, id, type, date) {
+
+            var data = {date: date, id_activite: type, id_enfant: id};
+
+            $.ajax({
+                type: 'POST',
+                url: '/ajax/calendrierSetDay',
+                data: data,
+                dataType: 'json'
+            }).done(function (response) {
+                ajaxEvents($calendarElement, date.split('-')[0], date.split('-')[1], "reload");
+            });
+
+            return true;
+        }
 
         /* ----- Event functions ----- */
         //todo gestion de l'event
         function checkEvents($calendarElement, year, month) {
             var jsonData = $calendarElement.data('jsonData');
             $calendarElement.data('events', false);
-            return ajaxEvents($calendarElement, year, month);
+            return ajaxEvents($calendarElement, year, month, null);
         }
 
         function jsonEvents($calendarElement) {
@@ -304,9 +335,16 @@ $.fn.zabuto_calendar = function (options) {
             return true;
         }
 
-        function ajaxEvents($calendarElement, year, month) {
-
-            var data = {annee: year, mois: (month + 1)};
+        function ajaxEvents($calendarElement, year, month, callerMethod) {
+            // Cas ou on appelle un rafraichissement des évènements affichés
+            if (callerMethod === "reload")
+            {
+                var data = {annee: year, mois: month};
+            }
+            else
+            {
+                var data = {annee: year, mois: (month + 1)};
+            }
             //todo l'ajax
             //effecture requete ajax
             var urlR =window.location.href.replace('calendrier',"ajax/calendrier");

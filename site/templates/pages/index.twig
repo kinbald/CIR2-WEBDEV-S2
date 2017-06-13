@@ -18,7 +18,7 @@
                      </div>
                      <div class="panel-body">
                          {% for enfant in enfants %}
-                             <a href="#"> {{ enfant.prenom |capitalize }}</a><br>
+                             <a href="{{ path_for('calendrier', { 'id' : enfant.id }) }}"> {{ enfant.prenom |capitalize }}</a><br>
                          {% endfor %}
                      </div>
                  </div>

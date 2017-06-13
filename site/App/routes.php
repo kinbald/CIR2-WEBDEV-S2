@@ -27,6 +27,7 @@ $app->group('', function () use ($app) {
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
 
 $app->post('/ajax/calendrier/{id_enfant}', \App\Controllers\CreneauController::class . ':getMoisEnfant')->setName('AJAX-getMoisEnfant');
+$app->post('/ajax/calendrierSetDay', \App\Controllers\CreneauController::class . ':modifieCreneau')->setName('AJAX-modifieCreneau');
 
 $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
 $app->get('/recover', App\Controllers\AuthController::class . ':recover')->setName("recover.get");

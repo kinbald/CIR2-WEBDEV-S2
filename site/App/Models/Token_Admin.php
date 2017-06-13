@@ -15,7 +15,7 @@ class Token_Admin extends Models
         "verifier_admin"=>"string",
         "selector_admin"=>"string",
         "id_admin"=>"integer",
-        "date_expiration_admin"=>"string",
+        "date_expiration_admin"=>"date",
     );
 
     /**

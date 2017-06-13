@@ -31,15 +31,19 @@
         {
             if($this->verifieDateCoherente($date_journee))
             {
-                if( (new Enfant())->estExistant($id_enfant) )
+                if( !$this->estExistant($id_enfant, array("id_activite" => $id_activite, "date_journee" => $date_journee)) )
                 {
-                    return $this->insert(array(
-                        "id_enfant" => $id_enfant,
-                        "date_journee" => $date_journee,
-                        "id_activite" => $id_activite
-                    ));
+                    if( (new Enfant())->estExistant($id_enfant) )
+                    {
+                        return $this->insert(array(
+                            "id_enfant" => $id_enfant,
+                            "date_journee" => $date_journee,
+                            "id_activite" => $id_activite
+                        ));
+                    }
                 }
             }
+            return false;
         }
         
         /**
