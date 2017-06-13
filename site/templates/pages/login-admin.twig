@@ -7,13 +7,16 @@
 {% endblock %}
 
 {% block title %}
-Page de connexion
+    Page de connexion
 {% endblock %}
 
 {% block body %}
     {{ include('navbar.twig') }}
 
     <div class="container firstContainer">
+
+        <span class="label label-primary col-md-4 center-block info">Administrateur</span>
+
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
@@ -23,13 +26,13 @@ Page de connexion
                     <div class="panel-body">
 
                         {% if errors %}
-                        <div class="alert alert-danger">
+                            <div class="alert alert-danger">
                                 {% for error in errors %}
                                     <div class="text">
-                                    {{ error }}
+                                        {{ error }}
                                     </div>
                                 {% endfor %}
-                        </div>
+                            </div>
                         {% endif %}
                         <form role="form" action="{{ path_for('login-admin.post') }}" method="post">
                             <fieldset>
@@ -44,13 +47,19 @@ Page de connexion
                                         <input type="checkbox" name="remember"> Se souvenir de moi
                                     </label>
                                 </div>
+                                <!-- <div class="col-md-7">
+                                     <div class="checkbox">
+                                         <div class="icheckbox_flat " style="position: relative;"><input type="checkbox" id="flat-checkbox-1" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                         <label for="flat-checkbox-1">Se souvenir de moi</label>
+                                     </div>
+                                 </div> -->
                                 <!-- Change this to a button or input when using this as a form -->
                                 <div class="form-group">
                                     <button class="btn btn-lg btn-success btn-block" type="submit">Connexion</button>
                                 </div>
                             </fieldset>
                         </form>
-                        <a href="{{ path_for('recover-admin.get') }}">Mot de passe oublié</a>
+                        <a href="{{ path_for('recover-admin.get') }}">Mot de passe oublié ?</a>
                     </div>
                 </div>
             </div>
