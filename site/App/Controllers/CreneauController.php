@@ -9,6 +9,7 @@
     namespace App\Controllers;
     
     
+    use App\Models\Activite;
     use App\Models\Creneau;
     use Slim\Http\Request;
     use Slim\Http\Response;
