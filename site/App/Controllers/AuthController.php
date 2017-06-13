@@ -148,12 +148,12 @@ class AuthController extends Controllers
      */
     public function tokenValidation(Request $request, Response $response, $args)
     {
-        var_dump($args);
+        //var_dump($args);
         //todo ->solidité mot de passe?
         if ($request->getParam('password') != $request->getParam('confirmation')) {
             $args["statut"] = "motDePasseDifferent";
         } else {
-            var_dump($request->getParams());
+            //var_dump($request->getParams());
             $id = (new Token_responsable_legal())->existeTokenRecover($args["token"]);
             if ($id > 0) {
                 (new Responsable_legal())->update(array(
