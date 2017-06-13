@@ -85,6 +85,7 @@
         }
     
         /**
+         * Vérifie si l'élément correspondant à l'id est existant dans la base de données
          * @param $id
          * @param null $params
          * @return bool
@@ -97,5 +98,21 @@
                 "date_journee" => $params["date_journee"]
             );
             return !empty($this->select($selectParams));
+        }
+    
+        /**
+         * @param $NumAnnee
+         * @param $NumMois
+         * @param $Enfant
+         * @return array
+         */
+        public function getCreneauxMois($NumAnnee, $NumMois, $Enfant)
+        {
+            if( (new Enfant())->estExistant($Enfant) )
+            {
+                $sql = "SELECT date_journee, id_activite FROM creneau WHERE id_enfant = $Enfant AND EXTRACT(MONTH FROM date_journee) = $NumMois AND EXTRACT(YEAR FROM date_journee) = $NumAnnee";
+                $req = $this->execute($sql);
+                return $req->fetchAll(\PDO::FETCH_ASSOC);
+            }
         }
     }

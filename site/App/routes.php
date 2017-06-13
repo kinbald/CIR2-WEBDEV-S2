@@ -26,6 +26,11 @@ $app->group('', function () use ($app)
     $app->post('/login', 'AuthController:postLogin')->setName('login.post');
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
+    
+$app->group('', function () use ($app)
+{
+    $app->post('/ajax/calendrier/{id_enfant}', \App\Controllers\CreneauController::class.':getMoisEnfant')->setName('AJAX-getMoisEnfant');
+});
 
 
 $app->get('/logout',App\Controllers\AuthController::class.':logout')->setName("logout");
