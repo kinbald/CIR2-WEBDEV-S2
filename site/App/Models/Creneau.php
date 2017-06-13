@@ -28,14 +28,16 @@
          */
         public function ajouteCreneauEnfant($id_enfant, $date_journee, $id_activite)
         {
-            //TODO add call to time verif
-            if( (new Enfant())->estExistant($id_enfant) )
+            if($this->verifieDateCoherente($date_journee))
             {
-                $this->insert(array(
-                    "id_enfant" => $id_enfant,
-                    "date_journee" => $date_journee,
-                    "id_activite" => $id_activite
-                ));
+                if( (new Enfant())->estExistant($id_enfant) )
+                {
+                    $this->insert(array(
+                        "id_enfant" => $id_enfant,
+                        "date_journee" => $date_journee,
+                        "id_activite" => $id_activite
+                    ));
+                }
             }
         }
         
@@ -73,10 +75,12 @@
          */
         public function supprimerCreneau($id_enfant, $date_journee, $id_activite)
         {
-            //TODO add call to time verif
-            if( $this->estExistant($id_enfant, array("id_activite" => $id_activite, "date_journee" => $date_journee)) )
+            if($this->verifieDateCoherente($date_journee))
             {
-                $this->delete(array("id_enfant" => $id_enfant, "date_journee" => $date_journee, "id_activite" => $id_activite));
+                if( $this->estExistant($id_enfant, array("id_activite" => $id_activite, "date_journee" => $date_journee)) )
+                {
+                    $this->delete(array("id_enfant" => $id_enfant, "date_journee" => $date_journee, "id_activite" => $id_activite));
+                }
             }
         }
     
