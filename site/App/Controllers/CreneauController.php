@@ -9,6 +9,7 @@
     namespace App\Controllers;
     
     
+    use App\Models\Activite;
     use App\Models\Creneau;
     use Slim\Http\Request;
     use Slim\Http\Response;
@@ -29,10 +30,12 @@
                 $creneaux = (new Creneau())->getCreneauxMois($params['annee'], $params['mois'], $id_enfant);
                 $json = array();
                 foreach ($creneaux as $creneau) {
+                    $intitule = (new Activite())->getIntitule($creneau['id_activite']);
+                    $classname = (new Activite())->getClassname($creneau['id_activite']);
                     $tmp = array(
                         'date' => $creneau['date_journee'],
-                        'classname' => $creneau['id_activite'],
-                        'title' => $creneau['id_activite']
+                        'classname' => $classname,
+                        'title' => $intitule
                     );
                     array_push($json, $tmp);
                 }
