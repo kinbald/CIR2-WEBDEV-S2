@@ -9,11 +9,18 @@
     namespace App\Controllers;
     
     
-    use App\Models\Activite;
     use App\Models\Creneau;
     use Slim\Http\Request;
     use Slim\Http\Response;
-
+    use Slim\Router;
+    use Slim\Views\Twig;
+    
+    /**
+     * Class CreneauController
+     * @property Twig view
+     * @property Router router
+     * @package App\Controllers
+     */
     class CreneauController extends Controllers
     {
         /**
@@ -48,5 +55,10 @@
         private function checkInput($params, $name)
         {
             return isset($params[$name]) && !empty($params[$name]);
+        }
+        
+        public function calendrier(Request $request, Response $response, $args)
+        {
+            return $this->view->render($response,'calendrier.twig');
         }
     }
