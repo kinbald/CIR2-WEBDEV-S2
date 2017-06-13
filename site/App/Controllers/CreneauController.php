@@ -18,7 +18,7 @@
         /**
          * @param Request $request
          * @param Response $response
-         * @return
+         * @return Response
          */
         public function getMoisEnfant(Request $request, Response $response)
         {
@@ -27,12 +27,22 @@
             if( $this->checkInput($params, 'mois') && $this->checkInput($params, 'annee') )
             {
                 $creneaux = (new Creneau())->getCreneauxMois($params['annee'], $params['mois'], $id_enfant);
-                return $response->withJson($creneaux);
+                $json = array();
+                foreach ($creneaux as $creneau) {
+                    $tmp = array(
+                        'date' => $creneau['date_journee'],
+                        'classname' => $creneau['id_activite'],
+                        'title' => $creneau['id_activite']
+                    );
+                    array_push($json, $tmp);
+                }
+                return $response->withJson($json);
             }
+            return $response;
         }
         
         
-        public function checkInput($params, $name)
+        private function checkInput($params, $name)
         {
             return isset($params[$name]) && !empty($params[$name]);
         }
