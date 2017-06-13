@@ -149,12 +149,12 @@ class AuthAdminController extends Controllers
      */
     public function tokenValidationAd(Request $request, Response $response, $args)
     {
-        var_dump($args);
+        //var_dump($args);
         //todo ->solidité mot de passe?
         if ($request->getParam('password') != $request->getParam('confirmation')) {
             $args["statut"] = "motDePasseDifferent";
         } else {
-            var_dump($request->getParams());
+            //var_dump($request->getParams());
             $id = (new Token_Admin())->existeTokenRecover($args["token"]);
             if ($id > 0) {
                 (new Admin())->update(array(
