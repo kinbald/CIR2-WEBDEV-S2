@@ -32,14 +32,15 @@ $app->group('', function () use ($app)
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
 
+$app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
 $app->get('/importData',\App\Controllers\ImportDataController::class.':getImportData')->setName("importData.get");
 $app->post('/importData',\App\Controllers\ImportDataController::class.':postImportData')->setName("importData.post");
-
-$app->get('/logout-admin',App\Controllers\AuthAdminController::class.':logoutAd')->setName("logout-admin");
 $app->get('/recover', App\Controllers\AuthController::class . ':recover')->setName("recover.get");
 $app->post('/recover', App\Controllers\AuthController::class . ':sendRecover')->setName("recover.post");
 $app->get('/recover/{token}', App\Controllers\AuthController::class . ':token')->setName("recoverToken.get");
 $app->post('/recover/{token}', App\Controllers\AuthController::class . ':tokenValidation')->setName("recoverToken.post");
+
+$app->get('/logout-admin',App\Controllers\AuthAdminController::class.':logoutAd')->setName("logout-admin");
 $app->get('/recover-admin',App\Controllers\AuthAdminController::class.':recoverAd')->setName("recover-admin.get");
 $app->post('/recover-admin',App\Controllers\AuthAdminController::class.':sendRecoverAd')->setName("recover-admin.post");
 $app->get('/recover-admin/{token}',App\Controllers\AuthAdminController::class.':tokenAd')->setName("recoverToken-admin.get");
