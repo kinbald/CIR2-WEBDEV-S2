@@ -13,23 +13,28 @@
 {% block body %}
     {{ include('navbar.twig') }}
     <div class="firstContainer">
-        
-    <form  enctype="multipart/form-data" class="firstContainer" action="{{ path_for('exportData.post') }}" method="post">
-        <select name="Ecole " required oninput="toggle_div();">
-            <option value="0">Selectionner Ecole</option>
-            {% for ecole in ecole %}
-                <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
-            {% endfor %}
-        </select>
-        <div id="Classe" style="display: none">
-        <select name="Classe" required oninput="">
-            <option value="0">Selectionner Classe</option>
-            {% for ecole in ecole %}
-                <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
-            {% endfor %}
-        </select>
-        </div>
-        <input type="submit" value="Télécharger">
-    </form>
-    </div>{##}
+        <form enctype="multipart/form-data" class="firstContainer" method="post">
+            <label for="Ecole">
+                <select name="Ecole" id="Ecole" onchange="{{ path_for('selectClasse.post') }}">
+                    <option value="0">Selectionner Ecole</option>
+                    <option value="1">Ecole du Sel</option>
+                    <option value="2">Ecole du Billaud</option>
+                    {% for ecole in listeEcole %}
+                        <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+
+                <label for="Classe">
+                    <select name="Classe"  id="Classe" onchange="{{ path_for('exportData.post') }}">
+                        <option value="0">Selectionner Classe</option>
+                        {% for ecole in ecole %}
+                            <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            <input type="submit" value="Télécharger">
+        </form>
+
+    </div>
 {% endblock %}
