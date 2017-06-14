@@ -15,24 +15,21 @@
     <div class="firstContainer">
         <form enctype="multipart/form-data" class="firstContainer" method="post">
             <label for="Ecole">
-                <select name="Ecole" id="Ecole" onchange="{{ path_for('selectClasse.post') }}">
-                    <option value="0">Selectionner Ecole</option>
-                    <option value="1">Ecole du Sel</option>
-                    <option value="2">Ecole du Billaud</option>
+                <select name="Ecole" id="Ecole" onchange="{{path_for('selectClasse.post') }}">
+                    <option value="0">Sélectionner Ecole</option>
                     {% for ecole in listeEcole %}
-                        <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
+                        <option value={{ ecole['nom_ecole'] }}>{{ ecole['nom_ecole'] }}</option>
                     {% endfor %}
                 </select>
             </label>
-
-                <label for="Classe">
-                    <select name="Classe"  id="Classe" onchange="{{ path_for('exportData.post') }}">
-                        <option value="0">Selectionner Classe</option>
-                        {% for ecole in ecole %}
-                            <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
-                        {% endfor %}
-                    </select>
-                </label>
+            <label for="Classe">
+                <select name="Classe" id="Classe" onchange="{{ path_for('exportData.post') }}">
+                    <option value="0">Sélectionner Classe</option>
+                    {% for classe in listeClasse %}
+                        <option value={{ classe.nom_classe }}>{{ classe.nom_classe }}</option>
+                    {% endfor %}
+                </select>
+            </label>
             <input type="submit" value="Télécharger">
         </form>
 
