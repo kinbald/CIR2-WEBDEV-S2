@@ -8,7 +8,8 @@
 
 namespace App\Controllers;
 
-use App\Models\Responsable_legal;
+use App\Models\Admin;
+use App\Models\Token_Admin;
 use Psr\Http\Message\ResponseInterface;
 use App\Models\Token_responsable_legal;
 use Slim\Http\Request;
@@ -22,7 +23,7 @@ use Slim\Views\Twig;
  * @property Router router
  * @package App\Controllers
  */
-class AuthController extends Controllers
+class AuthAdminController extends Controllers
 {
     /**
      * Fonction qui gère un appel en POST sur la page de connexion
@@ -30,7 +31,7 @@ class AuthController extends Controllers
      * @param Response $response
      * @return ResponseInterface
      */
-    public function postLogin(Request $request, Response $response)
+    public function postLoginAd(Request $request, Response $response)
     {
         // Tableau qui contiendra les erreurs
         $errors = array(null);
@@ -39,18 +40,18 @@ class AuthController extends Controllers
 
         if (isset($post['email']) && isset($post['password'])) {
             if (!empty($post['email']) && !empty($post['password'])) {
-                $etat = (new Responsable_legal())->authentification_rl($post['email'], $post['password']);
+                $etat = (new Admin())->authentification_admin($post['email'], $post['password']);
                 if ($etat == -1) {
                     // Le mot de passe est incorrect
                     $errors['password'] = "Le mot de passe est incorrect.";
                 } elseif ($etat == -2) {
                     // L'utilisateur n'existe pas
-                    $errors['email'] = "Cet utilisateur n'existe pas.";
+                    $errors['email'] = "Cet admin n'existe pas.";
                 } elseif ($etat > 0) {
                     // Connexion réussie
-                    $this->connectUser($etat);
+                    $this->connectUserAd($etat);
                     if ($post["remember"]) {
-                        (new Token_responsable_legal())->setRememberMe($etat);
+                        (new Token_Admin())->setRememberMe($etat);
                     }
                     // Redirection vers l'index
                     return $response->withRedirect($this->router->pathFor('index'));
@@ -64,7 +65,7 @@ class AuthController extends Controllers
         // Il y a des erreurs donc on les garde dans la session pour l'affichage
         $_SESSION['errors'] = $errors;
         // Redirection vers le formulaire
-        return $response->withRedirect($this->router->pathFor('login.get'));
+        return $response->withRedirect($this->router->pathFor('login-admin.get'));
         //return $this->view->render($response, 'login.twig'/*, ['errors' => $errors]*/);
     }
 
@@ -74,22 +75,22 @@ class AuthController extends Controllers
      * @param Response $response
      * @return ResponseInterface
      */
-    public function getLogin(Request $request, Response $response)
+    public function getLoginAd(Request $request, Response $response)
     {
-        return $this->view->render($response, 'login.twig');
+        return $this->view->render($response, 'login-admin.twig');
     }
 
     /**
-     * Fonction permettant de déconnecter un utilisateur
+     * Fonction permettant de déconnecter un admin
      * @param Request $request
      * @param Response $response
      * @param $args
      * @return ResponseInterface
      */
-    public function logout(Request $request, Response $response, $args)
+    public function logoutAd(Request $request, Response $response, $args)
     {
-        (new Token_responsable_legal())->unsetRememberMe();
-        $this->sessionInstance->delete("RL");
+        (new Token_Admin())->unsetRememberMe();
+        $this->sessionInstance->delete("admin");
         return $response->withRedirect($this->router->pathFor('index'));
     }
 
@@ -100,10 +101,10 @@ class AuthController extends Controllers
      * @param $args
      * @return ResponseInterface
      */
-    public function recover(Request $request, Response $response, $args)
+    public function recoverAd(Request $request, Response $response, $args)
     {
         // Envoi d'un mail avec le token de regénération du mot de passe
-        return $this->view->render($response, 'recover.twig');
+        return $this->view->render($response, 'recover-admin.twig');
     }
 
     /**
@@ -113,18 +114,18 @@ class AuthController extends Controllers
      * @param $args
      * @return ResponseInterface
      */
-    public function sendRecover(Request $request, Response $response, $args)
+    public function sendRecoverAd(Request $request, Response $response, $args)
     {
         if ($request->getParam('email'))
         {
             if(!empty($request->getParam('email')))
             {
-                (new Token_responsable_legal())->setTokenRecovery($request->getParam('email'));
+                (new Token_Admin())->setTokenRecovery($request->getParam('email'));
                 $args["send"] = true;
             }
         }
         $args["send"] = false;
-        return $this->view->render($response, 'recover.twig', $args);
+        return $this->view->render($response, 'recover-admin.twig', $args);
     }
 
     /**
@@ -134,9 +135,9 @@ class AuthController extends Controllers
      * @param $args
      * @return ResponseInterface
      */
-    public function token(Request $request, Response $response, $args)
+    public function tokenAd(Request $request, Response $response, $args)
     {
-        return $this->view->render($response, 'newPassword.twig', $args);
+        return $this->view->render($response, 'newPassword-admin.twig', $args);
     }
 
     /**
@@ -146,7 +147,7 @@ class AuthController extends Controllers
      * @param $args
      * @return ResponseInterface
      */
-    public function tokenValidation(Request $request, Response $response, $args)
+    public function tokenValidationAd(Request $request, Response $response, $args)
     {
         //var_dump($args);
         //todo ->solidité mot de passe?
@@ -154,30 +155,30 @@ class AuthController extends Controllers
             $args["statut"] = "motDePasseDifferent";
         } else {
             //var_dump($request->getParams());
-            $id = (new Token_responsable_legal())->existeTokenRecover($args["token"]);
+            $id = (new Token_Admin())->existeTokenRecover($args["token"]);
             if ($id > 0) {
-                (new Responsable_legal())->update(array(
-                    "mot_de_passe_rl" => password_hash($request->getParam('password'), PASSWORD_DEFAULT)
-                ), "id_responsable_legal =" . $id);
-                (new Token_responsable_legal())->unsetAllRememberMe($id);
+                (new Admin())->update(array(
+                    "mot_de_passe" => password_hash($request->getParam('password'), PASSWORD_DEFAULT)
+                ), "id_admin =" . $id);
+                (new Token_Admin())->unsetAllRememberMe($id);
                 $args["statut"] = "ok";
             } else {
                 $args["statut"] = "tokenAbsent";
             }
         }
         // Mise à jour du mot de passe
-        return $this->view->render($response, 'newPassword.twig', $args);
+        return $this->view->render($response, 'newPassword-admin.twig', $args);
     }
 
     /**
      * Fonction permettant de connecter un utilisateur dans la session
      * @param int $etat
      */
-    public function connectUser($etat)
+    public function connectUserAd($etat)
     {
         if($etat)
         {
-            $this->sessionInstance->write("RL", $etat);
+            $this->sessionInstance->write("admin", $etat);
         }
     }
 }
