@@ -45,7 +45,14 @@ footer {
 }
 
 /* index */
-#firstContainer{
+.firstContainer{
     margin-top: 50px;
+}
+
+/* label info admin/utilisateur */
+.info{
+    margin-top: 5px;
+    float: inherit;
+    font-size: 20px;
 }
 

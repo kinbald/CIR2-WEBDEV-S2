@@ -11,7 +11,6 @@ namespace App\Controllers;
 use App\Models\Admin;
 use App\Models\Token_Admin;
 use Psr\Http\Message\ResponseInterface;
-use App\Models\Token_responsable_legal;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Router;
@@ -54,7 +53,7 @@ class AuthAdminController extends Controllers
                         (new Token_Admin())->setRememberMe($etat);
                     }
                     // Redirection vers l'index
-                    return $response->withRedirect($this->router->pathFor('index'));
+                    return $response->withRedirect($this->router->pathFor('index-admin'));
                 }
             }
             else

@@ -9,7 +9,7 @@
 namespace App\Controllers;
 
 use App\Models\Enfant;
-use App\Models\est_responsable_de;
+use App\Models\Est_responsable_de;
 use App\Models\Responsable_legal;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -21,7 +21,7 @@ class ContactController extends Controllers
 {
     public function getContact(Request $request, Response $response, $args){
         $user = $this->sessionInstance->read("RL");
-        $childs = (new est_responsable_de())->id_enfant_depuis_id_rl($user);
+        $childs = (new Est_responsable_de())->id_enfant_depuis_id_rl($user);
         $childs_names = array();
         foreach ($childs as $child => $key) {
             $info["prenom"]=(new Enfant())->getPrenom($key);
