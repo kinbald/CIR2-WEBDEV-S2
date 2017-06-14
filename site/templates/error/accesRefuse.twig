@@ -1,0 +1,10 @@
+{% extends "layout.twig" %}
+{% block title %}
+    Accès refusé
+{% endblock %}
+{% block body %}
+    <h1>Accès refusé</h1>
+    <br>
+    <p>Vous n'avez pas le droit d'acceder à cette page</p>
+    <a href="{{ path_for('index') }}">back</a>
+{% endblock %}

@@ -174,4 +174,16 @@ abstract class Models
         $sql.=" WHERE ".$cond;
         return $this->execute($sql);
     }
+
+    public function estExistant($id, $params = null)
+    {
+        if( empty($this->select(array(key($this->champs) => $id))) )
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }
