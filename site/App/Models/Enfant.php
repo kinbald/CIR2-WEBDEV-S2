@@ -31,10 +31,6 @@ class Enfant extends Models
         $child = ($this->select(array("id_enfant" => $id_enfant)))[0];
         return $child['prenom_enfant'];
     }
-    public function recupèreIdEnfant($data)
-    {
-        $res = $this->select($data);
-        return $res[0];
-    }
+
 
 }
