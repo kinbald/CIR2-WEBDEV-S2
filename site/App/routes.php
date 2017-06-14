@@ -39,4 +39,4 @@ $app->group('/calendrier/', function () use ($app) {
     $app->post('ajax/SetDay/{id_enfant}', \App\Controllers\CreneauController::class . ':modifieCreneau')->setName('AJAX-modifieCreneau');
 })->add(new App\Middleware\VerificationRl($container))->add(new \App\Middleware\Authentification($container));
 
-$app->get('/getActivite',\App\Controllers\CreneauController::class.'getActivite');
+$app->post('/getActivite',\App\Controllers\CreneauController::class.':getActivite');

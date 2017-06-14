@@ -10,6 +10,7 @@ namespace App\Controllers;
 
 
 use App\Models\Activite;
+use App\Models\ActiviteEnfant;
 use App\Models\Creneau;
 use App\Models\Est_responsable_de;
 use Slim\Http\Request;
@@ -90,6 +91,14 @@ class CreneauController extends Controllers
 
     public function getActivite(Request $request,Response $response,$args)
     {
-
+        $anne=$request->getParam('annee');
+        $id=$request->getParam('id_enfant');
+        $activite=(new ActiviteEnfant())->select(array('annee'=>$anne,'id_enfant'=>$id));
+        $res=array();
+        foreach ($activite as $v )
+        {
+            array_push($res,array('id_activite'=>$v['id_activite'],'intitule' =>$v['intitule'],'classname'=>$v['classname']));
+        }
+        return $response->withJson($res);
     }
 }
