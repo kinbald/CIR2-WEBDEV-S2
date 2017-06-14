@@ -274,9 +274,7 @@ $.fn.zabuto_calendar = function (options) {
                                 var $id = $(this).attr('id');
                                 var type = $id.split("_")[0];
                                 var date = $id.split("_")[1];
-                                var tabLocation = window.location.href.split('/');
-                                var id_enfant = tabLocation[tabLocation.length - 1];
-                                ajaxInsert($calendarElement, id_enfant, type, date);
+                                ajaxInsert($calendarElement, getIdEnfant(), type, date);
                             });
                             $Li.append($a);
                             $dayUL.append($Li);
@@ -302,11 +300,12 @@ $.fn.zabuto_calendar = function (options) {
 
         function ajaxInsert($calendarElement, id, type, date) {
 
-            var data = {date: date, id_activite: type, id_enfant: id};
+            var data = {date: date, id_activite: type};
+
 
             $.ajax({
                 type: 'POST',
-                url: '/ajax/calendrierSetDay',
+                url: '/calendrier/ajax/SetDay/' + id,
                 data: data,
                 dataType: 'json'
             }).done(function () {
@@ -335,10 +334,9 @@ $.fn.zabuto_calendar = function (options) {
             }
             //todo l'ajax
             //effecture requete ajax
-            var urlR = window.location.href.replace('calendrier', "ajax/calendrier");
             $.ajax({
                 type: 'POST',
-                url: urlR,
+                url: '/calendrier/ajax/getEvents/' + getIdEnfant(),
                 data: data,
                 dataType: 'json'
             }).done(function (response) {
@@ -450,6 +448,11 @@ $.fn.zabuto_calendar = function (options) {
                 }
             }
             return false;
+        }
+
+        function getIdEnfant() {
+            var tabLocation = window.location.href.split('/');
+            return tabLocation[tabLocation.length - 1];
         }
     }); // each()
 

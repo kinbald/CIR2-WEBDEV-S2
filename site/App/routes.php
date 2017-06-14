@@ -26,14 +26,17 @@ $app->group('', function () use ($app) {
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
 
-$app->post('/ajax/calendrier/{id_enfant}', \App\Controllers\CreneauController::class . ':getMoisEnfant')->setName('AJAX-getMoisEnfant');
-$app->post('/ajax/calendrierSetDay', \App\Controllers\CreneauController::class . ':modifieCreneau')->setName('AJAX-modifieCreneau');
-
-
 $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
 $app->get('/recover', App\Controllers\AuthController::class . ':recover')->setName("recover.get");
 $app->post('/recover', App\Controllers\AuthController::class . ':sendRecover')->setName("recover.post");
 $app->get('/recover/{token}', App\Controllers\AuthController::class . ':token')->setName("recoverToken.get");
 $app->post('/recover/{token}', App\Controllers\AuthController::class . ':tokenValidation')->setName("recoverToken.post");
 
-$app->get('/calendrier/{id}',App\Controllers\CreneauController::class.':calendrier')->setName("calendrier");
+//MW authentification appliqué avant le middleware verification rl
+$app->group('/calendrier/', function () use ($app) {
+    $app->get('{id_enfant}',App\Controllers\CreneauController::class.':calendrier')->setName("calendrier");
+    $app->post('ajax/getEvents/{id_enfant}', \App\Controllers\CreneauController::class . ':getMoisEnfant')->setName('AJAX-getMoisEnfant');
+    $app->post('ajax/SetDay/{id_enfant}', \App\Controllers\CreneauController::class . ':modifieCreneau')->setName('AJAX-modifieCreneau');
+})->add(new App\Middleware\VerificationRl($container))->add(new \App\Middleware\Authentification($container));
+
+$app->get('/getActivite',\App\Controllers\CreneauController::class.'getActivite');
