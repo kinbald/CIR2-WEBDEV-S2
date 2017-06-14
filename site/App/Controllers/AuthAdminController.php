@@ -53,7 +53,7 @@ class AuthAdminController extends Controllers
                         (new Token_Admin())->setRememberMe($etat);
                     }
                     // Redirection vers l'index
-                    return $response->withRedirect($this->router->pathFor('index'));
+                    return $response->withRedirect($this->router->pathFor('index-admin'));
                 }
             }
             else

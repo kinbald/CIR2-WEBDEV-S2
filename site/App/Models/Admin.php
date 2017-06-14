@@ -50,4 +50,12 @@ class Admin extends Models
         );
         return $this->insert($data);
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function  recupèreInfoAdmin($id){
+        return ($this->select(array("id_admin"=>$id)))[0];
+    }
 }
