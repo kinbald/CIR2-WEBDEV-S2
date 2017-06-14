@@ -9,7 +9,7 @@
 namespace App\Models;
 
 
-class est_responsable_de extends Models
+class Est_responsable_de extends Models
 {
 
     protected $champs = array(
