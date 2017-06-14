@@ -1,0 +1,16 @@
+{% extends "layout.twig" %}
+{% import "macro.twig" as m %}
+
+{% block css %}
+    {{ parent() }}
+    {{ m.css('zabuto_calendar.css') }}
+{% endblock %}
+
+{% block script_footer %}
+    {{ parent() }}
+    {{ m.js('zabuto_calendar.js') }}
+{% endblock %}
+
+{% block body %}
+    <div id="my-calendar"></div>
+{% endblock %}
