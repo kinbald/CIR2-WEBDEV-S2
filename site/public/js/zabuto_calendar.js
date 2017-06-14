@@ -36,9 +36,7 @@ $.fn.zabuto_calendar = function (options) {
         $calendarElement.data('dowLabels', opts.dow_labels);
         $calendarElement.data('showPrevious', opts.show_previous);
         $calendarElement.data('showNext', opts.show_next);
-        $calendarElement.data('jsonData', opts.data);
         $calendarElement.data('legendList', opts.legend);
-        $calendarElement.data('actionFunction', opts.action);
         $calendarElement.data('actionNavFunction', opts.action_nav);
 
         drawCalendar();
@@ -74,7 +72,6 @@ $.fn.zabuto_calendar = function (options) {
         function drawTable($calendarElement, $tableObj, year, month) {
             var dateCurrObj = new Date(year, month, 1, 0, 0, 0, 0);
             $calendarElement.data('currDate', dateCurrObj);
-
             $tableObj.empty();
             //nom du mois
             $tableObj = appendMonthHeader($calendarElement, $tableObj, year, month);
@@ -170,7 +167,7 @@ $.fn.zabuto_calendar = function (options) {
                 if (typeof($calendarElement.data('actionNavFunction')) === 'function') {
                     $prevMonthNav.click($calendarElement.data('actionNavFunction'));
                 }
-                $prevMonthNav.click(function (e) {
+                $prevMonthNav.click(function () {
                     drawTable($calendarElement, $tableObj, prevYear, prevMonth);
                 });
             }
@@ -195,7 +192,7 @@ $.fn.zabuto_calendar = function (options) {
                 if (typeof($calendarElement.data('actionNavFunction')) === 'function') {
                     $nextMonthNav.click($calendarElement.data('actionNavFunction'));
                 }
-                $nextMonthNav.click(function (e) {
+                $nextMonthNav.click(function () {
                     drawTable($calendarElement, $tableObj, nextYear, nextMonth);
                 });
             }
@@ -250,7 +247,7 @@ $.fn.zabuto_calendar = function (options) {
                         var $dayElement = $('<div id="' + dayId + '" class="day" >' + currDayOfMonth + '</div>');
                         $dayElement.data('day', currDayOfMonth);
                         $dayElement.addClass('dropdown-toggle');
-                        $dayElement.attr("data-toggle" , "dropdown");
+                        $dayElement.attr("data-toggle", "dropdown");
                         $dayElement.attr("aria-haspopup", "true");
                         $dayElement.attr("aria-expanded", "true");
 
@@ -266,13 +263,12 @@ $.fn.zabuto_calendar = function (options) {
                         //TODO ajout liste des options de façon automatique
                         var Activite =
                             {
-                                "1" : "Garderie",
-                                "2" : "JIS"
+                                "1": "Garderie",
+                                "2": "JIS"
                             };
-                        for(var key in Activite)
-                        {
+                        for (var key in Activite) {
                             var $Li = $('<li></li>');
-                            var $a = $('<a id="' + key + '_' + dateAsString(year, month, currDayOfMonth) + '" href="#">'+ Activite[key] +'</a>');
+                            var $a = $('<a id="' + key + '_' + dateAsString(year, month, currDayOfMonth) + '" href="#">' + Activite[key] + '</a>');
                             $a.click(function (event) {
                                 event.preventDefault();
                                 var $id = $(this).attr('id');
@@ -313,7 +309,7 @@ $.fn.zabuto_calendar = function (options) {
                 url: '/ajax/calendrierSetDay',
                 data: data,
                 dataType: 'json'
-            }).done(function (response) {
+            }).done(function () {
                 ajaxEvents($calendarElement, date.split('-')[0], date.split('-')[1], "reload");
             });
 
@@ -328,26 +324,18 @@ $.fn.zabuto_calendar = function (options) {
             return ajaxEvents($calendarElement, year, month, null);
         }
 
-        function jsonEvents($calendarElement) {
-            var jsonData = $calendarElement.data('jsonData');
-            $calendarElement.data('events', jsonData);
-            drawEvents($calendarElement);
-            return true;
-        }
-
         function ajaxEvents($calendarElement, year, month, callerMethod) {
             // Cas ou on appelle un rafraichissement des évènements affichés
-            if (callerMethod === "reload")
-            {
-                var data = {annee: year, mois: month};
+            var data;
+            if (callerMethod === "reload") {
+                data = {annee: year, mois: month};
             }
-            else
-            {
-                var data = {annee: year, mois: (month + 1)};
+            else {
+                data = {annee: year, mois: (month + 1)};
             }
             //todo l'ajax
             //effecture requete ajax
-            var urlR =window.location.href.replace('calendrier',"ajax/calendrier");
+            var urlR = window.location.href.replace('calendrier', "ajax/calendrier");
             $.ajax({
                 type: 'POST',
                 url: urlR,
@@ -355,7 +343,7 @@ $.fn.zabuto_calendar = function (options) {
                 dataType: 'json'
             }).done(function (response) {
                 var events = [];
-                $.each(response, function (k, v) {
+                $.each(response, function (k) {
                     events.push(response[k]);
                 });
                 //recupere les evente
@@ -486,7 +474,7 @@ $.fn.zabuto_calendar_defaults = function () {
     var now = new Date();
     var year = now.getFullYear();
     var month = now.getMonth() + 1;
-    var settings = {
+    return {
         language: false,
         year: year,
         month: month,
@@ -494,12 +482,10 @@ $.fn.zabuto_calendar_defaults = function () {
         show_next: true,
         nav_icon: false,
         data: false,
-
         legend: false,
         action: false,
         action_nav: false
     };
-    return settings;
 };
 
 /**
