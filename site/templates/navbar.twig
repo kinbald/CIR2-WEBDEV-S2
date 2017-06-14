@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -6,17 +6,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <a class="navbar-brand" href="http://www.jis-lacrau.com/"><img src="img/JIS_couleur_détouré.gif" class="img-rounded" alt="Logo" width="30" height="30"></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="{{ path_for('index') }}">Accueil</a></li>
                 <li><a href="#">Planning</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="{{ path_for('contact.get') }}">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if infoUtilisateur.id_responsable_legal %}
-                <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Deconnecter</a></li>
+                <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                 {% else %}
                 <li><a href="{{ path_for('login.get') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
                 {% endif  %}

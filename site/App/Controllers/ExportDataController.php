@@ -7,9 +7,20 @@
  */
 
 namespace App\Controllers;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
-
-class ExportDataController
+class ExportDataController extends Controllers
 {
 
+    public function postExportData(Request $request, Response $response)
+    {
+        return $response->withRedirect($this->router->pathFor('exportData.get'));
+    }
+
+
+    public function getExportData(Request $request, Response $response)
+    {
+        return $this->view->render($response, 'exportData.twig');
+    }
 }

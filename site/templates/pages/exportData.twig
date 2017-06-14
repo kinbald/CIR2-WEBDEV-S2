@@ -1,0 +1,31 @@
+{% extends "layout.twig" %}
+{% import "macro.twig" as m %}
+
+{% block css %}
+    {{ parent() }}
+    {{ m.css("style.css") }}
+{% endblock %}
+
+{% block title %}
+    Page de connexion
+{% endblock %}
+
+{% block body %}
+    {{ include('navbar.twig') }}
+    <form  enctype="multipart/form-data" action="{{ path_for('exportData.post') }}" method="post">
+        <p>Sélectionnez une Ecole</p>
+        <select name="Ecole " required>
+
+            {% for ecole in ecole %}
+                <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
+            {% endfor %}
+        </select>
+        <p>Sélectionnez une Classe</p>
+        <select name="Classe" required>
+            {% for ecole in ecole %}
+                <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Télécharger">
+    </form>
+{% endblock %}
