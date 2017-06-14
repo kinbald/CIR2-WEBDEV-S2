@@ -58,7 +58,7 @@
             return isset($params[$name]) && !empty($params[$name]);
         }
         
-        public function calendrier(Request $request, Response $response, $args)
+        public function calendrier(Request $request, Response $response)
         {
             return $this->view->render($response,'calendrier.twig');
         }
