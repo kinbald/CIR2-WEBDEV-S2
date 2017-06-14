@@ -7,25 +7,29 @@
 {% endblock %}
 
 {% block title %}
-    Page de connexion
+    Page pour récupérer les données
 {% endblock %}
 
 {% block body %}
     {{ include('navbar.twig') }}
-    <form  enctype="multipart/form-data" action="{{ path_for('exportData.post') }}" method="post">
-        <p>Sélectionnez une Ecole</p>
-        <select name="Ecole " required>
-
+    <div class="firstContainer">
+        
+    <form  enctype="multipart/form-data" class="firstContainer" action="{{ path_for('exportData.post') }}" method="post">
+        <select name="Ecole " required oninput="toggle_div();">
+            <option value="0">Selectionner Ecole</option>
             {% for ecole in ecole %}
                 <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
             {% endfor %}
         </select>
-        <p>Sélectionnez une Classe</p>
-        <select name="Classe" required>
+        <div id="Classe" style="display: none">
+        <select name="Classe" required oninput="">
+            <option value="0">Selectionner Classe</option>
             {% for ecole in ecole %}
                 <option value={{ ecole.nom_ecole |capitalize }}>{{ ecole.nom_ecole |capitalize }}</option>
             {% endfor %}
         </select>
+        </div>
         <input type="submit" value="Télécharger">
     </form>
+    </div>{##}
 {% endblock %}
