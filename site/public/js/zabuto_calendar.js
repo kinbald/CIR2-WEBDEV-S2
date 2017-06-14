@@ -388,6 +388,8 @@ $.fn.zabuto_calendar = function (options) {
                         $dowElement.addClass('event');
                     } else {
                         $dowElement.addClass('event-styled');
+                        //todo list class possible
+                        $dayElement.removeClass('red green');
                         $dayElement.addClass(value.classname);
                     }
                 });

@@ -11,7 +11,7 @@
     
     use App\Models\Activite;
     use App\Models\Creneau;
-    use App\Models\est_responsable_de;
+    use App\Models\Est_responsable_de;
     use Slim\Http\Request;
     use Slim\Http\Response;
     use Slim\Router;
@@ -57,12 +57,26 @@
         {
             return isset($params[$name]) && !empty($params[$name]);
         }
-        
+
+        /**
+         * @param Request $request
+         * @param Response $response
+         * @return \Psr\Http\Message\ResponseInterface
+         *
+         * routes d'affichages de la page du calendrier
+         */
         public function calendrier(Request $request, Response $response)
         {
             return $this->view->render($response,'calendrier.twig');
         }
-        
+
+        /**
+         * @param Request $request
+         * @param Response $response
+         * @return Response
+         *
+         * route de retour de la requere ajax pour la modification du calendrier
+         */
         public function modifieCreneau(Request $request, Response $response)
         {
             $params = $request->getParams();
@@ -71,7 +85,7 @@
                 if( isset($_SESSION['RL']))
                 {
                     $id_parent = $this->sessionInstance->read('RL');
-                    if( (new est_responsable_de())->estReponsable($id_parent, $params['id_enfant']) )
+                    if( (new Est_responsable_de())->estReponsable($id_parent, $params['id_enfant']) )
                     {
                         $Creneau = new Creneau();
                         if($Creneau->ajouteCreneauEnfant( intval($params['id_enfant']), $params['date'], intval($params['id_activite']) ) != false)
