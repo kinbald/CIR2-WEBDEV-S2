@@ -9,7 +9,8 @@
 {% block body %}
     {{ include('navbar.twig') }}
 
-    <div class="container-fluid text-center" xmlns="http://www.w3.org/1999/html">
+    <div class="container-fluid text-center firstContainer" xmlns="http://www.w3.org/1999/html">
+
         <div class="row content">
             <div class="col-sm-2 sidenav">
                 <div class="panel panel-primary">
@@ -27,29 +28,25 @@
                         {% endif %}
                     </div>
                 </div>
-
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Mes Informations</h3>
                     </div>
-                    <div class="panel-body">
+
+                    <div class="panel-body" style="word-wrap:break-word;">
                         {{ infoUtilisateur.nom_rl |capitalize }}
-                        {{ infoUtilisateur.prenom_rl |capitalize}} </br>
-                        {{ infoUtilisateur.adresse_mail_rl }} </br>
-                        {{ infoUtilisateur.complement_d_adresse }}, </br>
-
+                        {{ infoUtilisateur.prenom_rl |capitalize}}
+                        <div class="row"></div>
+                        {{ infoUtilisateur.adresse_mail_rl }}
+                        <div class="row"></div>
+                        {{ infoUtilisateur.complement_d_adresse }}
+                        <div class="row"></div>
                         {{ infoUtilisateur.code_postal }}  {{ infoUtilisateur.ville }}
-
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-sm-2 sidenav">
-                <p><a href="#">Link</a></p>
-                <p><a href="#">Link</a></p>
-                <p><a href="#">Link</a></p>
-            </div> -->
             <div class="col-sm-8 text-left">
-                <CENTER><h1>Bienvenue</h1></CENTER>
+                <h1>Bienvenue</h1>
                 <p>Ce site vous permet de gérer l'emploie du temps de vos enfants en ligne.
                     S'il s'agit de votre première connexion, il est fortement conseillé
                     de modifier votre mot de passe au plus vite afin de ne pas le perdre.
@@ -61,11 +58,6 @@
 
                 <p> todo: Calendrier des enfants à afficher ici
                 </p>
-
-
-
-
-
             </div>
             <div class="col-sm-2 sidenav">
                 <div class="thumbnail">
@@ -82,8 +74,9 @@
 {% endblock %}
 
 
-            {% block footer %}
-                <div id="footer" class="footer-copyright">
-                    <i class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></i> Copyright 2017 Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
-                </div>
-            {% endblock %}
+
+{% block footer %}
+    <div id="footer" class="footer-copyright ">
+        <i class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></i> Copyright 2017 Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
+    </div>
+{% endblock %}

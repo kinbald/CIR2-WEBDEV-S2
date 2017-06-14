@@ -8,6 +8,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Admin;
 use App\Models\Enfant;
 use App\Models\Est_responsable_de;
 use App\Models\Responsable_legal;
@@ -41,5 +42,19 @@ class UserController extends Controllers
         $args['enfants'] = $childs_names;
         $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
         return $this->view->render($response, 'index.twig', $args);
+    }
+    /**
+     * Fonction qui gère la page d'accueil d'un admin
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function getIndexAd(Request $request, Response $response, $args)
+    {
+        $user = $this->sessionInstance->read("admin");
+
+        $args["infoUtilisateur"] = (new Admin())->recupèreInfoAdmin($this->sessionInstance->read('admin'));
+        var_dump($args);
+        return $this->view->render($response, 'index-admin.twig', $args);
     }
 }
