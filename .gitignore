@@ -6,6 +6,8 @@ composer.lock
 site/composer.phar
 /data/
 
+CIR2-WEBDEV-S2.iml
+
 *.xls
 
 site/App/private_settings\.php

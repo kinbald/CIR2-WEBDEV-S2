@@ -9,31 +9,64 @@
 {% block body %}
     {{ include('navbar.twig') }}
 
-    <div class="container-fluid text-center">
+    <div class="container-fluid text-center firstContainer" xmlns="http://www.w3.org/1999/html">
+
         <div class="row content">
             <div class="col-sm-2 sidenav">
-                <p><a href="#">Link</a></p>
-                <p><a href="#">Link</a></p>
-                <p><a href="#">Link</a></p>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Enfants à Charge</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% if enfants %}
+                            {% for enfant in enfants %}
+
+                                <a href="{{ path_for('calendrier', { 'id_enfant' : enfant.id }) }}"> {{ enfant.prenom |capitalize }}</a><br>
+                            {% endfor %}
+                        {% else %}
+                            Vous n'avez pas d'enfants
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Mes Informations</h3>
+                    </div>
+
+                    <div class="panel-body" style="word-wrap:break-word;">
+                        {{ infoUtilisateur.nom_rl |capitalize }}
+                        {{ infoUtilisateur.prenom_rl |capitalize}}
+                        <div class="row"></div>
+                        {{ infoUtilisateur.adresse_mail_rl }}
+                        <div class="row"></div>
+                        {{ infoUtilisateur.complement_d_adresse }}
+                        <div class="row"></div>
+                        {{ infoUtilisateur.code_postal }}  {{ infoUtilisateur.ville }}
+                    </div>
+                </div>
             </div>
             <div class="col-sm-8 text-left">
-                <h1>Welcome</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                    officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <h1>Bienvenue</h1>
+                <p>Ce site vous permet de gérer l'emploie du temps de vos enfants en ligne.
+                    S'il s'agit de votre première connexion, il est fortement conseillé
+                    de modifier votre mot de passe au plus vite afin de ne pas le perdre.
+
+                    Pour tout problème, contactez l'administrateur du site.
+                </p>
+
                 <hr>
-                <h3>Test</h3>
-                <p>Lorem ipsum...</p>
+
+                <p> todo: Calendrier des enfants à afficher ici
+                </p>
             </div>
             <div class="col-sm-2 sidenav">
-                <div class="well">
-                    <p>ADS</p>
-                </div>
-                <div class="well">
-                    <p>ADS</p>
+                <div class="thumbnail">
+                    <img class="img-rounded" src="../../img/JIS_couleur_détouré.gif">
+                    <div class="caption text-center">
+                        <h3>Site JIS - La Crau</h3>
+                        <p>Retrouvez toutes les actualités de l'association Jeunesse Inter Services. Toutes les infomations utiles s'y trouvent.</p>
+                        <p><a href="http://www.jis-lacrau.com/" class="btn btn-warning" role="button">Site</a> <a href="http://www.jis-lacrau.com/contactez-nous.html" class="btn btn-default" role="button">Contact</a></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -41,6 +74,9 @@
 {% endblock %}
 
 
+
 {% block footer %}
-    <p>Footer Text</p>
+    <div id="footer" class="footer-copyright ">
+        <i class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></i> Copyright 2017 Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
+    </div>
 {% endblock %}

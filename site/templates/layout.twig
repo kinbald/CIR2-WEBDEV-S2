@@ -26,18 +26,19 @@
 <footer class="container-fluid text-center">
     {% block footer %}
         <div id="footer" class="footer-copyright">
-            <i class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></i>copyright 2017 Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
+            <i class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></i> Copyright 2017 Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
         </div>
     {% endblock %}
 </footer>
 {% block script_footer %}
     <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
     {{ m.js("icheck.min.js") }}
-    <script src="{{ base_url() }}/js/jquery.fs.selecter.min.js"></script>
-    <script src="{{ base_url() }}/js/jquery.fs.stepper.min.js"></script>
+    {{ m.js("jquery.fs.selecter.min.js") }}
+    {{ m.js("jquery.fs.stepper.min.js") }}
 {% endblock %}
 </body>
 </html>
