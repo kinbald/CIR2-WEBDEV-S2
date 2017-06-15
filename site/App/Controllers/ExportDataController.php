@@ -63,7 +63,6 @@ class ExportDataController extends Controllers
         $planning = new Planning();
         $listeEleves = $planning->select($dataRequete);
         $json = array();
-        //var_dump($listeEleves);
         foreach ($listeEleves as $eleve) {
             $tmp = array(
                 'nom_enfant' => $eleve['nom_enfant'],
@@ -72,13 +71,12 @@ class ExportDataController extends Controllers
             );
             array_push($json, $tmp);
         }
-        //var_dump($json);
         //Creation du fihier exel
         $objPHPExcel = new PHPExcel();
         $objWorksheet = $objPHPExcel->getActiveSheet();
         $objWorksheet->fromArray(array('ARTRU'=>'Thomas'),null,A1,false);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        $objWriter->save("../../public/excel/monfichierexcel.xls");
+        $objWriter->save(WEBROOT . "/excel/planning.xls");
 
 
         return $response->withJson($json);

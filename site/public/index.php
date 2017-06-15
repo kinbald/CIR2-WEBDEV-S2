@@ -8,6 +8,7 @@
 
 ini_set('display_errors', 'On');
 date_default_timezone_set('Europe/Paris');
+define('WEBROOT', __DIR__);
 require '../vendor/autoload.php';
 $settings = require __DIR__ . '/../App/settings.php';
 \App\Session::getInstance();
