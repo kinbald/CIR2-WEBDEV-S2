@@ -49,12 +49,13 @@ class ExportDataController extends Controllers
     {
         $ecole = new Ecole();
         $infoEcole = $ecole->select(["nom_ecole" => $request->getParam('nom_ecole')]);
+        if ($infoEcole[0]['id_ecole'] == '') return $response;
         $classe = new Classes();
         $infoClasse = $classe->select(["nom_classes" => $request->getParam('nom_classe'),
             "id_ecole" => $infoEcole[0]["id_ecole"]]);
-        //var_dump($infoClasse);
+        if ($infoClasse[0]['id_classes'] == '') return $response;
         date_default_timezone_set('UTC');
-        $date = date("Y-m-s");
+        $date = date("Y-m-d");
         $dataRequete = array(
             'id_classes' => $infoClasse[0]['id_classes'],
             'date_journee' => $date
@@ -65,19 +66,19 @@ class ExportDataController extends Controllers
         //var_dump($listeEleves);
         foreach ($listeEleves as $eleve) {
             $tmp = array(
-                'nom_eleve' => $eleve['nom_eleve'],
-                'prenom_eleve' => $eleve['prenom_eleve'],
+                'nom_enfant' => $eleve['nom_enfant'],
+                'prenom_enfant' => $eleve['prenom_enfant'],
                 'intitule' => $eleve['intitule'],
             );
             array_push($json, $tmp);
         }
         //var_dump($json);
         //Creation du fihier exel
-        /*$objPHPExcel = new PHPExcel();
+        $objPHPExcel = new PHPExcel();
         $objWorksheet = $objPHPExcel->getActiveSheet();
-        $objWorksheet->fromArray($json);
+        $objWorksheet->fromArray(array('ARTRU'=>'Thomas'),null,A1,false);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        $objWriter->save('excel/' . $params['nom_classe'] . '.xls');*/
+        $objWriter->save('/teste.xls');
 
         return $response->withJson($json);
     }

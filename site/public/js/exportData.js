@@ -30,8 +30,12 @@ function ajaxExportDataGetPlanning()
         url: 'ajax/exportDataGetPlanning',
         data: data,
         dataType: 'json'
-    }).done(function (response) {
+    }).always(function (response) {
         console.log('Traitement de la réponse');
-
+        $("#resultat").empty();
+        $.each(response, function (key, value) {
+            console.log(key,  value);
+            $("#classe").append('<p>Retour'+key+':' + value + '</p>');
+        });
     });
 }
