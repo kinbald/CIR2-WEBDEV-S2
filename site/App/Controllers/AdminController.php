@@ -35,25 +35,30 @@
 
         }
         
-        public function getPasswordImpression(){
+        public function getPasswordImpression(Request $request, Response $response){
 
             $id_parent=$request->getParam('id_responsable_legal');
-            if((new Responsable_legal())->estExistant($id_parent))
+            $info=(new Responsable_legal())->select(array('id_responsable_legal'=>$id_parent))[0];
+            if(!empty($info))
             {
                 //très sale car mdp generer pas forcement valide tout le temp
                 do{
                     $nouveauMotDePasse=Utils::generatePassword();
                 }while((new Responsable_legal())->modifieMotDePasse($id_parent,$nouveauMotDePasse)==-1);
-
                 try {
                     $html2pdf = new HTML2PDF('P', 'A4', 'fr');
-                    $html2pdf->writeHTML('<h1>HelloWorld</h1>This is my first test');
-                    $html2pdf->writeHTML('<h2>mdp : '.$nouveauMotDePasse.'</h2>');
-                    $html2pdf->Output('bonjour.pdf','D');
+                    $html2pdf->writeHTML('<h2>'.$info["nom_rl"].' '.$info["prenom_rl"].'</h2>');
+                    $html2pdf->writeHTML('<p>Identifiant : '.$info["adresse_mail_rl"].'</p>');
+                    $html2pdf->writeHTML('<p>Mot de passe : '.$nouveauMotDePasse.'</p>');
+                    ob_end_clean();
+                    $d=date('Y_M_D');
+                    $nom_fichier='pdf/mot_de_passe'.$d.'.pdf';
+                    $html2pdf->Output(dirname(__FILE__).'/../../public/'.$nom_fichier,'F');
                 } catch (HTML2PDF_exception $e) {
+                    echo $e->getMessage();
                     exit;
                 }
-
+                return $response->withJson($nom_fichier);
             }
         }
         
