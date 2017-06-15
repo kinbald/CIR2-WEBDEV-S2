@@ -58,20 +58,8 @@ class CreneauController extends Controllers
     {
         return isset($params[$name]) && !empty($params[$name]);
     }
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
-     *
-     * routes d'affichages de la page du calendrier
-     */
-    public function calendrier(Request $request, Response $response)
-    {
-        return $this->view->render($response, 'calendrier.twig');
-    }
-
-    /**
+    
+        /**
      * @param Request $request
      * @param Response $response
      * @return Response

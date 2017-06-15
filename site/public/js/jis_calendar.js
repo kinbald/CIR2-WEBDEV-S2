@@ -72,7 +72,7 @@ $.fn.jis_calendar = function (options) {
             if (dateInitMonth > 7) {
                 yeara = yeara + 1;
             }
-            data = {annee: yeara, id_enfant: getIdEnfant()};
+            data = {annee: yeara, id_enfant: opts.id_enfant};
             $.ajax({
                 type: 'POST',
                 url: '/getActivite',
@@ -80,10 +80,7 @@ $.fn.jis_calendar = function (options) {
                 dataType: 'json'
             }).done(function (response) {
                 activite = response.activite;
-                console.log(activite);
-
                 var $tableObj = $('<table class="table' + ' table-bordered' + '"></table>');
-                //var $tableObj = $('<table border="1" class="table"></table>');
                 $tableObj = drawTable($calendarElement, $tableObj, dateInitObj.getFullYear(), dateInitObj.getMonth());
 
                 var $legendObj = drawLegend(activite);
@@ -260,7 +257,7 @@ $.fn.jis_calendar = function (options) {
                                 var $id = $(this).attr('id');
                                 var type = $id.split("_")[0];
                                 var date = $id.split("_")[1];
-                                ajaxInsert($calendarElement, getIdEnfant(), type, date);
+                                ajaxInsert($calendarElement, opts.id_enfant, type, date);
                             });
                             $Li.append($a);
                             $dayUL.append($Li);
@@ -278,16 +275,13 @@ $.fn.jis_calendar = function (options) {
                         firstDow = 0;
                     }
                 }
-
                 $tableObj.append($dowRow);
             }
             return $tableObj;
         }
 
         function ajaxInsert($calendarElement, id, type, date) {
-
             var data = {date: date, id_activite: type};
-
 
             $.ajax({
                 type: 'POST',
@@ -322,7 +316,7 @@ $.fn.jis_calendar = function (options) {
             //effecture requete ajax
             $.ajax({
                 type: 'POST',
-                url: '/calendrier/ajax/getEvents/' + getIdEnfant(),
+                url: '/calendrier/ajax/getEvents/' + opts.id_enfant,
                 data: data,
                 dataType: 'json'
             }).done(function (response) {
@@ -442,11 +436,6 @@ $.fn.jis_calendar = function (options) {
     return this;
 };
 
-function getIdEnfant() {
-    var tabLocation = window.location.href.split('/');
-    return tabLocation[tabLocation.length - 1];
-}
-
 /**
  * Default settings
  *
@@ -469,7 +458,7 @@ $.fn.jis_calendar_defaults = function () {
         language: false,
         year: year,
         month: month,
-        show_previous: true,
+        show_previous: false,
         show_next: true,
         nav_icon: false,
         legend: false,
@@ -511,5 +500,15 @@ $.fn.jis_calendar_language = function (lang) {
  */
 $(document).ready(function () {
     //language=JQuery-CSS
-    $("#my-calendar").jis_calendar();
+    $('a.id_enfant_bouton').click(function (e) {
+        e.preventDefault();
+        var id = this.getAttribute('id');
+        id =  id.split("_")[1];
+        var calendar = $("#my-calendar");
+        calendar.empty();
+        calendar.append("<h5>Calendrier de " + this.text + " :<h5>");
+        calendar.jis_calendar(
+            {id_enfant: id}
+        );
+    });
 });
