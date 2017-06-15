@@ -13,7 +13,6 @@
     use App\Models\ActiviteEnfant;
     use App\Models\Creneau;
     use App\Models\Enfant;
-    use App\Models\Est_responsable_de;
     use Slim\Http\Request;
     use Slim\Http\Response;
     use Slim\Router;
@@ -71,12 +70,13 @@
             $prenom_enfant = (new Enfant())->getPrenom($request->getAttribute('id_enfant'));
             return $this->view->render($response, 'calendrier.twig', ['prenom_enfant' => $prenom_enfant]);
         }
-        
-        
+
+
         /**
          * @param Request $request
          * @param Response $response
-         * @return Response
+         * @param $args
+         * @return Response route de retour de la requere ajax pour la modification du calendrier
          *
          * route de retour de la requere ajax pour la modification du calendrier
          */
@@ -91,7 +91,13 @@
             }
             return $response->withJson(array('Error' => 'Erreur de requête'));
         }
-        
+
+        /**
+         * @param Request $request
+         * @param Response $response
+         * @param $args
+         * @return Response
+         */
         public function getActivite(Request $request,Response $response,$args)
         {
             $anne=$request->getParam('annee');

@@ -9,8 +9,6 @@
 namespace App\Models;
 
 
-use App\Utils\Utils;
-
 use App\Utils\Validateur;
 
 class Responsable_legal extends Models
@@ -84,8 +82,9 @@ class Responsable_legal extends Models
     /**
      *fonction peremettant de réxuperer les information dur un RL
      *
-     * @param int $id du responsable legal
+     * @param $data
      * @return array contenant les, les clés sont les noms des colonnes
+     * @internal param int $id du responsable legal
      */
     public function  insertResponsable($data){
         return array("message"=>$this->insert($data));
@@ -112,8 +111,9 @@ class Responsable_legal extends Models
         $cond = "nom_rl ILIKE $nom_rl";
         return $this->select($cond);
     }
-    
+
     /**
+     * @param $data
      * @return bool|\PDOStatement
      */
     public function existeRespo($data){
@@ -127,5 +127,6 @@ class Responsable_legal extends Models
         {
             return $this->update($donnees, $cond);
         }
+        return false;
     }
 }
