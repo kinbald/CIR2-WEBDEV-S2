@@ -4,7 +4,6 @@
 {% block css %}
     {{ parent() }}
     {{ m.css('jis_calendar.css') }}
-    {{ m.css("style.css") }}
 {% endblock %}
 
 {% block title %}
@@ -14,7 +13,7 @@ Votre compte de responsable légal - JIS
 {% block body %}
     {{ include('navbar.twig') }}
 
-    <div class="container-fluid text-center firstContainer" xmlns="http://www.w3.org/1999/html">
+    <div class="container-fluid text-center firstContainer lastContainer" >
 
         <div class="row content">
             <div class="col-sm-2 sidenav">
@@ -65,7 +64,7 @@ Votre compte de responsable légal - JIS
             </div>
             <div class="col-sm-2 sidenav">
                 <div class="thumbnail">
-                    <img class="img-rounded" src="../../img/JIS_couleur_détouré.gif">
+                    <img class="img-rounded" src="{{ m.img('JIS_couleur_détouré.gif') }}">
                     <div class="caption text-center">
                         <h3>Site JIS - La Crau</h3>
                         <p>Retrouvez toutes les actualités de l'association Jeunesse Inter Services. Toutes les infomations utiles s'y trouvent.</p>

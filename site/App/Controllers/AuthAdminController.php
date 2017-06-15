@@ -69,7 +69,6 @@ class AuthAdminController extends Controllers
         $_SESSION['errors'] = $errors;
         // Redirection vers le formulaire
         return $response->withRedirect($this->router->pathFor('login-admin.get'));
-        //return $this->view->render($response, 'login.twig'/*, ['errors' => $errors]*/);
     }
 
     /**

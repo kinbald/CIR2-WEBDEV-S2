@@ -39,10 +39,9 @@ class Token_responsable_legal extends Models
         $this->insert(array(
             "verifier_rl" => $hash_c,
             "selector_rl" => $selector,
-            "date_expiration_rl" => date("Y/m/d", $dateExpiration),
+            "date_expiration_rl" => date("Y-m-d", $dateExpiration),
             "id_responsable_legal" => $id,
         ));
-        var_dump(date("d/m/Y", $dateExpiration));
     }
 
     /**
@@ -54,12 +53,9 @@ class Token_responsable_legal extends Models
      */
     public function verifyRememberMe()
     {
-        if(isset($_COOKIE["rememberme"]))
-        {
+        if (isset($_COOKIE["rememberme"])) {
             $rememberme = $_COOKIE["rememberme"];
-        }
-    else
-        {
+        } else {
             return false;
         }
         $a = explode(" | ", $rememberme);
@@ -119,36 +115,39 @@ class Token_responsable_legal extends Models
     {
         $info = (new Responsable_legal())->select(array("adresse_mail_rl" => $email));
         if ($info[0]["id_responsable_legal"] > 0) {
-
             //generation du token
             $token = bin2hex(random_bytes(20));
 
             //ajout du token dans la base de données
-            $this->insert(array(
+            if ($this->insert(array(
                 "selector_rl" => "recover",
                 "verifier_rl" => $token,
                 "date_expiration_rl" => (new \DateTime())->add(new \DateInterval('P1D'))->format("Y/m/d"),
                 "id_responsable_legal" => $info[0]["id_responsable_legal"],
-            ));
-
-            //envoie du mél
-            try {
-                $message = Swift_Message::newInstance()
-                    //emetteur
-                    ->setFrom(array('testleasen@gmail.com' => 'leasen'))
-                    //destinataire
-                    ->setTo($email)
-                    //sujet
-                    ->setSubject('Mot de passe oublié')
-                    //corp du text
-                    ->setBody("<div> Voici le lien sur lequel vous devez cliquer : 
+            ))
+            ) {
+                //envoie du mél
+                //todo add lien adresse du site
+                try {
+                    $message = Swift_Message::newInstance()
+                        //emetteur
+                        ->setFrom(array('testleasen@gmail.com' => 'leasen'))
+                        //destinataire
+                        ->setTo($email)
+                        //sujet
+                        ->setSubject('Mot de passe oublié')
+                        //corp du text
+                        ->setBody("<div> Voici le lien sur lequel vous devez cliquer : 
                    <a href=\"127.0.0.1/recover/" . $token . "\">127.0.0.1/recover/" . $token . "</a> <br></div>")
-                    //header necessaire pour pouvoir cliquer sur le lien
-                    ->setContentType("text/html; charset=\"UTF-8\"");
-                $this->container->mailer->send($message);
-            } catch (Swift_IoException $e) {
-                echo $e;
+                        //header necessaire pour pouvoir cliquer sur le lien
+                        ->setContentType("text/html; charset=\"UTF-8\"");
+                    $this->container->mailer->send($message);
+                } catch (Swift_IoException $e) {
+                    echo $e;
+                }
             }
+
+
         } else {
             return false;
         }
@@ -161,15 +160,14 @@ class Token_responsable_legal extends Models
      */
     public function existeTokenRecover($token)
     {
-        $args=array(
-            "selector_rl"=>"recover",
-            "verifier_rl"=>$token,
+        $args = array(
+            "selector_rl" => "recover",
+            "verifier_rl" => $token,
         );
-        $res=$this->select($args);
-        if($res[0]["id_responsable_legal"]>0)
-        {
+        $res = $this->select($args);
+        if ($res[0]["id_responsable_legal"] > 0) {
             return $res[0]["id_responsable_legal"];
-        }else{
+        } else {
             return false;
         }
     }

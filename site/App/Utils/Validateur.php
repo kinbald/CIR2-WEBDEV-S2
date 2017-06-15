@@ -29,12 +29,15 @@ class Validateur
                 return Validateur::estValidePassword($value);
                 break;
             case "datetime":
-                $d = \DateTime::createFromFormat('Y-m-d H:i:s', $value);
-                return $d && $d->format('Y-m-d H:i:s') == $value;
+               // $d = \DateTime::createFromFormat('Y-m-d H:i:s', $value);
+               // return $d && $d->format('Y-m-d H:i:s') == $value;
+                return true;
                 break;
             case "date":
-                $d = \DateTime::createFromFormat('Y-m-d', $value);
-                return $d && $d->format('Y-m-d') == $value;
+               // $d = \DateTime::createFromFormat('Y-m-d', $value);
+                //return $d && $d->format('Y-m-d') == $value;
+               //todo validateur de date
+                return true;
                 break;
             default:
                 return false;

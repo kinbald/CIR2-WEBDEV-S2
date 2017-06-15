@@ -1,11 +1,6 @@
 {% extends "layout.twig" %}
 {% import "macro.twig" as m %}
 
-{% block css %}
-    {{ parent() }}
-    {{ m.css("style.css") }}
-{% endblock %}
-
 {% block body %}
     {{ include('navbar-admin.twig') }}
     <div class="container-fluid text-center firstContainer" xmlns="http://www.w3.org/1999/html">

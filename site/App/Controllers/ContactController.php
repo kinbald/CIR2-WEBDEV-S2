@@ -19,77 +19,61 @@ use Swift_Message;
 
 class ContactController extends Controllers
 {
-    public function getContact(Request $request, Response $response, $args){
+    public function getContact(Request $request, Response $response, $args)
+    {
         $user = $this->sessionInstance->read("RL");
-        $childs = (new Est_responsable_de())->id_enfant_depuis_id_rl($user);
-        $childs_names = array();
-        foreach ($childs as $child => $key) {
-            $info["prenom"]=(new Enfant())->getPrenom($key);
-            $info["id"]=$key;
-            $childs_names[]=$info;
+        if (!empty($user)) {
+            $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($user);
         }
-        $args['enfants'] = $childs_names;
-        $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
         return $this->view->render($response, 'contact.twig', $args);
     }
 
+    //todo vrai adresse d'envoie + vrai message
     public function postContact(Request $request, Response $response)
     {
         // Tableau qui contiendra les erreurs
-        $errors = array(null);
+        $args=array();
+        $errors = array();
         // Récupération des paramètres
         $post = $request->getParams();
-
-        if (isset($post['email']) && isset($post['nom']) && isset($post['prenom'])) {
-                if (empty($post["email"])) {
-                    // Mail vide ?
-                    $errors['email'] = "L'e-mail est obligatoire";
-                } elseif (empty($post["nom"])) {
-                    // nom vide
-                    $errors['nom'] = "Précisez votre nom.";
-                } elseif (empty($post["prenom"])) {
-                    // Prenom vide
-                    $errors['prenom'] = "Précisez votre nom.";
-                } elseif (empty($post["objet"])) {
-                    // Prenom vide
-                    $errors['objet'] = "Précisez l'objet de votre message.";
-                } else{
-                    try {
-                        $message = Swift_Message::newInstance()
-                            //emetteur
-                            ->setFrom(array('testleasen@gmail.com' => 'leasen'))
-                            //destinataire
-                            ->setTo("misterplaymania@gmail.com")
-                            //sujet
-                            ->setSubject("Page de contact: " .$post['objet'])
-                            //corps du text
-                            ->setBody("<div> Message reçu de la part de  : " . $post['nom']. " " . $post['prenom'] . "
-                            :</br>" .$post['message'] . "</div></br> Contact Mail : " .$post['email'])
-                            ->setContentType("text/html; charset=\"UTF-8\"");
-                        $this->container->mailer->send($message);
-                    } catch (Swift_IoException $e) {
-                        echo $e;
-                    }
-                    return $response->withRedirect($this->router->pathFor('index'));
-                }
-
+        if (empty($post["email"])) {
+            // Mail vide ?
+            $errors['email'] = "L'e-mail est obligatoire";
+        } elseif (empty($post["nom"])) {
+            // nom vide
+            $errors['nom'] = "Précisez votre nom.";
+        } elseif (empty($post["prenom"])) {
+            // Prenom vide
+            $errors['prenom'] = "Précisez votre nom.";
+        } elseif (empty($post["objet"])) {
+            // Prenom vide
+            $errors['objet'] = "Précisez l'objet de votre message.";
+        } else {
+            try {
+                $message = Swift_Message::newInstance()
+                    //emetteur
+                    ->setFrom(array('testleasen@gmail.com' => 'leasen'))
+                    //destinataire
+                    ->setTo("misterplaymania@gmail.com")
+                    //sujet
+                    ->setSubject("Page de contact: " . $post['objet'])
+                    //corps du text
+                    ->setBody("<div> Message reçu de la part de  : " . $post['nom'] . " " . $post['prenom'] . "
+                            :</br>" . $post['message'] . "</div></br> Contact Mail : " . $post['email'])
+                    ->setContentType("text/html; charset=\"UTF-8\"");
+                $this->container->mailer->send($message);
+            } catch (Swift_IoException $e) {
+                echo $e;
             }
-            else
-            {
-                $errors['champs'] = "Les champs doivent être remplis.";
+            $args["valid"] = "envoie reussie";
+        }
 
-            }
-
-        // Il y a des erreurs donc on les garde dans la session pour l'affichage
-        $_SESSION['errors'] = $errors;
+        // Il y a des erreurs on les garde dans la session pour l'affichage
+        //todo affichage des erreurs?
+        $this->sessionInstance->write('errors', $errors);
         // Redirection vers le formulaire
-        return $response->withRedirect($this->router->pathFor('contact.get'));
-        //return $this->view->render($response, 'login.twig'/*, ['errors' => $errors]*/);
+        return $this->view->render($response, 'contact.twig', $args);
     }
-
-
-
-
 
 
 }
