@@ -63,7 +63,7 @@ $.fn.zabuto_calendar = function (options) {
                 data: data,
                 dataType: 'json'
             }).done(function (response) {
-                activite = response;
+                activite = response.activite;
                 console.log(activite);
 
                 var $tableObj = $('<table class="table' + ' table-bordered' + '"></table>');
@@ -275,6 +275,7 @@ $.fn.zabuto_calendar = function (options) {
 
                         //TODO ajout liste des options de façon automatique
                         var Activite =activite;
+                        console.log(Activite);
                         for (var key in Activite) {
                             var $Li = $('<li></li>');
                             var $a = $('<a id="' + Activite[key].id_activite + '_' + dateAsString(year, month, currDayOfMonth) + '" href="#">' + Activite[key].intitule + '</a>');
