@@ -21,7 +21,7 @@ class Token_responsable_legal extends Models
         "verifier_rl" => "string",
         "selector_rl" => "string",
         "id_responsable_legal" => "integer",
-        "date_expiration_rl" => "string",
+        "date_expiration_rl" => "date",
     );
 
     /**
