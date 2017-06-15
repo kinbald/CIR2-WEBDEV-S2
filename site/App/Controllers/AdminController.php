@@ -11,11 +11,13 @@
     use App\Models\Responsable_legal;
     use Slim\Http\Request;
     use Slim\Http\Response;
+    use Slim\Router;
     use Slim\Views\Twig;
 
     /**
      * Class AdminController
      * @property Twig view
+     * @property Router router
      * @package App\Controllers
      */
     class AdminController extends Controllers
@@ -49,5 +51,17 @@
                 return $response->withJson($json);
             }
             return $response;
+        }
+        
+        public function getModifierRL(Request $request, Response $response)
+        {
+            $id_rl = $request->getAttribute('id_responsable_legal');
+            $ModelRL = new Responsable_legal();
+            if($ModelRL->estExistant($id_rl))
+            {
+                $data = $ModelRL->select(array('id_responsable_legal' => intval($id_rl)));
+                return $this->view->render($response, 'modifierRL.twig', ['infos' => $data[0]]);
+            }
+            return $response->withRedirect($this->router->pathFor('index-admin'));
         }
     }

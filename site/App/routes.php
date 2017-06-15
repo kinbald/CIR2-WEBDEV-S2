@@ -61,6 +61,8 @@ $app->group('/admin/', function () use ($app)
     $app->get('regenerer', \App\Controllers\AdminController::class.':getAdminRegenerer')->setName("admin.regenerer");
     $app->post('regenerer', \App\Controllers\AdminController::class.':regenererCompte');
     
+    $app->get('rl/{id_responsable_legal}', \App\Controllers\AdminController::class.':getModifierRL');
+    
     $app->post('ajax/getUser/', \App\Controllers\AdminController::class.':getUserByName');
     
     $app->get('index', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
