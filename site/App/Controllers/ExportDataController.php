@@ -44,7 +44,8 @@ class ExportDataController extends Controllers
                     array_push($json, $tmp);
                     var_dump($tmp);
                 }
-                return $response->withJson($json);
+
+                //return $response->withJson($json);
             } else if ($params['nom_ecole'] != 0 && $params['nom_classe'] != 0 && $this->checkInput($params, 'date_journee') ) {
                 $classe = new Classes();
                 $infoClasse = $classe->select(["nom_ecole" => $params['nom_ecole']]);
