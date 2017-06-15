@@ -9,6 +9,7 @@
 namespace App\Controllers;
 
 
+use App\Models\Admin;
 use App\Models\Responsable_legal;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -17,20 +18,23 @@ use Swift_Message;
 
 class ContactController extends Controllers
 {
-    public function getContact(Request $request, Response $response, $args)
+    public function getContact(Request $request, Response $response)
     {
         $user = $this->sessionInstance->read("RL");
+        $admin =$this->sessionInstance->read('admin');
         if (!empty($user)) {
-            $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($user);
+            $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Responsable_legal())->recupèreInfoParent($user));
+        }else if(!empty($admin))
+        {
+            $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Admin())->recupèreInfoAdmin($admin));
         }
-        return $this->view->render($response, 'contact.twig', $args);
+        return $this->view->render($response, 'contact.twig');
     }
 
     //todo vrai adresse d'envoie + vrai message
     public function postContact(Request $request, Response $response)
     {
         // Tableau qui contiendra les erreurs
-        $args=array();
         $errors = array();
         // Récupération des paramètres
         $post = $request->getParams();
@@ -67,15 +71,19 @@ class ContactController extends Controllers
         }
 
         $user = $this->sessionInstance->read("RL");
+        $admin =$this->sessionInstance->read('admin');
         if (!empty($user)) {
-            $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($user);
+            $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Responsable_legal())->recupèreInfoParent($user));
+        }else if(!empty($admin))
+        {
+            $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Admin())->recupèreInfoAdmin($admin));
         }
 
         // Il y a des erreurs on les garde dans la session pour l'affichage
         //todo affichage des erreurs?
         $this->sessionInstance->write('errors', $errors);
         // Redirection vers le formulaire
-        return $this->view->render($response, 'contact.twig', $args);
+        return $this->view->render($response, 'contact.twig');
     }
 
 
