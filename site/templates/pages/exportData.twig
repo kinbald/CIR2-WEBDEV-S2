@@ -15,7 +15,7 @@
     <div class="firstContainer">
         <form enctype="multipart/form-data" class="firstContainer" method="post">
             <label for="ecole">
-                <select name="ecole" id="ecole" onchange="{{path_for('selectClasse.post') }}">
+                <select name="ecole" id="ecole" onchange="{{path_for('exportData.post') }}">
                     <option value="0">Sélectionner Ecole</option>
                     {% for ecole in listeEcole %}
                         <option value={{ ecole['nom_ecole'] }}>{{ ecole['nom_ecole'] }}</option>
@@ -30,7 +30,7 @@
                     {% endfor %}
                 </select>
             </label>
-            <input type="date" name="Date" title="Date">
+            <input type="date" name="date_journee" title="date_journee">
             <input type="submit" value="Télécharger">
         </form>
 
