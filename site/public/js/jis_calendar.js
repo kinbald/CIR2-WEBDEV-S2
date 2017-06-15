@@ -69,7 +69,7 @@ $.fn.jis_calendar = function (options) {
             $calendarElement.data('initDate', dateInitObj);
 
             var yeara = dateInitYear;
-            if (dateInitMonth > 07) {
+            if (dateInitMonth > 7) {
                 yeara = yeara + 1;
             }
             data = {annee: yeara, id_enfant: getIdEnfant()};

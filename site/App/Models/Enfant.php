@@ -31,6 +31,11 @@ class Enfant extends Models
         $child = ($this->select(array("id_enfant" => $id_enfant)))[0];
         return $child['prenom_enfant'];
     }
-
+    public function recupereEnfant($nom_enfant)
+    {
+        $nom_enfant = $this->pdo->quote('%' . $nom_enfant . '%');
+        $cond = "nom_enfant ILIKE $nom_enfant";
+        return $this->select($cond);
+    }
 
 }

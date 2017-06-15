@@ -19,7 +19,7 @@ return [
         //TWIG settings
         'twig'=>[
             'path'=>[
-                '../templates/','../templates/pages'
+                '../templates/','../templates/pages','../templates/pages/admin'
                 ],
             'g'=>[
                 'cache'=>false,

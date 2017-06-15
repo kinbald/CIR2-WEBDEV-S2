@@ -27,7 +27,8 @@
 		"slim/slim":"^3.0",
 		"slim/twig-view": "^2.2",
 		"phpoffice/phpexcel": "^1.8",
-		"swiftmailer/swiftmailer": "^5.4"
+		"swiftmailer/swiftmailer": "^5.4",
+		"spipu/html2pdf": "^4.6"
 	},
 	"autoload": {
 		"psr-4":{"App\\":"App/"}

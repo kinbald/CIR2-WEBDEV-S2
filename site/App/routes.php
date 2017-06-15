@@ -5,10 +5,10 @@ use App\Controllers\TestController;
 $app->group('', function () use ($app) {
     $app->get('/b', \App\Controllers\TestController::class)->setName('test');
 
-    $app->get('/salut[/{nom}]', \App\Controllers\TestController::class . ':salut')->setName("salut");
+    $app->get('/salut', \App\Controllers\TestController::class . ':salut')->setName("salut");
 
 // setName permet d'appeler path_for('nom_route',{param}) dans twig
-    $app->get('/index', \App\Controllers\UserController::class . ':getIndex')->setName("index");
+$app->get('/index', \App\Controllers\UserController::class . ':getIndex')->setName("index");
 
 
 $app->get('/index-admin', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
@@ -63,3 +63,21 @@ $app->post('/recover-admin',App\Controllers\AuthAdminController::class.':sendRec
 $app->get('/recover-admin/{token}',App\Controllers\AuthAdminController::class.':tokenAd')->setName("recoverToken-admin.get");
 $app->post('/recover-admin/{token}',App\Controllers\AuthAdminController::class.':tokenValidationAd')->setName("recoverToken-admin.post");
 
+$app->group('/admin/', function () use ($app)
+{
+    $app->get('regenerer', \App\Controllers\AdminController::class.':getAdminRegenerer')->setName("admin.regenerer");
+    $app->post('regenerer', \App\Controllers\AdminController::class.':regenererCompte');
+
+    $app->get('utilisateur-enfant', \App\Controllers\AdminController::class.':utilisateurEnfant')->setName("utilisateur-enfant");
+    $app->post('utilisateur-enfant', \App\Controllers\AdminController::class.':associe_RL_Enfant')->setName("utilisateur-enfant.post");
+    
+    $app->get('rl/{id_responsable_legal}', \App\Controllers\AdminController::class.':getModifierRL')->setName("getModifierRL");
+    $app->post('rl/{id_responsable_legal}', \App\Controllers\AdminController::class.':postModifierRL');
+    
+    $app->post('ajax/getUser/', \App\Controllers\AdminController::class.':getUserByName');
+    $app->post('ajax/getChild/', \App\Controllers\AdminController::class.':getChildByName');
+
+    $app->get('index', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
+    
+    $app->post('imprimerPassword', \App\Controllers\AdminController::class.':getPasswordImpression')->setName("admin.regenerer");
+})->add(new \App\Middleware\AdminAuthentification($container))->add(new \App\Middleware\FlashMessagesMiddleware($container));

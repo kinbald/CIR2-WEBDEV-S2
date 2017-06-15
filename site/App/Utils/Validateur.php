@@ -57,7 +57,6 @@ class Validateur
         $count+= preg_match('@[A-Z]@', $password);
         $count+= preg_match('@[a-z]@', $password);
         $count+= preg_match('@[0-9]@', $password);
-        var_dump($count);
         if($count>=2 && strlen($password) >= 8) {
             return true;
         }else{
