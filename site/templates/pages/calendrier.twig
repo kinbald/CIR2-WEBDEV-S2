@@ -3,7 +3,12 @@
 
 {% block css %}
     {{ parent() }}
+    {{ m.css('style.css') }}
     {{ m.css('jis_calendar.css') }}
+{% endblock %}
+
+{% block title %}
+    Calendrier prévisionnel de {{ prenom_enfant | capitalize }}
 {% endblock %}
 
 {% block script_footer %}
@@ -12,5 +17,11 @@
 {% endblock %}
 
 {% block body %}
-    <div id="calendar"></div>
+    {{ include('navbar.twig') }}
+    <div class="container firstContainer">
+
+        <h5 >Calendrier prévisionnel de {{ prenom_enfant | capitalize }} :</h5>
+
+        <div id="calendar"></div>
+    </div>
 {% endblock %}

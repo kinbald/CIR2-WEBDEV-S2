@@ -21,7 +21,7 @@
                     <div class="panel-body">
                         {% if enfants %}
                             {% for enfant in enfants %}
-                                <a href="#my-calendar" class="id_enfant_bouton" id="enfant_{{ enfant.id }}"> {{ enfant.prenom |capitalize }}</a><br>
+                                <a href="{{ path_for('calendrier', {'id_enfant':enfant.id}) }}" class="id_enfant_bouton" id="enfant_{{ enfant.id }}"> {{ enfant.prenom |capitalize }}</a><br>
                             {% endfor %}
                         {% else %}
                             Vous n'avez pas d'enfants

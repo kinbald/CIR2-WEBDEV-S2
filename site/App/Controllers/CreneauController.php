@@ -68,7 +68,8 @@
          */
         public function calendrier(Request $request, Response $response)
         {
-            return $this->view->render($response, 'calendrier.twig');
+            $prenom_enfant = (new Enfant())->getPrenom($request->getAttribute('id_enfant'));
+            return $this->view->render($response, 'calendrier.twig', ['prenom_enfant' => $prenom_enfant]);
         }
         
         

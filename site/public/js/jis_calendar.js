@@ -509,6 +509,8 @@ $(document).ready(function () {
         calendar.append("<h5>Calendrier de " + this.text + " :");
         var a = $(document.createElement('a'));
         a.addClass("btn btn-primary");
+        a.attr("href", this.getAttribute('href'));
+        a.attr("target", "_blank");
         a.text("Voir sur une page séparée");
         calendar.append(a);
         calendar.jis_calendar(
