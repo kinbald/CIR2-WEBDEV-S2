@@ -30,8 +30,8 @@ class ExportDataController extends Controllers
         $listeEcole = $ecole->select($data);
         return $this->view->render($response, 'exportData.twig', ['listeEcole' => $listeEcole]);
     }
-    
-    
+
+
     public function exportDataGetClasses(Request $request, Response $response)
     {
         $ecole = new Ecole();
@@ -45,60 +45,41 @@ class ExportDataController extends Controllers
         return $response->withJson($json);
     }
 
-    public function postExportData(Request $request, Response $response)
+    public function exportDataGetPlanning(Request $request, Response $response)
     {
-        $params = $request->getParams();
-        //var_dump($params);
-
-        if ($params['nom_ecole'] != 'Sélectionner Ecole' && $params['nom_classe'] == 'Sélectionner Classe') {
-            $ecole = new Ecole();
-            $infoEcole = $ecole->select(["nom_ecole" => $params['nom_ecole']]);
-            $classes = new classes();
-            $listeClasses = $classes->select(["id_ecole" => $infoEcole[0]["id_ecole"]]);
-            //var_dump($listeClasses);
-            $json = array();
-            foreach ($listeClasses as $classe) {
-                $tmp = array(
-                    'nom_classe' => $classe['nom_classes'],
-                );
-                array_push($json, $tmp);
-            }
-            var_dump($json);
-            return $response->withJson($json);
-
-        } else if ($params['nom_ecole'] != 'Sélectionner Ecole' && $params['nom_classe'] != 'Sélectionner Classe') {
-            $classe = new Classes();
-            $infoClasse = $classe->select(["nom_ecole" => $params['nom_ecole']]);
-            $dataRequete = array(
-                'id_classes' => $infoClasse[0]['id_classes'],
-                'date_journee' => date("Y-m-d")
+        $ecole = new Ecole();
+        $infoEcole = $ecole->select(["nom_ecole" => $request->getParam('nom_ecole')]);
+        $classe = new Classes();
+        $infoClasse = $classe->select(["nom_classes" => $request->getParam('nom_classe'),
+            "id_ecole" => $infoEcole[0]["id_ecole"]]);
+        //var_dump($infoClasse);
+        date_default_timezone_set('UTC');
+        $date = date("Y-m-s");
+        $dataRequete = array(
+            'id_classes' => $infoClasse[0]['id_classes'],
+            'date_journee' => $date
+        );
+        $planning = new Planning();
+        $listeEleves = $planning->select($dataRequete);
+        $json = array();
+        //var_dump($listeEleves);
+        foreach ($listeEleves as $eleve) {
+            $tmp = array(
+                'nom_eleve' => $eleve['nom_eleve'],
+                'prenom_eleve' => $eleve['prenom_eleve'],
+                'intitule' => $eleve['intitule'],
             );
-            $planning = new Planning();
-            $listeEleves = $planning->select($dataRequete);
-            $json = array();
-            foreach ($listeEleves as $eleve) {
-                $tmp = array(
-                    'nom_eleve' => $eleve['nom_eleve'],
-                    'prenom_eleve' => $eleve['prenom_eleve'],
-                    'intitule' => $eleve['intitule'],
-                );
-                array_push($json, $tmp);
-            }
-            var_dump($json);
-            $objPHPExcel = new PHPExcel();
-            $objWorksheet = $objPHPExcel->getActiveSheet();
-            $objWorksheet->fromArray($json);
-            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-            $objWriter->save('excel/' . $params['nom_classe'] . '.xls');
-
-            return $response->withJson($json);
+            array_push($json, $tmp);
         }
+        //var_dump($json);
+        //Creation du fihier exel
+        /*$objPHPExcel = new PHPExcel();
+        $objWorksheet = $objPHPExcel->getActiveSheet();
+        $objWorksheet->fromArray($json);
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('excel/' . $params['nom_classe'] . '.xls');*/
 
-        return $response->withJson(array('bonjour' => 'thomas'));
+        return $response->withJson($json);
     }
 
-    private function checkInput($params, $name)
-    {
-        return isset($params[$name]) && !empty($params[$name]);
-    }
 }

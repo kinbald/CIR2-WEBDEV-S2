@@ -20,3 +20,18 @@ function ajaxExportDataGetClasses()
         });
     });
 }
+function ajaxExportDataGetPlanning()
+{
+    var nom_classe = $("#classe option:selected").text();
+    var nom_ecole = $("#ecole option:selected").text();
+    var data = {nom_classe: nom_classe,nom_ecole: nom_ecole};
+    $.ajax({
+        type: 'POST',
+        url: 'ajax/exportDataGetPlanning',
+        data: data,
+        dataType: 'json'
+    }).done(function (response) {
+        console.log('Traitement de la réponse');
+
+    });
+}

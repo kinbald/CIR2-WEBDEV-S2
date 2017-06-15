@@ -38,7 +38,7 @@ $app->get('/exportData', \App\Controllers\ExportDataController::class . ':getExp
 $app->post('/exportData', \App\Controllers\ExportDataController::class . ':postExportData')->setName("exportData.post");
 
 $app->post('/ajax/exportDataGetClasses', \App\Controllers\ExportDataController::class . ':exportDataGetClasses');
-
+$app->post('/ajax/exportDataGetPlanning', \App\Controllers\ExportDataController::class . ':exportDataGetPlanning');
 
 
 $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
