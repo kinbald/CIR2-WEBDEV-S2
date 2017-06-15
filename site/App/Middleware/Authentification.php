@@ -8,6 +8,7 @@
 
 namespace App\Middleware;
 
+use App\Models\Admin;
 use App\Models\Responsable_legal;
 use App\Models\Token_Admin;
 use App\Models\Token_responsable_legal;
@@ -33,6 +34,7 @@ class Authentification extends Middleware
         if($this->sessionInstance->read("admin") > 0)
         {
             //verification
+            $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Admin())->recupèreInfoAdmin($this->sessionInstance->read('admin')));
         }
         else if($this->sessionInstance->read("RL") >0)
         {
@@ -51,6 +53,7 @@ class Authentification extends Middleware
             }
             elseif($admin) {
                 $this->sessionInstance->write("admin", $admin);
+                $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Admin())->recupèreInfoAdmin($this->sessionInstance->read('admin')));
             }else
             {
                 $route = $this->router->pathFor("login.get");
