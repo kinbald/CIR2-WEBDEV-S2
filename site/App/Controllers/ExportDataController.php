@@ -50,14 +50,13 @@ class ExportDataController extends Controllers
         }
         return $response;
     }
-    public function selectEleve(Request $request, Response $response)
+    public function selectEleves(Request $request, Response $response)
     {
         $params = $request->getParams();
-        if ($this->checkInput($params, 'nom_ecole') && $this->checkInput($params, 'nom_classe')) {
+        if ($this->checkInput($params, 'nom_classe')) {
             $dataRequete = array(
                 'nom_classe' => $params['nom_classe'],
-                'nom_ecole' => $params['nom_ecole'],
-                'date_journee' =>$params
+                'date_journee' =>$params['date_journee']
             );
             $adefinir = new adefinir();
             $listeEleves = $adefinir->selet($dataRequete);

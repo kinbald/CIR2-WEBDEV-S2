@@ -36,7 +36,9 @@ $app->group('', function () use ($app) {
 
 $app->get('/exportData', \App\Controllers\ExportDataController::class . ':getExportData')->setName("exportData.get");
 $app->post('/exportData', \App\Controllers\ExportDataController::class . ':postExportData')->setName("exportData.post");
-$app->post('exportData', \App\Controllers\ExportDataController::class . ':selectClasse')->setName("selectClasse.post");
+$app->post('/exportData', \App\Controllers\ExportDataController::class . ':selectClasse')->setName("selectClasse.post");
+$app->post('/exportData', \App\Controllers\ExportDataController::class . ':selectEleve')->setName("selectEleve.post");
+
 $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
 
 $app->get('/importData',\App\Controllers\ImportDataController::class.':getImportData')->setName("importData.get");
