@@ -34,7 +34,7 @@
                                 <input class="form-control formWeb" placeholder="Nom Classe" name="nom_classe" type="text"  >
                                 <input class="form-control formWeb" placeholder="2017" name="annee" type="text"   >
                                 <input class="form-control formWeb" placeholder="Nom Enseignant" name="nom_enseignant" type="text" >
-                                <select name="selecter_basic" class="selecter_3"  data-selecter-options='{"cover":"true"}'>
+                                <select name="selecter_basic" class="selecter_3" data-selecter-options='{"cover":"true"}'>
                                     {% for school in infoEcole %}
                                     <option name="id_ecole" value="{{ school.id_ecole }}">{{ school.nom_ecole }}</option>
                                     {% endfor %}
