@@ -32,10 +32,11 @@ function ajaxExportDataGetPlanning()
         dataType: 'json'
     }).always(function (response) {
         console.log('Traitement de la réponse');
-        $("#resultat").empty();
-        $.each(response, function (key, value) {
-            console.log(key,  value);
-            $("#classe").append('<p>Retour'+key+':' + value + '</p>');
-        });
+        $("#resultat").append('<table>');
+        $("#resultat").append('<tr><td>NOM</td><td>PRENOM</td><td>ACTIVITÉ</td></tr>');
+            for(enfant in response){
+             $("#resultat").append('<tr><td>'+enfant.nom_enfant+'</td><td>'+enfant.prenom_enfant+'</td><td>'+enfant.intitule+'</td></tr>');
+            }
+        $("#resultat").append('</table>');
     });
 }
