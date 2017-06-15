@@ -12,6 +12,8 @@ function ajaxExportDataGetClasses()
         dataType: 'json'
     }).done(function (response) {
         console.log('Traitement de la réponse');
+        $("#classe").empty();
+        $("#classe").append('<option value="0" disabled="">Sélectionner Classe</option>');
         $.each(response, function (key, value) {
             console.log(key,  value);
             $("#classe").append('<option value="' + key + '" >' + value + '</option>');
