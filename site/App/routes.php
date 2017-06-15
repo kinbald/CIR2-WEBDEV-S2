@@ -11,12 +11,12 @@ $app->group('', function () use ($app) {
     $app->get('/index', \App\Controllers\UserController::class . ':getIndex')->setName("index");
 
 
-    $app->get('/index-admin', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
+    $app->get('/index-admin', \App\Controllers\UserController::class . ':getIndexAd')->setName("index-admin");
 
-$app->get('/contact', \App\Controllers\ContactController::class.':getContact')->setName("contact.get");
-$app->post('/contact', \App\Controllers\ContactController::class.':postContact')->setName("contact.post");
+    $app->get('/contact', \App\Controllers\ContactController::class . ':getContact')->setName("contact.get");
+    $app->post('/contact', \App\Controllers\ContactController::class . ':postContact')->setName("contact.post");
 
-$app->get('/excel[/]',TestController::class.':excel');
+    $app->get('/excel[/]', TestController::class . ':excel');
 
     $app->get('/mail[/]', TestController::class . ':mail');
 
@@ -41,8 +41,8 @@ $app->post('/exportData', \App\Controllers\ExportDataController::class . ':postE
 
 $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
 
-$app->get('/importData',\App\Controllers\ImportDataController::class.':getImportData')->setName("importData.get");
-$app->post('/importData',\App\Controllers\ImportDataController::class.':postImportData')->setName("importData.post");
+$app->get('/importData', \App\Controllers\ImportDataController::class . ':getImportData')->setName("importData.get");
+$app->post('/importData', \App\Controllers\ImportDataController::class . ':postImportData')->setName("importData.post");
 $app->get('/recover', App\Controllers\AuthController::class . ':recover')->setName("recover.get");
 $app->post('/recover', App\Controllers\AuthController::class . ':sendRecover')->setName("recover.post");
 $app->get('/recover/{token}', App\Controllers\AuthController::class . ':token')->setName("recoverToken.get");
@@ -56,10 +56,10 @@ $app->post('/recover-admin/{token}', App\Controllers\AuthAdminController::class 
 
 //MW authentification appliqué avant le middleware verification rl
 $app->group('/calendrier/', function () use ($app) {
-    $app->get('{id_enfant}',App\Controllers\CreneauController::class.':calendrier')->setName("calendrier");
+    $app->get('{id_enfant}', App\Controllers\CreneauController::class . ':calendrier')->setName("calendrier");
     $app->post('ajax/getEvents/{id_enfant}', \App\Controllers\CreneauController::class . ':getMoisEnfant')->setName('AJAX-getMoisEnfant');
     $app->post('ajax/SetDay/{id_enfant}', \App\Controllers\CreneauController::class . ':modifieCreneau')->setName('AJAX-modifieCreneau');
 })->add(new App\Middleware\VerificationRl($container))->add(new \App\Middleware\Authentification($container));
 
-$app->post('/getActivite',\App\Controllers\CreneauController::class.':getActivite');
+$app->post('/getActivite', \App\Controllers\CreneauController::class . ':getActivite');
 
