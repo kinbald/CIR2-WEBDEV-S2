@@ -78,7 +78,7 @@ class ExportDataController extends Controllers
         $objWorksheet = $objPHPExcel->getActiveSheet();
         $objWorksheet->fromArray(array('ARTRU'=>'Thomas'),null,A1,false);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        //$objWriter->save("../../public/excel/monfichierexcel.xlsx");
+        $objWriter->save("../../public/excel/monfichierexcel.xlsx");
 
 
         return $response->withJson($json);
