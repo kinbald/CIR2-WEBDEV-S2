@@ -13,12 +13,10 @@
                 <li><a href="{{ path_for('index-admin') }}">Administrateur</a></li>
                 <li><a href="{{ path_for('importData.get') }}">Importer</a></li>
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
-                {% if infoUtilisateur.id_admin %}
-                    <li><a href="{{ path_for('logout-admin') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
-                {% else %}
-                    <li><a href="{{ path_for('login.get') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
-                {% endif  %}
+                <p class="navbar-text">{{ infoUtilisateur.adresse_mail }}</p>
+                <li><a href="{{ path_for('logout-admin') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
             </ul>
         </div>
     </div>
