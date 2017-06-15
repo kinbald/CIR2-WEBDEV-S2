@@ -67,7 +67,7 @@ class ContactController extends Controllers
             } catch (Swift_IoException $e) {
                 echo $e;
             }
-            $args["valid"] = "envoie reussie";
+            $args["valid"] = "Envoi réussi, merci de nous avoir contacté";
         }
 
         $user = $this->sessionInstance->read("RL");
