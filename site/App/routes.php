@@ -25,7 +25,7 @@ $app->group('', function () use ($app) {
     $app->get('/login-admin', App\Controllers\AuthAdminController::class . ':getLoginAd')->setName('login-admin.get');
     $app->post('/login-admin', App\Controllers\AuthAdminController::class . ':postLoginAd')->setName('login-admin.post');
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
-    ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
+    ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container))->add(new App\Middleware\NonAuthentifieMiddleware($container));
 
 
 //route de gestion du compte
