@@ -9,6 +9,10 @@
 namespace App\Models;
 
 
+use App\Utils\Utils;
+
+use App\Utils\Validateur;
+
 class Responsable_legal extends Models
 {
 
@@ -70,8 +74,58 @@ class Responsable_legal extends Models
         return ($this->select(array("id_responsable_legal"=>$id)))[0];
     }
 
+    /**
+     *fonction peremettant de modifier le mot de passe d'un RL
+     * sous conditions: 8 caractères, 1 chiffre/Special mini, 1 lettre mini
+     *
+     * @param int $id du responsable legal
+     * @return 0 si mot de passe ok, -1 sinon, -2 si l'id n'existe pas
+     */
+    /**
+     *fonction peremettant de réxuperer les information dur un RL
+     *
+     * @param int $id du responsable legal
+     * @return array contenant les, les clés sont les noms des colonnes
+     */
+    public function  insertResponsable($data){
+        return array("message"=>$this->insert($data));
+    }
 
+    public function modifieMotDePasse($id, $mot_de_passe){
 
+        if(Validateur::estValidePassword($mot_de_passe) == true){
+            // le mot de passe est valide
+            
+            $this->update(array("mot_de_passe_rl"=> password_hash($mot_de_passe,PASSWORD_DEFAULT)), "id_responsable_legal = $id");
+            return 0;
+        }
+        else {
+            return -1;
+            //mot de passe invalide
+        }
 
-
+    }
+    
+    public function recupereRL($nom_rl)
+    {
+        $nom_rl = $this->pdo->quote('%' . $nom_rl . '%');
+        $cond = "nom_rl ILIKE $nom_rl";
+        return $this->select($cond);
+    }
+    
+    /**
+     * @return bool|\PDOStatement
+     */
+    public function existeRespo($data){
+        if ($this->select($data) == NULL) return false;
+        else return true;
+    }
+    
+    public function metAJourDonnees($donnees, $cond)
+    {
+        if($this->existeRespo($cond))
+        {
+            return $this->update($donnees, $cond);
+        }
+    }
 }

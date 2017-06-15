@@ -9,7 +9,9 @@
 namespace App\Controllers;
 
 use App\Models\Admin;
+use App\Models\Responsable_legal;
 use App\Models\Token_Admin;
+use App\Utils\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -47,10 +49,12 @@ class AuthAdminController extends Controllers
                     // L'utilisateur n'existe pas
                     $errors['email'] = "Cet admin n'existe pas.";
                 } elseif ($etat > 0) {
+                    $hash=(new Admin())->select(array("adresse_mail"=>$post['email']));
+                    $hash=$hash[0];
                     // Connexion réussie
-                    $this->connectUserAd($etat);
+                    $this->connectUserAd($hash["id_admin"]);
                     if ($post["remember"]) {
-                        (new Token_Admin())->setRememberMe($etat);
+                        (new Token_Admin())->setRememberMe($hash["id_admin"]);
                     }
                     // Redirection vers l'index
                     return $response->withRedirect($this->router->pathFor('index-admin'));
@@ -179,5 +183,25 @@ class AuthAdminController extends Controllers
         {
             $this->sessionInstance->write("admin", $etat);
         }
+    }
+    /**
+     * Fonction qui gère la page d'accueil d'un admin
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function insertRespoLegal(Request $request, Response $response)
+    {
+        $respo = new Responsable_legal();
+
+        $data = $request->getParams();
+        if (($respo->existeRespo($data))== false) {
+            $data["mot_de_passe_rl"] = Utils::generatePassword();
+            $args["info"] = $respo->insertResponsable($data);
+            $data['valid'] = "L'utilisateur est enregistré avec le mot de passe : ".$data["mot_de_passe_rl"];
+        }else {
+            $data['errors'] = "L'utilisateur existe déjà";
+        }
+        return $this->view->render($response, 'index-admin.twig', $data);
     }
 }

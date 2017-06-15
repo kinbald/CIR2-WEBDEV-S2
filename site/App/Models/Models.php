@@ -8,6 +8,7 @@
 
 namespace App\Models;
 
+use App\Utils\Validateur;
 use PDO;
 use PDOException;
 use Psr\Container\ContainerInterface;

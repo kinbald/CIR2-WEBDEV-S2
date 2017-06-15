@@ -2,11 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\Admin;
-use App\Models\Responsable_legal;
-use App\Models\Token_Admin;
-use App\Models\Token_responsable_legal;
-use App\Models\Validateur;
+use HTML2PDF;
+use HTML2PDF_exception;
 use PDO;
 use PDOException;
 use PHPExcel;
@@ -42,9 +39,17 @@ class TestController extends Controllers
      */
     public function salut($request, $response, $args)
     {
+        // convert in PDF
+        try {
+            $html2pdf = new HTML2PDF('P', 'A4', 'fr');
+            $html2pdf->writeHTML('<h1>HelloWorld</h1>This is my first test');
+            $html2pdf->Output('bonjour.pdf','D');
+        } catch (HTML2PDF_exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
 
-        (new Admin())->update(array("type_droit" => 1), "id_admin =1");
-        return $this->view->render($response, 'test.twig', $args);
+       //return $this->view->render($response, 'test.twig', $args);
     }
 
     /**

@@ -28,7 +28,7 @@ class Admin extends Models
         {
             return -2;
         }
-        if( password_verify($mot_de_passe,$hash["mot_de_passe"])){
+        if(password_verify($mot_de_passe,$hash["mot_de_passe"])){
             return $hash["type_droit"];
         }else{
             return -1;
