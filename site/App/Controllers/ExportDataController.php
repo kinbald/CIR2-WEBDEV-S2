@@ -15,7 +15,11 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use PHPExcel;
 use PHPExcel_IOFactory;
+use Slim\Views\Twig;
 
+/**
+ * @property Twig view
+ */
 class ExportDataController extends Controllers
 {
 
@@ -25,6 +29,20 @@ class ExportDataController extends Controllers
         $data = array("1" => "1");
         $listeEcole = $ecole->select($data);
         return $this->view->render($response, 'exportData.twig', ['listeEcole' => $listeEcole]);
+    }
+    
+    
+    public function exportDataGetClasses(Request $request, Response $response)
+    {
+        $ecole = new Ecole();
+        $infoEcole = $ecole->select(["nom_ecole" => $request->getParam('nom_ecole')]);
+        $classes = new classes();
+        $listeClasses = $classes->select(["id_ecole" => $infoEcole[0]["id_ecole"]]);
+        $json = array();
+        foreach ($listeClasses as $listeClass) {
+            $json[$listeClass['id_classes']] = $listeClass['nom_classes'];
+        }
+        return $response->withJson($json);
     }
 
     public function postExportData(Request $request, Response $response)

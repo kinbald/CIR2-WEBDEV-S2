@@ -28,7 +28,7 @@ return [
         //DATABASE settings
         'database'=>[
             'name'=>'bdd',
-            'user'=>'william',
+            'user'=>'guillaume',
             'password'=>'root',
             'host'=>'db_postgres',
         ],

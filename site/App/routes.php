@@ -37,6 +37,8 @@ $app->group('', function () use ($app) {
 $app->get('/exportData', \App\Controllers\ExportDataController::class . ':getExportData')->setName("exportData.get");
 $app->post('/exportData', \App\Controllers\ExportDataController::class . ':postExportData')->setName("exportData.post");
 
+$app->post('/ajax/exportDataGetClasses', \App\Controllers\ExportDataController::class . ':exportDataGetClasses');
+
 
 
 $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");

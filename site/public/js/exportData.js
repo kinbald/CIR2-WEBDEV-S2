@@ -1,23 +1,20 @@
 /**
  * Created by thomas on 14/06/17.
  */
-function ajaxExportData() {
-
+function ajaxExportDataGetClasses()
+{
     var nom_ecole = $("#ecole option:selected").text();
-    var nom_classe = $("#classe option:selected").text();
-    var date_journee = $("#date_journee").val();
-    var data = {nom_ecole: nom_ecole, nom_classe: nom_classe, date_journee: date_journee};
+    var data = {nom_ecole: nom_ecole};
     $.ajax({
         type: 'POST',
-        url: '/exportData',
+        url: 'ajax/exportDataGetClasses',
         data: data,
         dataType: 'json'
-    }).always(function (response) {
+    }).done(function (response) {
         console.log('Traitement de la réponse');
         $.each(response, function (key, value) {
-            $("#classe").append(new Option({key:value}, {key:value}));
-
+            console.log(key,  value);
+            $("#classe").append('<option value="' + key + '" >' + value + '</option>');
         });
-
     });
 }

@@ -15,7 +15,7 @@
     <div class="firstContainer">
         <form enctype="multipart/form-data" class="firstContainer" method="post">
             <label for="ecole">
-                <select name="ecole" id="ecole" onchange="ajaxExportData()">
+                <select name="ecole" id="ecole" onchange="ajaxExportDataGetClasses()">
                     <option value="0">Sélectionner Ecole</option>
                     {% for ecole in listeEcole %}
                         <option value={{ ecole['nom_ecole'] }}>{{ ecole['nom_ecole'] }}</option>
@@ -23,7 +23,7 @@
                 </select>
             </label>
             <label for="classe">
-                <select name="classe" id="classe" onchange="ajaxExportData()">
+                <select name="classe" id="classe" >
                     <option value="0">Sélectionner Classe</option>
                 </select>
             </label>
