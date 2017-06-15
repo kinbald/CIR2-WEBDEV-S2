@@ -17,12 +17,6 @@ use Slim\Http\Response;
 class ExportDataController extends Controllers
 {
 
-    public function postExportData(Request $request, Response $response)
-    {
-        return $response->withRedirect($this->router->pathFor('exportData.get'));
-    }
-
-
     public function getExportData(Request $request, Response $response)
     {
         $ecole = new Ecole();
@@ -50,27 +44,5 @@ class ExportDataController extends Controllers
         }
         return $response;
     }
-    public function selectEleves(Request $request, Response $response)
-    {
-        $params = $request->getParams();
-        if ($this->checkInput($params, 'nom_classe')) {
-            $dataRequete = array(
-                'nom_classe' => $params['nom_classe'],
-                'date_journee' =>$params['date_journee']
-            );
-            $adefinir = new adefinir();
-            $listeEleves = $adefinir->selet($dataRequete);
-            $json = array();
-            foreach ($listeEleves as $eleve) {
-                $tmp = array(
-                    'nom_eleve' => $eleve['nom_eleve'],
-                    'prenom_eleve' => $eleve['prenom_eleve'],
-                    'intitule' => $eleve['intitule'],
-                );
-                array_push($json, $tmp);
-            }
-            return $response->withJson($json);
-        }
-        return $response;
-    }
+
 }
