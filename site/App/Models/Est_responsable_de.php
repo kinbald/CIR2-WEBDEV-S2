@@ -36,6 +36,10 @@ class Est_responsable_de extends Models
         }
         return $enfants;
     }
-
-
+    
+    public function estReponsable($id_parent, $id_enfant)
+    {
+        $enfants = $this->select(array('id_responsable_legal' => $id_parent,'id_enfant'=>$id_enfant));
+        return !empty($enfants);
+    }
 }
