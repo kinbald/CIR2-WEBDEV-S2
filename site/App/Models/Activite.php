@@ -23,6 +23,7 @@
             {
                 return ($this->select(array("id_activite" => $id_activite))[0])['intitule'];
             }
+            return false;
         }
     
         public function getClassname($id_activite)
@@ -31,5 +32,6 @@
             {
                 return ($this->select(array("id_activite" => $id_activite))[0])['classname'];
             }
+            return false;
         }
     }

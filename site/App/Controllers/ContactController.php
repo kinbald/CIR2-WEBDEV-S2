@@ -8,12 +8,10 @@
 
 namespace App\Controllers;
 
-use App\Models\Enfant;
-use App\Models\Est_responsable_de;
+
 use App\Models\Responsable_legal;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Slim\Views\Twig;
 use Swift_IoException;
 use Swift_Message;
 

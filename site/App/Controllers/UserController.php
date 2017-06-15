@@ -25,6 +25,7 @@ class UserController extends Controllers
      * Fonction qui gère la page d'accueil d'un responsable légal
      * @param Request $request
      * @param Response $response
+     * @param $args
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getIndex(Request $request, Response $response, $args)
@@ -43,10 +44,12 @@ class UserController extends Controllers
         }
         return $this->view->render($response, 'index.twig', $args);
     }
+
     /**
      * Fonction qui gère la page d'accueil d'un admin
      * @param Request $request
      * @param Response $response
+     * @param $args
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function getIndexAd(Request $request, Response $response, $args)
