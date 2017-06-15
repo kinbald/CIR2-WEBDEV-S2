@@ -11,9 +11,10 @@ namespace App\Controllers;
 use App\Models\Classes;
 use App\Models\Ecole;
 use App\Models\Planning;
-use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use PHPExcel;
+use PHPExcel_IOFactory;
 
 class ExportDataController extends Controllers
 {
@@ -41,8 +42,10 @@ class ExportDataController extends Controllers
                         'nom_classe' => $classe['nom_classe'],
                     );
                     array_push($json, $tmp);
+                    var_dump($tmp);
                 }
-                return $response->withJson($json);
+
+                //return $response->withJson($json);
             } else if ($params['nom_ecole'] != 0 && $params['nom_classe'] != 0 && $this->checkInput($params, 'date_journee') ) {
                 $classe = new Classes();
                 $infoClasse = $classe->select(["nom_ecole" => $params['nom_ecole']]);
@@ -60,11 +63,23 @@ class ExportDataController extends Controllers
                         'intitule' => $eleve['intitule'],
                     );
                     array_push($json, $tmp);
+                    var_dump($tmp);
                 }
-                return $response->withJson($json);
+                $objPHPExcel = new PHPExcel();
+                $objWorksheet = $objPHPExcel->getActiveSheet();
+                $objWorksheet->fromArray($json);
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+                $objWriter->save('excel/'.$params['nom_classe'].'.xls');
+
+               // return $response->withJson($json);
             }
-            return $response;
+           // return $response;
+            echo 'Parametre Invalide';
         }
     }
 
+    private function checkInput($params, $name)
+    {
+        return isset($params[$name]) && !empty($params[$name]);
+    }
 }
