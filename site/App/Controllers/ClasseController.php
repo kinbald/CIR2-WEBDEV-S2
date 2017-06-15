@@ -32,15 +32,14 @@ class ClasseController extends Controllers{
         $errors = array(null);
         // Récupération des paramètres
         $post = $request->getParams();
-
-        if(isset($post['nom_classe']) && isset($post['annee']) && isset($post['nom_enseignant'])){
+         if(isset($post['nom_classe']) && isset($post['annee']) && isset($post['nom_enseignant'])){
             if(empty($post['nom_classe']) || empty($post['annee'] || empty($post['nom_enseignant']))) {
                 $errors['erreur'] = "Tous les champs sont obligatoires";
             } else{
-                var_dump($post);
+
                 $classe = new Classes();
-                $classe->insertClasse($post['nom_classe'], $post['annee'], $post['nom_enseignant'], $post['id_ecole']);
-               // return $response->withRedirect($this->router->pathFor('index-admin'));
+                $classe->insertClasse($post['nom_classe'], $post['annee'], $post['nom_enseignant'], intval($post['selecter_basic']));
+                return $response->withRedirect($this->router->pathFor('index-admin'));
             }
 
         }
@@ -49,5 +48,6 @@ class ClasseController extends Controllers{
         $_SESSION['errors'] = $errors;
         // Redirection vers le formulaire
         return $response->withRedirect($this->router->pathFor('classe-admin.get'));
+
     }
 }

@@ -21,12 +21,8 @@ class Classes extends Models
 
     public function insertClasse( $nom_classe, $annee, $enseignant, $id_ecole)
     {
-
-        if (!empty($nom_classe) && !empty($id_classe)) {
-            $this->insert(array("nom_classes" => $nom_classe,
-                "annee" => $annee,
-                "enseignant" => $enseignant,
-                "id_ecole" => $id_ecole));
+        if (!empty($nom_classe) && !empty($id_ecole)) {
+            return $this->insert(array("nom_classes" => $nom_classe,"annee" => $annee, "enseignant" => $enseignant,"id_ecole" => $id_ecole));
         }
     }
 
