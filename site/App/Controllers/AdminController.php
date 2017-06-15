@@ -10,7 +10,6 @@
     
     use App\Models\Enfant;
     use App\Models\Est_responsable_de;
-    use App\Models\Models;
     use App\Models\Responsable_legal;
     use App\Utils\Utils;
     use HTML2PDF;

@@ -42,7 +42,6 @@ class UserController extends Controllers
                 $childs_names[]=$info;
             }
             $args['enfants'] = $childs_names;
-            $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
         }
         return $this->view->render($response, 'index.twig', $args);
     }

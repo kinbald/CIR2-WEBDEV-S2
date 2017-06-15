@@ -36,7 +36,6 @@ class ContactController extends Controllers
         $errors = array();
         // Récupération des paramètres
         $post = $request->getParams();
-        var_dump($post);
         if (empty($post["email"])) {
             // Mail vide ?
             $errors['email'] = "L'e-mail est obligatoire";
