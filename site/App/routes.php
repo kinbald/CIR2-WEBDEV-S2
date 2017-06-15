@@ -45,6 +45,9 @@ $app->post('/recover/{token}', App\Controllers\AuthController::class . ':tokenVa
 
 
 //MW authentification appliqué avant le middleware verification rl
+/**
+ * route du calendrier
+ */
 $app->group('/calendrier/', function () use ($app) {
     $app->get('{id_enfant}',App\Controllers\CreneauController::class.':calendrier')->setName("calendrier");
     $app->post('ajax/getEvents/{id_enfant}', \App\Controllers\CreneauController::class . ':getMoisEnfant')->setName('AJAX-getMoisEnfant');
