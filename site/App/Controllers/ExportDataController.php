@@ -10,6 +10,7 @@ namespace App\Controllers;
 
 use App\Models\Classes;
 use App\Models\Ecole;
+use App\Models\Planning;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -49,8 +50,8 @@ class ExportDataController extends Controllers
                     'id_classes' => $infoClasse[0]['id_classes'],
                     'date_journee' => $params['date_journee']
                 );
-                $adefinir = new adefinir();
-                $listeEleves = $adefinir->select($dataRequete);
+                $planning = new Planning();
+                $listeEleves = $planning->select($dataRequete);
                 $json = array();
                 foreach ($listeEleves as $eleve) {
                     $tmp = array(
