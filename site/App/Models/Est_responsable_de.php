@@ -42,4 +42,10 @@ class Est_responsable_de extends Models
         $enfants = $this->select(array('id_responsable_legal' => $id_parent,'id_enfant'=>$id_enfant));
         return !empty($enfants);
     }
+
+    public function responsabilise($id_parent, $id_enfant)
+    {
+        $enfants = $this->insert(array('id_responsable_legal' => $id_parent,'id_enfant'=>$id_enfant));
+        return !empty($enfants);
+    }
 }

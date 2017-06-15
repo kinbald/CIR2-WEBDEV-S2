@@ -8,6 +8,9 @@
     
     namespace App\Controllers;
     
+    use App\Models\Enfant;
+    use App\Models\Est_responsable_de;
+    use App\Models\Models;
     use App\Models\Responsable_legal;
     use Slim\Http\Request;
     use Slim\Http\Response;
@@ -51,6 +54,44 @@
                 return $response->withJson($json);
             }
             return $response;
+        }
+
+        public function getChildByName(Request $request, Response $response)
+        {
+            $params = $request->getParams();
+            if(isset($params['nom_enfant']) && !empty($params['nom_enfant']))
+            {
+                $EnfantModel = new Enfant();
+                $data = $EnfantModel->recupereEnfant($params['nom_enfant']);
+                $json = array();
+                foreach ($data as $datum) {
+                    $element['id_enfant'] = $datum['id_enfant'];
+                    $element['nom_enfant'] = $datum['nom_enfant'];
+                    $element['prenom_enfant'] = $datum['prenom_enfant'];
+                    array_push($json, $element);
+                }
+                return $response->withJson($json);
+            }
+            return $response;
+        }
+
+        public function associe_RL_Enfant(Request $request, Response $response){
+            $params = $request->getParams();
+            $responsable_de = new Est_responsable_de();
+            if(isset($params['parent']) && isset($params['enfant']))
+            {
+                if ($responsable_de->estReponsable(intval($params['parent']), intval($params['enfant'])) == NULL) {
+                    $responsable_de->responsabilise(intval($params['parent']), intval($params['enfant']));
+                    $params['valid'] = "L'association a été réalisée avec succès.";
+                }else{
+                    $params['errors'] = "L'association existe déjà.";
+                }
+            }
+            else
+            {
+                $params['errors'] = "Vous devez choisir un couple utilisateur / enfant.";
+            }
+            return $this->view->render($response, 'utilisateur-enfant.twig', $params);
         }
         
         public function getModifierRL(Request $request, Response $response)
@@ -113,5 +154,9 @@
             }
             $_SESSION['messages'] = $errors;
             return $response->withRedirect($this->router->pathFor('getModifierRL', ['id_responsable_legal' => $id_responsable_legal]));
+        }
+
+        public function utilisateurEnfant(Request $request, Response $response, $args){
+            return $this->view->render($response, 'utilisateur-enfant.twig', $args);
         }
     }
