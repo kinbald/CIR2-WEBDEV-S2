@@ -9,6 +9,8 @@
 namespace App\Models;
 
 
+use App\Utils\Validateur;
+
 class Responsable_legal extends Models
 {
 

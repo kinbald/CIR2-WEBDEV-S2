@@ -83,6 +83,7 @@ CREATE TABLE public.responsable_legal(
 CREATE TABLE public.activite(
 	id_activite SERIAL  NOT NULL ,
 	intitule    VARCHAR (25)  ,
+	classname		VARCHAR (25),
 	CONSTRAINT prk_constraint_activite PRIMARY KEY (id_activite)
 )WITHOUT OIDS;
 
@@ -190,3 +191,5 @@ ALTER TABLE public.est_responsable_de ADD CONSTRAINT FK_est_responsable_de_id_en
 ALTER TABLE public.est_responsable_de ADD CONSTRAINT FK_est_responsable_de_id_responsable_legal FOREIGN KEY (id_responsable_legal) REFERENCES public.responsable_legal(id_responsable_legal);
 ALTER TABLE public.a_droit ADD CONSTRAINT FK_a_droit_id_section FOREIGN KEY (id_section) REFERENCES public.section(id_section);
 ALTER TABLE public.a_droit ADD CONSTRAINT FK_a_droit_id_activite FOREIGN KEY (id_activite) REFERENCES public.activite(id_activite);
+
+CREATE VIEW ActiviteEnfant AS SELECT * FROM activite INNER JOIN a_droit USING(id_activite) INNER JOIN est_de_niveau USING (id_section) INNER JOIN  est_dans_classes USING(id_classes) INNER JOIN classes USING(id_classes);
