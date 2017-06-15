@@ -30,7 +30,6 @@ class ContactController extends Controllers
         }
         $args['enfants'] = $childs_names;
         $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
-        var_dump($args);
         return $this->view->render($response, 'contact.twig', $args);
     }
 

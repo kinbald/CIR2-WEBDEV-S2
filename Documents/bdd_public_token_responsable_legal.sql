@@ -1,0 +1,2 @@
+INSERT INTO public.token_responsable_legal (verifier_rl, selector_rl, date_expiration_rl, id_responsable_legal) VALUES ('f768dbfd3334dab4b154de47bcaf82ad93399df8237b7d338e02b19db3be472649a8d61c6edf8bfbba9429bcaee1ea29', '926c2e4f37d75c91ff6acdd71b3ca5f02b6eae30', '2017-06-03', 1);
+INSERT INTO public.token_responsable_legal (verifier_rl, selector_rl, date_expiration_rl, id_responsable_legal) VALUES ('8895f3f0e92b63bb0c92c36d08277cfb94692a865739ebdaeb089fb754fec07d86dfe7a614a23763f9690de167a968cc', '3e86a2e27430ca3175c196c5ea0585d451c58cf8', '2017-06-03', 1);

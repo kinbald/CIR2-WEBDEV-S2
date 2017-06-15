@@ -3,26 +3,31 @@
 
 {% block css %}
     {{ parent() }}
+    {{ m.css("style.css") }}
 {% endblock %}
 
 {% block title %}
-    mot de passe oublie
+    Mot de passe oublié
 {% endblock %}
 
 {% block body %}
     {{ include('navbar.twig') }}
 
-    <form role="form" action="{{ path_for('recover.post') }}" method="post">
-        <fieldset>
-            <div class="form-group">
-                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
-            </div>
-            <div class="form-group">
-                <input class="btn btn-lg btn-success btn-block" type="submit" value="Envoyer">
-            </div>
-        </fieldset>
-    </form>
-    {% if send == true %}
-        <p>Si l'adresse est dans notre base de donnée, un mail a été envoyé</p>
-    {% endif %}
+    <div class="container firstContainer">
+        <div class="row jumbotron">
+            <form role="form" action="{{ path_for('recover.post') }}" method="post" class="jumbotron-contents">
+                <fieldset>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Envoyer">
+                    </div>
+                </fieldset>
+            </form>
+            {% if send == true %}
+                <p>Si l'adresse est dans notre base de donnée, un mail vous a été envoyé</p>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layout.twig" %}
+{% import "macro.twig" as m %}
+
+{% block css %}
+    {{ parent() }}
+    {{ m.css("style.css") }}
+{% endblock %}
+
+{% block title %}
+    Regénération d'un compte utilisateur
+{% endblock %}
+
+{% block body %}
+    {{ include('navbar.twig') }}
+    <div class="container firstContainer">
+        <div class="row content">
+            <div class="jumbotron">
+                <div class="jumbotron-contents">
+                    <h3>Veuillez entrer un nom d'utilisateur :</h3>
+                    <div class="input-group form-search">
+                        <input type="text" class="form-control search-query" id="searchUser">
+                        <span class="input-group-btn">
+                    <button id="button-search" type="submit" class="btn btn-primary" data-type="last">Rechercher</button>
+                  </span>
+                    </div>
+                    <hr>
+                    <div>
+                        <ul class="list-group" id="responseList">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script_footer %}
+    {{ parent() }}
+    {{ m.js('adminRegenerationRecherche.js') }}
+{% endblock %}
