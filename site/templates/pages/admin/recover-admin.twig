@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block body %}
-    {{ include('navbar.twig') }}
+    {{ parent() }}
 
     <form role="form" action="{{ path_for('recover-admin.post') }}" method="post">
         <fieldset>
