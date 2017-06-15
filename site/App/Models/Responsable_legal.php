@@ -81,4 +81,12 @@ class Responsable_legal extends Models
     public function  insertResponsable($data){
         return array("message"=>$this->insert($data));
     }
+
+    /**
+     * @return bool|\PDOStatement
+     */
+    public function existeRespo($data){
+        if ($this->select($data) == NULL) return false;
+        else return true;
+    }
 }

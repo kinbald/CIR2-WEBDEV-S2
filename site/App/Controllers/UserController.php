@@ -53,7 +53,6 @@ class UserController extends Controllers
     {
         $user = $this->sessionInstance->read("admin");
         $args["infoUtilisateur"] = (new Admin())->recupèreInfoAdmin($this->sessionInstance->read('admin'));
-        var_dump($args);
         return $this->view->render($response, 'index-admin.twig', $args);
     }
 }

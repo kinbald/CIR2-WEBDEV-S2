@@ -190,10 +190,16 @@ class AuthAdminController extends Controllers
      */
     public function insertRespoLegal(Request $request, Response $response)
     {
+        $respo = new Responsable_legal();
+
         $data = $request->getParams();
-        $data["mot_de_passe_rl"] = Utils::generatePassword();
-        $args["info"] = (new Responsable_legal())->insertResponsable($data);
-        var_dump($args);
+        if (($respo->existeRespo($data))== false) {
+            $data["mot_de_passe_rl"] = Utils::generatePassword();
+            $args["info"] = $respo->insertResponsable($data);
+            $data['valid'] = "L'utilisateur est enregistré avec le mot de passe : ".$data["mot_de_passe_rl"];
+        }else {
+            $data['errors'] = "L'utilisateur existe déjà";
+        }
         return $this->view->render($response, 'index-admin.twig', $data);
     }
 }
