@@ -9,6 +9,8 @@
 namespace App\Models;
 
 
+use App\Utils\Utils;
+
 class Responsable_legal extends Models
 {
 
@@ -77,6 +79,15 @@ class Responsable_legal extends Models
      * @param int $id du responsable legal
      * @return 0 si mot de passe ok, -1 sinon, -2 si l'id n'existe pas
      */
+    /**
+     *fonction peremettant de réxuperer les information dur un RL
+     *
+     * @param int $id du responsable legal
+     * @return array contenant les, les clés sont les noms des colonnes
+     */
+    public function  insertResponsable($data){
+        return array("message"=>$this->insert($data));
+    }
 
     public function editPassByAdmin($id,$mot_de_passe){
 
@@ -101,4 +112,16 @@ class Responsable_legal extends Models
     }
     
     
+
+
+
+
+
+    /**
+     * @return bool|\PDOStatement
+     */
+    public function existeRespo($data){
+        if ($this->select($data) == NULL) return false;
+        else return true;
+    }
 }

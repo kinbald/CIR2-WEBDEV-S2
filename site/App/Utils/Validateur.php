@@ -8,7 +8,7 @@
  * inspiré de GUMP : https://github.com/Wixel/GUMP
  */
 
-namespace App\Models;
+namespace App\Utils;
 
 
 class Validateur

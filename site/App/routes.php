@@ -10,6 +10,10 @@ $app->group('', function () use ($app) {
 // setName permet d'appeler path_for('nom_route',{param}) dans twig
     $app->get('/index', \App\Controllers\UserController::class . ':getIndex')->setName("index");
 
+
+$app->get('/index-admin', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
+$app->post('/index-admin', App\Controllers\AuthAdminController::class.':insertRespoLegal')->setName('add-user.post');
+
 $app->get('/contact', \App\Controllers\ContactController::class.':getContact')->setName("contact.get");
 $app->post('/contact', \App\Controllers\ContactController::class.':postContact')->setName("contact.post");
 
@@ -42,6 +46,9 @@ $app->post('/recover/{token}', App\Controllers\AuthController::class . ':tokenVa
 
 
 //MW authentification appliqué avant le middleware verification rl
+/**
+ * route du calendrier
+ */
 $app->group('/calendrier/', function () use ($app) {
     $app->get('{id_enfant}',App\Controllers\CreneauController::class.':calendrier')->setName("calendrier");
     $app->post('ajax/getEvents/{id_enfant}', \App\Controllers\CreneauController::class . ':getMoisEnfant')->setName('AJAX-getMoisEnfant');
