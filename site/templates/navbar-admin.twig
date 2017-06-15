@@ -15,9 +15,14 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <p class="navbar-text">{{ infoUtilisateur.adresse_mail }}</p>
-                <li><a href="{{ path_for('logout-admin') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                {% if infoUtilisateur.id_admin %}
+                    <p class="navbar-text">{{ infoUtilisateur.adresse_mail }}</p>
+                    <li><a href="{{ path_for('logout-admin') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                {% else %}
+                    <li><a href="{{ path_for('login-admin.get') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                {% endif  %}
             </ul>
+
         </div>
     </div>
 </nav>
