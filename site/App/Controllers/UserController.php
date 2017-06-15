@@ -41,7 +41,6 @@ class UserController extends Controllers
         }
         $args['enfants'] = $childs_names;
         $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
-        var_dump($args);
         return $this->view->render($response, 'index.twig', $args);
     }
     /**
@@ -55,7 +54,6 @@ class UserController extends Controllers
         $user = $this->sessionInstance->read("admin");
 
         $args["infoUtilisateur"] = (new Admin())->recupèreInfoAdmin($this->sessionInstance->read('admin'));
-        var_dump($args);
         return $this->view->render($response, 'index-admin.twig', $args);
     }
 }

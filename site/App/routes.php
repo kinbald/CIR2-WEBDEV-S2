@@ -10,8 +10,6 @@ $app->get('/salut[/{nom}]',\App\Controllers\TestController::class.':salut')->set
 // setName permet d'appeler path_for('nom_route',{param}) dans twig
 $app->get('/index', \App\Controllers\UserController::class.':getIndex')->setName("index");
 
-    $app->get('/index-admin', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
-
 $app->get('/contact', \App\Controllers\ContactController::class.':getContact')->setName("contact.get");
 $app->post('/contact', \App\Controllers\ContactController::class.':postContact')->setName("contact.post");
 
@@ -47,3 +45,13 @@ $app->get('/recover-admin',App\Controllers\AuthAdminController::class.':recoverA
 $app->post('/recover-admin',App\Controllers\AuthAdminController::class.':sendRecoverAd')->setName("recover-admin.post");
 $app->get('/recover-admin/{token}',App\Controllers\AuthAdminController::class.':tokenAd')->setName("recoverToken-admin.get");
 $app->post('/recover-admin/{token}',App\Controllers\AuthAdminController::class.':tokenValidationAd')->setName("recoverToken-admin.post");
+
+$app->group('/admin/', function () use ($app)
+{
+    $app->get('regenerer', \App\Controllers\AuthAdminController::class.':getAdminRegenerer')->setName("admin.regenerer");
+    $app->post('regenerer', \App\Controllers\AuthAdminController::class.':regenererCompte');
+    
+    $app->get('index', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
+    
+    $app->get('imprimerPassword', \App\Controllers\AuthAdminController::class.':getPasswordImpression')->setName("admin.regenerer");
+})->add(new \App\Middleware\AdminAuthentification($container));
