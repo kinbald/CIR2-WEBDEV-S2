@@ -38,5 +38,6 @@ function ajaxExportDataGetPlanning()
              $("#resultat").append('<tr><td>'+enfant.nom_enfant+'</td><td>'+enfant.prenom_enfant+'</td><td>'+enfant.intitule+'</td></tr>');
             }
         $("#resultat").append('</table>');
+        $("#resultat").append('<a href="'+'">Télécharger le Planning</a>');
     });
 }
