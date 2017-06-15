@@ -12,9 +12,16 @@
 
 {% block body %}
     {{ include('navbar-admin.twig') }}
-    <form  class="firstContainer" enctype="multipart/form-data" action="{{ path_for('importData.post') }}" method="post">
-            Sélectionnez le fichier à importer<br>
-            <input type="file" name="data">
-            <input type="submit" value="Importer">
-    </form>
+    <div class="container">
+        <form  role="form" class="firstContainer" enctype="multipart/form-data" action="{{ path_for('importData.post') }}" method="post">
+            <fieldset>
+                <div class="form-group">
+                    <span class="label label-primary col-md-3 center-block info">Séléctionner le fichier</span>
+                    <div class="col-md-4"></div><input class="btn btn-default formWeb col-md-4" type="file" name="data">
+                    <div class="row"></div>
+                    <div class="col-md-4"></div><input class="btn btn-default formWeb col-md-4 col-sm-12" type="submit" value="Importer">
+                </div>
+            </fieldset>
+        </form>
+    </div>
 {% endblock %}
