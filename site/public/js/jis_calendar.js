@@ -57,7 +57,6 @@ $.fn.jis_calendar = function (options) {
         $calendarElement.data('showNext', opts.show_next);
         $calendarElement.data('legendList', opts.legend);
         $calendarElement.data('actionNavFunction', opts.action_nav);
-
         drawCalendar();
 
         /**
@@ -87,7 +86,7 @@ $.fn.jis_calendar = function (options) {
                 //var $tableObj = $('<table border="1" class="table"></table>');
                 $tableObj = drawTable($calendarElement, $tableObj, dateInitObj.getFullYear(), dateInitObj.getMonth());
 
-                var $legendObj = drawLegend($calendarElement);
+                var $legendObj = drawLegend(activite);
 
                 var $containerHtml = $('<div class="jis_calendar" id="' + $calendarElement.attr('id') + '"></div>');
                 $containerHtml.append($tableObj);
@@ -112,53 +111,14 @@ $.fn.jis_calendar = function (options) {
             return $tableObj;
         }
 
-        function drawLegend($calendarElement) {
+        function drawLegend(activite) {
             var $legendObj = $('<div class="legend" id="' + $calendarElement.attr('id') + '_legend"></div>');
-            var legend = $calendarElement.data('legendList');
-            if (typeof(legend) === 'object' && legend.length > 0) {
-                $(legend).each(function (index, item) {
-                    if (typeof(item) === 'object') {
-                        if ('type' in item) {
-                            var itemLabel = '';
-                            if ('label' in item) {
-                                itemLabel = item.label;
-                            }
-                            switch (item.type) {
-                                case 'text':
-                                    if (itemLabel !== '') {
-                                        var itemBadge = '';
-                                        $legendObj.append('<span class="legend-' + item.type + '">' + itemBadge + itemLabel + '</span>');
-                                    }
-                                    break;
-                                case 'block':
-                                    if (itemLabel !== '') {
-                                        itemLabel = '<span>' + itemLabel + '</span>';
-                                    }
-                                    var listClassName;
-                                    if (typeof(item.classname) === 'undefined') {
-                                        listClassName = 'event';
-                                    } else {
-                                        listClassName = 'event-styled ' + item.classname;
-                                    }
-                                    $legendObj.append('<span class="legend-' + item.type + '"><ul class="legend"><li class="' + listClassName + '"></li></u>' + itemLabel + '</span>');
-                                    break;
-                                case 'list':
-                                    if ('list' in item && typeof(item.list) === 'object' && item.list.length > 0) {
-                                        var $legendUl = $('<ul class="legend"></u>');
-                                        $(item.list).each(function (listIndex, listClassName) {
-                                            $legendUl.append('<li class="' + listClassName + '"></li>');
-                                        });
-                                        $legendObj.append($legendUl);
-                                    }
-                                    break;
-                                case 'spacer':
-                                    $legendObj.append('<span class="legend-' + item.type + '"> </span>');
-                                    break;
+                for (var key in activite) {
+                    var item=activite[key];
+                    var itemLabel=item.intitule;
+                    var listClassName='event-styled '+item.classname;
+                    $legendObj.append('<span class="legend-block"><ul class="legend"><li class="' + listClassName + '"></li></u>' + itemLabel + '</span>');
 
-                            }
-                        }
-                    }
-                });
             }
 
             return $legendObj;
@@ -291,8 +251,7 @@ $.fn.jis_calendar = function (options) {
                         $dowElement.append($dayUL);
 
                         //TODO ajout liste des options de façon automatique
-                        var Activite =activite;
-                        console.log(Activite);
+                        var Activite = activite;
                         for (var key in Activite) {
                             var $Li = $('<li></li>');
                             var $a = $('<a id="' + Activite[key].id_activite + '_' + dateAsString(year, month, currDayOfMonth) + '" href="#">' + Activite[key].intitule + '</a>');
@@ -402,7 +361,7 @@ $.fn.jis_calendar = function (options) {
                     } else {
                         $dowElement.addClass('event-styled');
                         //todo list class possible
-                        $dayElement.removeClass('red green blue');
+                        $dayElement.removeClass('red green blue yellow pink purple orange chocolate brown gray');
                         $dayElement.addClass(value.classname);
                     }
                 });
@@ -513,7 +472,6 @@ $.fn.jis_calendar_defaults = function () {
         show_previous: true,
         show_next: true,
         nav_icon: false,
-        data: false,
         legend: false,
         action: false,
         action_nav: false

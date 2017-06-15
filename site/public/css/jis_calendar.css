@@ -121,15 +121,8 @@ div.jis_calendar div.legend span {
     font-weight: normal;
 }
 
-div.jis_calendar div.legend span.legend-text:after,
-div.jis_calendar div.legend span.legend-block:after,
-div.jis_calendar div.legend span.legend-list:after,
-div.jis_calendar div.legend span.legend-spacer:after {
+div.jis_calendar div.legend span.legend-block:after{
     content: ' ';
-}
-
-div.jis_calendar div.legend span.legend-spacer {
-    padding-left: 25px;
 }
 
 div.jis_calendar ul.legend > span {
@@ -159,12 +152,6 @@ div.jis_calendar ul.legend li:last-child {
     margin-right: 5px;
 }
 
-div.jis_calendar div.legend span.badge {
-    font-size: 0.9em;
-    border-radius: 5px 5px 5px 5px;
-    padding: 2px 5px 3px;
-}
-
 /* responsive */
 @media (max-width: 979px) {
     div.jis_calendar .table th,
@@ -175,14 +162,42 @@ div.jis_calendar div.legend span.badge {
 
 /* Classname des différentes activités */
 
-.red{
-    background-color: #dd4444;
+div.jis_calendar .red{
+    background-color: red;
 }
 
-.green{
-    background-color: #1ba11e;
+div.jis_calendar .green{
+    background-color: green;
 }
 
-.blue{
-    background-color: #583cda;
+div.jis_calendar .blue{
+    background-color: blue;
+}
+
+div.jis_calendar .yellow{
+    background-color: yellow;
+}
+
+div.jis_calendar .pink{
+    background-color: pink;
+}
+
+div.jis_calendar .purple{
+    background-color: purple;
+}
+
+div.jis_calendar .orange{
+    background-color: orange;
+}
+
+div.jis_calendar .chocolate{
+    background-color: chocolate;
+}
+
+div.jis_calendar .brown{
+    background-color: brown;
+}
+
+div.jis_calendar .gray{
+    background-color: gray;
 }
