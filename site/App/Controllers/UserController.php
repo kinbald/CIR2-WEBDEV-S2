@@ -32,15 +32,18 @@ class UserController extends Controllers
     public function getIndex(Request $request, Response $response, $args)
     {
         $user = $this->sessionInstance->read("RL");
-        $childs = (new Est_responsable_de())->id_enfant_depuis_id_rl($user);
-        $childs_names = array();
-        foreach ($childs as $child => $key) {
-            $info["prenom"]=(new Enfant())->getPrenom($key);
-            $info["id"]=$key;
-            $childs_names[]=$info;
+        if($user)
+        {
+            $childs = (new Est_responsable_de())->id_enfant_depuis_id_rl($user);
+            $childs_names = array();
+            foreach ($childs as $child => $key) {
+                $info["prenom"]=(new Enfant())->getPrenom($key);
+                $info["id"]=$key;
+                $childs_names[]=$info;
+            }
+            $args['enfants'] = $childs_names;
+            $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
         }
-        $args['enfants'] = $childs_names;
-        $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL'));
         return $this->view->render($response, 'index.twig', $args);
     }
     /**

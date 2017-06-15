@@ -92,9 +92,13 @@ class Responsable_legal extends Models
         }
 
     }
-
-
-
-
-
+    
+    public function recupereRL($nom_rl)
+    {
+        $nom_rl = $this->pdo->quote('%' . $nom_rl . '%');
+        $cond = "nom_rl ILIKE $nom_rl";
+        return $this->select($cond);
+    }
+    
+    
 }

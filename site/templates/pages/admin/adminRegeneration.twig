@@ -12,37 +12,30 @@
 
 {% block body %}
     {{ include('navbar.twig') }}
-    <div class="container-fluid firstContainer">
+    <div class="container firstContainer">
         <div class="row content">
-            <div class="col-sm-2 sidenav">
-            </div>
-            <div class="col-md-8">
-                <h3>Veuillez entrer un nom d'utilisateur :</h3>
-                <div class="input-group form-search">
-                    <input type="text" class="form-control search-query" id="searchUser">
-                    <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary" data-type="last">Rechercher</button>
+            <div class="jumbotron">
+                <div class="jumbotron-contents">
+                    <h3>Veuillez entrer un nom d'utilisateur :</h3>
+                    <div class="input-group form-search">
+                        <input type="text" class="form-control search-query" id="searchUser">
+                        <span class="input-group-btn">
+                    <button id="button-search" type="submit" class="btn btn-primary" data-type="last">Rechercher</button>
                   </span>
+                    </div>
+                    <hr>
+                    <div>
+                        <ul class="list-group" id="responseList">
+                        </ul>
+                    </div>
                 </div>
-                <hr>
-                <div id="responseArray">
-
-                </div>
-            </div>
-            <div class="col-sm-2 sidenav">
             </div>
         </div>
+
+    </div>
     </div>
 {% endblock %}
-{% block footer %}
-{{ parent() }}
-<script type="application/javascript">
-    if (typeof jQuery === 'undefined') {
-        throw new Error('jQuery is not loaded');
-    }
-
-    $(document).ready(function () {
-        console.log($('searchUser'));
-    });
-</script>
+{% block script_footer %}
+    {{ parent() }}
+    {{ m.js('adminRegeneration.js') }}
 {% endblock %}

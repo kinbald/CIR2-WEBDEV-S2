@@ -61,6 +61,8 @@ $app->group('/admin/', function () use ($app)
     $app->get('regenerer', \App\Controllers\AdminController::class.':getAdminRegenerer')->setName("admin.regenerer");
     $app->post('regenerer', \App\Controllers\AdminController::class.':regenererCompte');
     
+    $app->post('ajax/getUser/', \App\Controllers\AdminController::class.':getUserByName');
+    
     $app->get('index', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
     
     $app->get('imprimerPassword', \App\Controllers\AdminController::class.':getPasswordImpression')->setName("admin.regenerer");

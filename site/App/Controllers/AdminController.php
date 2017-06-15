@@ -8,6 +8,7 @@
     
     namespace App\Controllers;
 
+    use App\Models\Responsable_legal;
     use Slim\Http\Request;
     use Slim\Http\Response;
     use Slim\Views\Twig;
@@ -30,4 +31,23 @@
         }
         
         public function getPasswordImpression(){}
+        
+        public function getUserByName(Request $request, Response $response)
+        {
+            $params = $request->getParams();
+            if(isset($params['nom_rl']) && !empty($params['nom_rl']))
+            {
+                $RLModel = new Responsable_legal();
+                $data = $RLModel->recupereRL($params['nom_rl']);
+                $json = array();
+                foreach ($data as $datum) {
+                    $element['id_responsable_legal'] = $datum['id_responsable_legal'];
+                    $element['nom_rl'] = $datum['nom_rl'];
+                    $element['prenom_rl'] = $datum['prenom_rl'];
+                    array_push($json, $element);
+                }
+                return $response->withJson($json);
+            }
+            return $response;
+        }
     }
