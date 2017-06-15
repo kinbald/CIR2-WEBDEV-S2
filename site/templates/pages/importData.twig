@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block body %}
-    {{ include('navbar.twig') }}
+    {{ include('navbar-admin.twig') }}
     <form  class="firstContainer" enctype="multipart/form-data" action="{{ path_for('importData.post') }}" method="post">
             Sélectionnez le fichier à importer<br>
             <input type="file" name="data">
