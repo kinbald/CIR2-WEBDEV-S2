@@ -16,7 +16,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if infoUtilisateur.id_responsable_legal %}
-                <p class="navbar-text">{{ infoUtilisateur.prenom_rl }} {{ infoUtilisateur.nom_rl }}</p>
+                <p class="navbar-text">{{ infoUtilisateur.prenom_rl | capitalize }} {{ infoUtilisateur.nom_rl | capitalize }}</p>
                 <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                 {% else %}
                 <li><a href="{{ path_for('login.get') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
