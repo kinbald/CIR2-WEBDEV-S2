@@ -1,0 +1,48 @@
+{% extends "layout.twig" %}
+{% import "macro.twig" as m %}
+
+{% block css %}
+    {{ parent() }}
+    {{ m.css("style.css") }}
+{% endblock %}
+
+{% block title %}
+    Regénération d'un compte utilisateur
+{% endblock %}
+
+{% block body %}
+    {{ include('navbar.twig') }}
+    <div class="container-fluid firstContainer">
+        <div class="row content">
+            <div class="col-sm-2 sidenav">
+            </div>
+            <div class="col-md-8">
+                <h3>Veuillez entrer un nom d'utilisateur :</h3>
+                <div class="input-group form-search">
+                    <input type="text" class="form-control search-query" id="searchUser">
+                    <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary" data-type="last">Rechercher</button>
+                  </span>
+                </div>
+                <hr>
+                <div id="responseArray">
+
+                </div>
+            </div>
+            <div class="col-sm-2 sidenav">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+{{ parent() }}
+<script type="application/javascript">
+    if (typeof jQuery === 'undefined') {
+        throw new Error('jQuery is not loaded');
+    }
+
+    $(document).ready(function () {
+        console.log($('searchUser'));
+    });
+</script>
+{% endblock %}

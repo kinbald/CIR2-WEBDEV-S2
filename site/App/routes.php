@@ -58,10 +58,10 @@ $app->post('/recover-admin/{token}',App\Controllers\AuthAdminController::class.'
 
 $app->group('/admin/', function () use ($app)
 {
-    $app->get('regenerer', \App\Controllers\AuthAdminController::class.':getAdminRegenerer')->setName("admin.regenerer");
-    $app->post('regenerer', \App\Controllers\AuthAdminController::class.':regenererCompte');
+    $app->get('regenerer', \App\Controllers\AdminController::class.':getAdminRegenerer')->setName("admin.regenerer");
+    $app->post('regenerer', \App\Controllers\AdminController::class.':regenererCompte');
     
     $app->get('index', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
     
-    $app->get('imprimerPassword', \App\Controllers\AuthAdminController::class.':getPasswordImpression')->setName("admin.regenerer");
+    $app->get('imprimerPassword', \App\Controllers\AdminController::class.':getPasswordImpression')->setName("admin.regenerer");
 })->add(new \App\Middleware\AdminAuthentification($container));
