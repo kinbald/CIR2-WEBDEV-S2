@@ -17,6 +17,5 @@ function ajaxExportData() {
         $.each(response, function (k) {
             events.push(response[k]);
         });
-
     });
 }

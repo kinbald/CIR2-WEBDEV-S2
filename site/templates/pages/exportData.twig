@@ -12,6 +12,7 @@
 
 {% block body %}
     {{ include('navbar.twig') }}
+
     <div class="firstContainer">
         <form enctype="multipart/form-data" class="firstContainer" method="post">
             <label for="ecole">
@@ -39,3 +40,7 @@
 
     </div>
 {% endblock %}
+ {% block script_footer %}
+     {{ parent() }}
+    {{ m.js("exportData.js") }}
+ {% endblock %}
