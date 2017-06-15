@@ -61,9 +61,3 @@ $app->group('/calendrier/', function () use ($app) {
 
 $app->post('/getActivite',\App\Controllers\CreneauController::class.':getActivite');
 
-$app->get('/logout-admin',App\Controllers\AuthAdminController::class.':logoutAd')->setName("logout-admin");
-$app->get('/recover-admin',App\Controllers\AuthAdminController::class.':recoverAd')->setName("recover-admin.get");
-$app->post('/recover-admin',App\Controllers\AuthAdminController::class.':sendRecoverAd')->setName("recover-admin.post");
-$app->get('/recover-admin/{token}',App\Controllers\AuthAdminController::class.':tokenAd')->setName("recoverToken-admin.get");
-$app->post('/recover-admin/{token}',App\Controllers\AuthAdminController::class.':tokenValidationAd')->setName("recoverToken-admin.post");
-

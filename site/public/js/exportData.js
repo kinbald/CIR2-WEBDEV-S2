@@ -11,8 +11,5 @@ $.ajax({
     $.each(response, function (k) {
         events.push(response[k]);
     });
-    //recupere les evente
-    $calendarElement.data('events', events);
-    //les dessines
-    drawEvents($calendarElement);
+
 });
