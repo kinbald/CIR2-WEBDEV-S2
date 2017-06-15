@@ -12,7 +12,6 @@
 
 {% block body %}
     {{ include('navbar.twig') }}
-
     <div class="firstContainer">
         <form enctype="multipart/form-data" class="firstContainer" method="post">
             <label for="ecole">
@@ -26,21 +25,16 @@
             <label for="classe">
                 <select name="classe" id="classe" onchange="ajaxExportData()">
                     <option value="0">Sélectionner Classe</option>
-                    {% for classe in listeClasse %}
-                        <option value={{ classe['nom_classe']}}>{{ classe['nom_classe'] }}</option>
-                    {% endfor %}
                 </select>
             </label>
             <input type="date" name="date_journee" title="date_journee" onchange="ajaxExportData()">
             <input type="button" value="Télécharger" name="Télécharger" id="Télécharger" onclick="ajaxExportData()">
         </form>
         <div id="resultat">
-
         </div>
-
     </div>
 {% endblock %}
- {% block script_footer %}
-     {{ parent() }}
+{% block script_footer %}
+    {{ parent() }}
     {{ m.js("exportData.js") }}
- {% endblock %}
+{% endblock %}
