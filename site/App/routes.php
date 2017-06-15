@@ -17,6 +17,9 @@ $app->post('/index-admin', App\Controllers\AuthAdminController::class.':insertRe
 $app->get('/classe-admin',\App\Controllers\ClasseController::class.':getClasse')->setName("classe-admin.get");
 $app->post('/classe-admin',\App\Controllers\ClasseController::class.':postClasse')->setName("classe-admin.post");
 
+$app->get('/enfant-admin',\App\Controllers\EnfantController::class.':getEnfant')->setName("enfant-admin.get");
+$app->post('/enfant-admin',\App\Controllers\EnfantController::class.':postEnfant')->setName("enfant-admin.post");
+
 
 $app->get('/contact', \App\Controllers\ContactController::class.':getContact')->setName("contact.get");
 $app->post('/contact', \App\Controllers\ContactController::class.':postContact')->setName("contact.post");

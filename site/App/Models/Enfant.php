@@ -32,5 +32,12 @@ class Enfant extends Models
         return $child['prenom_enfant'];
     }
 
+    public function insertEnfant($nom_enfant, $prenom_enfant, $date_naissance_enfant){
+        if (!empty($nom_enfant) && !empty($prenom_enfant) && !empty($date_naissance_enfant)) {
+            return $this->insert(array("nom_enfant" => $nom_enfant,"prenom_enfant" => $prenom_enfant, "date_naissance_enfant" => $date_naissance_enfant));
+        }
+
+    }
+
 
 }
