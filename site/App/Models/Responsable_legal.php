@@ -9,6 +9,8 @@
 namespace App\Models;
 
 
+use App\Utils\Validateur;
+
 class Responsable_legal extends Models
 {
 
@@ -80,10 +82,10 @@ class Responsable_legal extends Models
 
     public function editPassByAdmin($id,$mot_de_passe){
 
-        if(estValidePassword($mot_de_passe) == true){
+        if(Validateur::estValidePassword($mot_de_passe) == true){
             // le mot de passe est valide
 
-            $this->update(array("mot_de_passe_rl"=> hash($mot_de_passe) ), "id_responsable_legal = $id");
+            $this->update(array("mot_de_passe_rl"=> password_hash(PASSWORD_DEFAULT,$mot_de_passe) ), "id_responsable_legal = $id");
             return 0;
         }
         else {
