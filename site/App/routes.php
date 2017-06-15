@@ -5,7 +5,7 @@ use App\Controllers\TestController;
 $app->group('', function () use ($app) {
     $app->get('/b', \App\Controllers\TestController::class)->setName('test');
 
-    $app->get('/salut[/{nom}]', \App\Controllers\TestController::class . ':salut')->setName("salut");
+    $app->get('/salut', \App\Controllers\TestController::class . ':salut')->setName("salut");
 
 // setName permet d'appeler path_for('nom_route',{param}) dans twig
     $app->get('/index', \App\Controllers\UserController::class . ':getIndex')->setName("index");
@@ -66,5 +66,5 @@ $app->group('/admin/', function () use ($app)
     
     $app->get('index', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
     
-    $app->get('imprimerPassword', \App\Controllers\AdminController::class.':getPasswordImpression')->setName("admin.regenerer");
+    $app->post('imprimerPassword', \App\Controllers\AdminController::class.':getPasswordImpression')->setName("admin.regenerer");
 })->add(new \App\Middleware\AdminAuthentification($container));

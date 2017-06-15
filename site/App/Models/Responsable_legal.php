@@ -84,7 +84,7 @@ class Responsable_legal extends Models
 
         if(Validateur::estValidePassword($mot_de_passe) == true){
             // le mot de passe est valide
-
+            
             $this->update(array("mot_de_passe_rl"=> password_hash(PASSWORD_DEFAULT,$mot_de_passe) ), "id_responsable_legal = $id");
             return 0;
         }
