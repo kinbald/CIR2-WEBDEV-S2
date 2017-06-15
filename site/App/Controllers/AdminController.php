@@ -7,13 +7,13 @@
      */
     
     namespace App\Controllers;
-
+    
     use App\Models\Responsable_legal;
     use Slim\Http\Request;
     use Slim\Http\Response;
     use Slim\Router;
     use Slim\Views\Twig;
-
+    
     /**
      * Class AdminController
      * @property Twig view
@@ -55,7 +55,7 @@
         
         public function getModifierRL(Request $request, Response $response)
         {
-            $id_rl = $request->getAttribute('id_responsable_legal');
+            $id_rl = intval($request->getAttribute('id_responsable_legal'));
             $ModelRL = new Responsable_legal();
             if($ModelRL->estExistant($id_rl))
             {
@@ -63,5 +63,55 @@
                 return $this->view->render($response, 'modifierRL.twig', ['infos' => $data[0]]);
             }
             return $response->withRedirect($this->router->pathFor('index-admin'));
+        }
+        
+        public function postModifierRL(Request $request, Response $response)
+        {
+            // Tableau qui contiendra les erreurs
+            $errors = array(null);
+            // Récupération des paramètres
+            $post = $request->getParams();
+            $id_responsable_legal = explode('/', $request->getUri()->getPath())[3];
+            
+            if (isset($post['nom_rl']) && isset($post['prenom_rl']) && isset($post['adresse_mail_rl']) && isset($post['ville']) && isset($post['code_postal']) && isset($post['complement_d_adresse']))
+            {
+                if (!empty($post['nom_rl']) && !empty($post['prenom_rl']) && !empty($post['adresse_mail_rl']) && !empty($post['ville']) && !empty($post['code_postal']) && !empty($post['complement_d_adresse']))
+                {
+                    $ModelRL = new Responsable_legal();
+                    if ( $ModelRL->existeRespo(['id_responsable_legal' => $id_responsable_legal] ) )
+                    {
+                        $donnees = array(
+                            'nom_rl' => $post['nom_rl'],
+                            'prenom_rl' => $post['prenom_rl'],
+                            'adresse_mail_rl' => $post['adresse_mail_rl'],
+                            'ville' => $post['ville'],
+                            'code_postal' => $post['code_postal'],
+                            'complement_d_adresse' => $post['complement_d_adresse']
+                        );
+                        if($ModelRL->metAJourDonnees($donnees, "id_responsable_legal = " . $this->pdo->quote($id_responsable_legal) ) != NULL)
+                        {
+                            $errors['success'] = "Vos modifications ont été enregistrées";
+                        }
+                        else
+                        {
+                            $errors['danger'] = "Problème lors de la modification des données";
+                        }
+                    }
+                    else
+                    {
+                        return $response->withRedirect($this->router->pathFor('index-admin'));
+                    }
+                }
+                else
+                {
+                    $errors['warning'] = "Vous devez remplir tous les champs";
+                }
+            }
+            else
+            {
+                $errors['warning'] = "Vous devez remplir tous les champs";
+            }
+            $_SESSION['messages'] = $errors;
+            return $response->withRedirect($this->router->pathFor('getModifierRL', ['id_responsable_legal' => $id_responsable_legal]));
         }
     }
