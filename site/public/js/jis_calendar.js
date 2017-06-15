@@ -110,11 +110,11 @@ $.fn.jis_calendar = function (options) {
 
         function drawLegend(activite) {
             var $legendObj = $('<div class="legend" id="' + $calendarElement.attr('id') + '_legend"></div>');
-                for (var key in activite) {
-                    var item=activite[key];
-                    var itemLabel=item.intitule;
-                    var listClassName='event-styled '+item.classname;
-                    $legendObj.append('<span class="legend-block"><ul class="legend"><li class="' + listClassName + '"></li></u>' + itemLabel + '</span>');
+            for (var key in activite) {
+                var item=activite[key];
+                var itemLabel=item.intitule;
+                var listClassName='event-styled '+item.classname;
+                $legendObj.append('<span class="legend-block"><ul class="legend"><li class="' + listClassName + '"></li></u>' + itemLabel + '</span>');
 
             }
 
@@ -506,9 +506,23 @@ $(document).ready(function () {
         id =  id.split("_")[1];
         var calendar = $("#my-calendar");
         calendar.empty();
-        calendar.append("<h5>Calendrier de " + this.text + " :<h5>");
+        calendar.append("<h5>Calendrier de " + this.text + " :");
+        var a = $(document.createElement('a'));
+        a.addClass("btn btn-primary");
+        a.text("Voir sur une page séparée");
+        calendar.append(a);
         calendar.jis_calendar(
             {id_enfant: id}
         );
     });
+
+    var calendar = $("#calendar");
+    calendar.jis_calendar(
+        {id_enfant: getIdEnfant()}
+    );
+
+    function getIdEnfant() {
+        var tabLocation = window.location.href.split('/');
+        return tabLocation[tabLocation.length - 1];
+    }
 });
