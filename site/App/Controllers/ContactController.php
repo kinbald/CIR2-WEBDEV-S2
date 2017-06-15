@@ -68,6 +68,11 @@ class ContactController extends Controllers
             $args["valid"] = "envoie reussie";
         }
 
+        $user = $this->sessionInstance->read("RL");
+        if (!empty($user)) {
+            $args["infoUtilisateur"] = (new Responsable_legal())->recupèreInfoParent($user);
+        }
+
         // Il y a des erreurs on les garde dans la session pour l'affichage
         //todo affichage des erreurs?
         $this->sessionInstance->write('errors', $errors);
