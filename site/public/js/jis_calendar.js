@@ -46,7 +46,7 @@ $.fn.jis_calendar = function (options) {
     this.each(function () {
         var $calendarElement = $(this);
         //id aleatoire genere pour le calendrier (pour eviter les conflit si plusieurs meme page)
-        $calendarElement.attr('id', "jis_calendar_" + Math.floor(Math.random() * 99999).toString(36));
+        //$calendarElement.attr('id', "jis_calendar_" + Math.floor(Math.random() * 99999).toString(36));
 
         $calendarElement.data('initYear', opts.year);
         $calendarElement.data('initMonth', opts.month);

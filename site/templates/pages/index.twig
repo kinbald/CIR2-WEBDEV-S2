@@ -7,6 +7,10 @@
     {{ m.css("style.css") }}
 {% endblock %}
 
+{% block title %}
+Votre compte de responsable légal - JIS
+{% endblock %}
+
 {% block body %}
     {{ include('navbar.twig') }}
 
@@ -56,7 +60,7 @@
                 <hr>
 
                 <div id="my-calendar">
-                    Vous devez séléctionner un enfant !
+                    <h5>Vous devez séléctionner un enfant !</h5>
                 </div>
             </div>
             <div class="col-sm-2 sidenav">
