@@ -83,10 +83,9 @@ class AuthController extends Controllers
      * Fonction permettant de déconnecter un utilisateur
      * @param Request $request
      * @param Response $response
-     * @param $args
      * @return ResponseInterface
      */
-    public function logout(Request $request, Response $response, $args)
+    public function logout(Request $request, Response $response)
     {
         (new Token_responsable_legal())->unsetRememberMe();
         $this->sessionInstance->delete("RL");
@@ -97,10 +96,9 @@ class AuthController extends Controllers
      * Fonction qui affiche la page de récupération de mot de passe
      * @param Request $request
      * @param Response $response
-     * @param $args
      * @return ResponseInterface
      */
-    public function recover(Request $request, Response $response, $args)
+    public function recover(Request $request, Response $response)
     {
         // Envoi d'un mail avec le token de regénération du mot de passe
         return $this->view->render($response, 'recover.twig');
@@ -115,6 +113,7 @@ class AuthController extends Controllers
      */
     public function sendRecover(Request $request, Response $response, $args)
     {
+        $args["send"] = false;
         if ($request->getParam('email'))
         {
             if(!empty($request->getParam('email')))
@@ -122,8 +121,9 @@ class AuthController extends Controllers
                 (new Token_responsable_legal())->setTokenRecovery($request->getParam('email'));
                 $args["send"] = true;
             }
+        }else{
+
         }
-        $args["send"] = false;
         return $this->view->render($response, 'recover.twig', $args);
     }
 

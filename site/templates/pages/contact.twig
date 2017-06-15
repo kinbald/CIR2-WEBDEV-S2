@@ -1,19 +1,14 @@
 {% extends "layout.twig" %}
 {% import "macro.twig" as m %}
 
-{% block css %}
-    {{ parent() }}
-    {{ m.css("style.css") }}
-{% endblock %}
-
 {% block title %}
-    Contactez
+    Nous-contacter - JIS
 {% endblock %}
 
 {% block body %}
-    {{ include('navbar.twig') }}
+    {{ parent() }}
 
-    <div class="container-fluid text-center firstContainer" xmlns="http://www.w3.org/1999/html">
+    <div class="container-fluid text-center firstContainer lastContainer">
         <div class="row">
             <div class="col-md-12">
 
@@ -23,36 +18,59 @@
                     <div class="col-md-4">
 
                     </div>
-
                     <div class="col-md-4">
+                        {% if errors %}
+                            <div class="alert alert-danger">
+                                {% for error in errors %}
+                                    <div class="text">
+                                        {{ error }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% elseif valid %}
+                            <div class="alert alert-success firstContainer">
+                                <div class="text">
+                                    {{ valid }}
+                                </div>
+                            </div>
+                        {% endif %}
                         <form role="form" action="{{ path_for('contact.post') }}" method="post">
                             <fieldset>
                                 <div class="form-group">
-                                    Données de contact: Nom-Prénom-Mail
-                                    <input class="form-control formWeb" placeholder="Nom" name="nom"  type="text" value="{{ infoUtilisateur.nom_rl | capitalize }}" required autofocus>
-                                    <input class="form-control formWeb" placeholder="Prenom" name="prenom" type="text" value="{{ infoUtilisateur.prenom_rl | capitalize }}" required autofocus>
-                                    <input class="form-control formWeb" placeholder="E-mail" name="email" type="email"  value="{{ infoUtilisateur.adresse_mail_rl }}" required autofocus>
+                                    {% if infoUtilisateur %}
+                                        <input class="form-control formWeb" placeholder="Nom" name="nom" type="text"
+                                               value="{{ infoUtilisateur.nom_rl | capitalize }}" required autofocus>
+                                        <input class="form-control formWeb" placeholder="Prenom" name="prenom"
+                                               type="text" value="{{ infoUtilisateur.prenom_rl | capitalize }}">
+                                        <input class="form-control formWeb" placeholder="E-mail" name="email"
+                                               type="email" value="{{ infoUtilisateur.adresse_mail_rl }}">
+                                    {% else %}
+                                        <input class="form-control formWeb" placeholder="Nom" name="nom" type="text"
+                                               required autofocus>
+                                        <input class="form-control formWeb" placeholder="Prenom" name="prenom">
+                                        <input class="form-control formWeb" placeholder="E-mail" name="email">
+                                    {% endif %}
                                 </div>
 
                                 <div class="form-group">
                                     Objet:
-                                    <input class="form-control" placeholder="Raison de ce message" name="objet" type="text" required autofocus>
+                                    <input class="form-control" placeholder="Raison de ce message" name="objet"
+                                           type="text" required>
                                 </div>
 
                                 <div class="form-group">
-                                    Votre message:
+                                    Votre message :
                                     <textarea class="form-control" placeholder="Votre message" name="message" rows="6"></textarea>
                                 </div>
 
                                 <div class="form-group">
-                                    <button class="btn btn-lg btn-success btn-block" type="submit">Envoyez</button>
+                                    <button class="btn btn-lg btn-success btn-block" type="submit">Envoyer</button>
                                 </div>
 
                             </fieldset>
                         </form>
 
                     </div>
-                    </form>
                     <div class="col-md-4">
 
                     </div>

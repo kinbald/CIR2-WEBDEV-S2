@@ -9,6 +9,9 @@
     namespace App\Middleware;
     
     
+    use App\Models\Admin;
+    use App\Models\Token_Admin;
+    use App\Models\Token_responsable_legal;
     use Slim\Http\Request;
     use Slim\Http\Response;
     use Slim\Router;
@@ -22,7 +25,7 @@
         {
             if($this->sessionInstance->read("admin") > 0)
             {
-                //verification
+                $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Admin())->recupèreInfoAdmin($this->sessionInstance->read('admin')));
             }
             else if($this->sessionInstance->read("RL") >0)
             {
@@ -41,6 +44,7 @@
                 }
                 elseif($admin) {
                     $this->sessionInstance->write("admin", $admin);
+                    $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Admin())->recupèreInfoAdmin($this->sessionInstance->read('admin')));
                 }else
                 {
                     $route = $this->router->pathFor("login.get");

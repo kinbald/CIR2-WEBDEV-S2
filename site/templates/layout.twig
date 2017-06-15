@@ -16,12 +16,13 @@
                   crossorigin="anonymous">
             {{ m.css("bootflat.min.css") }}
             {{ m.css("bootflat.css") }}
+            {{ m.css("style.css") }}
         {% endblock %}
     {% endblock %}
 </head>
 <body>
 {% block body %}
-    <p>du contenu</p>
+    {{ include('navbar.twig') }}
 {% endblock %}
 <footer class="container-fluid text-center">
     {% block footer %}

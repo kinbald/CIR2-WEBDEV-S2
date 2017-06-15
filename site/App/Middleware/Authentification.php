@@ -8,11 +8,12 @@
 
 namespace App\Middleware;
 
+use App\Models\Admin;
+use App\Models\Responsable_legal;
 use App\Models\Token_Admin;
 use App\Models\Token_responsable_legal;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Slim\Route;
 use Slim\Router;
 
 /**
@@ -32,9 +33,11 @@ class Authentification extends Middleware
         if($this->sessionInstance->read("admin") > 0)
         {
             //verification
+            $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Admin())->recupèreInfoAdmin($this->sessionInstance->read('admin')));
         }
         else if($this->sessionInstance->read("RL") >0)
         {
+            $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL')));
             //verifie co utilisateur lambda
         }
         else
@@ -45,9 +48,11 @@ class Authentification extends Middleware
             if($rl)
             {
                 $this->sessionInstance->write("RL", $rl);
+                $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Responsable_legal())->recupèreInfoParent($this->sessionInstance->read('RL')));
             }
             elseif($admin) {
                 $this->sessionInstance->write("admin", $admin);
+                $this->view->getEnvironment()->addGlobal('infoUtilisateur',(new Admin())->recupèreInfoAdmin($this->sessionInstance->read('admin')));
             }else
             {
                 $route = $this->router->pathFor("login.get");

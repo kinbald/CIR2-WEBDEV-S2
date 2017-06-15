@@ -1,17 +1,12 @@
 {% extends "layout.twig" %}
 {% import "macro.twig" as m %}
 
-{% block css %}
-    {{ parent() }}
-    {{ m.css("style.css") }}
-{% endblock %}
-
 {% block title %}
     Association d'un utilisateur à son enfant
 {% endblock %}
 
 {% block body %}
-    {{ include('navbar-admin.twig') }}
+    {{ parent() }}
     <div class="container firstContainer">
         {% if errors %}
             <div class="alert alert-danger firstContainer">

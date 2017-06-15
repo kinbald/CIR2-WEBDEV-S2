@@ -24,7 +24,6 @@ class VerificationRl extends Middleware
             if (!$this->sessionInstance->read('RL') > 0) {
                 return $response->withRedirect($this->router->pathFor("login.get"));
             } else if (!(new Est_responsable_de())->estReponsable($this->sessionInstance->read('RL'), $id_enfant)) {
-                //todo page speciale annonce droit inexistant
                 return $this->view->render($response,'/error/accesRefuse.twig');
             }
         }

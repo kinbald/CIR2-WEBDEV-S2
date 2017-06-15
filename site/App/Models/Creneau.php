@@ -30,7 +30,7 @@ class Creneau extends Models
     public function ajouteCreneauEnfant($id_enfant, $date_journee, $id_activite)
     {
         if ($this->verifieDateCoherente($date_journee)) {
-            if (!$this->estExistant($id_enfant, array("date_journee" => $date_journee))) {
+            if (!$this->estExistant($id_enfant)) {
                 if ((new Enfant())->estExistant($id_enfant)) {
                     return $this->insert(array(
                         "id_enfant" => $id_enfant,
@@ -79,7 +79,7 @@ class Creneau extends Models
     public function supprimerCreneau($id_enfant, $date_journee, $id_activite)
     {
         if ($this->verifieDateCoherente($date_journee)) {
-            if ($this->estExistant($id_enfant, array("id_activite" => $id_activite, "date_journee" => $date_journee))) {
+            if ($this->estExistant($id_enfant)) {
                 $this->delete(array("id_enfant" => $id_enfant, "date_journee" => $date_journee, "id_activite" => $id_activite));
             }
         }
@@ -88,10 +88,10 @@ class Creneau extends Models
     /**
      * Vérifie si l'élément correspondant à l'id est existant dans la base de données
      * @param $id
-     * @param null $params
      * @return bool
+     * @internal param null $params
      */
-    public function estExistant($id, $params = null)
+    public function estExistant($id)
     {
         $selectParams = array("id_enfant" => $id);
         if (isset($params["id_activite"])) {

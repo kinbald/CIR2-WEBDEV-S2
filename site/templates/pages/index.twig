@@ -3,13 +3,17 @@
 
 {% block css %}
     {{ parent() }}
-    {{ m.css("style.css") }}
+    {{ m.css('jis_calendar.css') }}
+{% endblock %}
+
+{% block title %}
+Votre compte de responsable légal - JIS
 {% endblock %}
 
 {% block body %}
-    {{ include('navbar.twig') }}
+    {{ parent() }}
 
-    <div class="container-fluid text-center firstContainer" xmlns="http://www.w3.org/1999/html">
+    <div class="container-fluid text-center firstContainer lastContainer" >
 
         <div class="row content">
             <div class="col-sm-2 sidenav">
@@ -20,8 +24,7 @@
                     <div class="panel-body">
                         {% if enfants %}
                             {% for enfant in enfants %}
-
-                                <a href="{{ path_for('calendrier', { 'id_enfant' : enfant.id }) }}"> {{ enfant.prenom |capitalize }}</a><br>
+                                <a href="{{ path_for('calendrier', {'id_enfant':enfant.id}) }}" class="id_enfant_bouton" id="enfant_{{ enfant.id }}"> {{ enfant.prenom |capitalize }}</a><br>
                             {% endfor %}
                         {% else %}
                             Vous n'avez pas d'enfants
@@ -55,12 +58,13 @@
 
                 <hr>
 
-                <p> todo: Calendrier des enfants à afficher ici
-                </p>
+                <div id="my-calendar">
+                    <h5>Vous devez séléctionner un enfant !</h5>
+                </div>
             </div>
             <div class="col-sm-2 sidenav">
                 <div class="thumbnail">
-                    <img class="img-rounded" src="../../img/JIS_couleur_détouré.gif">
+                    <img class="img-rounded" src="{{ m.img('JIS_couleur_détouré.gif') }}">
                     <div class="caption text-center">
                         <h3>Site JIS - La Crau</h3>
                         <p>Retrouvez toutes les actualités de l'association Jeunesse Inter Services. Toutes les infomations utiles s'y trouvent.</p>
@@ -78,4 +82,9 @@
     <div id="footer" class="footer-copyright ">
         <i class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></i> Copyright 2017 Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
     </div>
+{% endblock %}
+
+{% block script_footer %}
+    {{ parent() }}
+    {{ m.js('jis_calendar.js') }}
 {% endblock %}

@@ -3,7 +3,6 @@
 
 {% block css %}
     {{ parent() }}
-    {{ m.css("style.css") }}
 {% endblock %}
 
 {% block title %}
@@ -11,7 +10,7 @@
 {% endblock %}
 
 {% block body %}
-    {{ include('navbar.twig') }}
+    {{ parent() }}
 
     <div class="container firstContainer">
         <div class="row jumbotron">
