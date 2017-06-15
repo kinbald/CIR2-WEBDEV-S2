@@ -83,6 +83,7 @@ CREATE TABLE public.responsable_legal(
 CREATE TABLE public.activite(
 	id_activite SERIAL  NOT NULL ,
 	intitule    VARCHAR (25)  ,
+	classname		VARCHAR (25),
 	CONSTRAINT prk_constraint_activite PRIMARY KEY (id_activite)
 )WITHOUT OIDS;
 

@@ -1,9 +1,26 @@
 /**
- * Zabuto Calendar
- *
- * Dependencies
- * - jQuery (2.0.3)
- * - Twitter Bootstrap (3.0.2)
+ * Copyright (c) 2013 Anke Heijnen <anke@zabuto.com>
+
+ Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
  */
 
 if (typeof jQuery === 'undefined') {
@@ -17,11 +34,11 @@ if (typeof jQuery === 'undefined') {
  * @param options
  * @returns {*}
  */
-$.fn.zabuto_calendar = function (options) {
+$.fn.jis_calendar = function (options) {
     //recupere les options et rajoute les valeurs par defaut
-    var opts = $.extend({}, $.fn.zabuto_calendar_defaults(), options);
+    var opts = $.extend({}, $.fn.jis_calendar_defaults(), options);
     //info du langage du calendrier
-    var languageSettings = $.fn.zabuto_calendar_language(opts.language);
+    var languageSettings = $.fn.jis_calendar_language(opts.language);
     //
     var activite;
 
@@ -29,7 +46,7 @@ $.fn.zabuto_calendar = function (options) {
     this.each(function () {
         var $calendarElement = $(this);
         //id aleatoire genere pour le calendrier (pour eviter les conflit si plusieurs meme page)
-        $calendarElement.attr('id', "zabuto_calendar_" + Math.floor(Math.random() * 99999).toString(36));
+        $calendarElement.attr('id', "jis_calendar_" + Math.floor(Math.random() * 99999).toString(36));
 
         $calendarElement.data('initYear', opts.year);
         $calendarElement.data('initMonth', opts.month);
@@ -72,7 +89,7 @@ $.fn.zabuto_calendar = function (options) {
 
                 var $legendObj = drawLegend($calendarElement);
 
-                var $containerHtml = $('<div class="zabuto_calendar" id="' + $calendarElement.attr('id') + '"></div>');
+                var $containerHtml = $('<div class="jis_calendar" id="' + $calendarElement.attr('id') + '"></div>');
                 $containerHtml.append($tableObj);
                 $containerHtml.append($legendObj);
 
@@ -485,7 +502,7 @@ function getIdEnfant() {
  *   action:            function
  *   action_nav:        function
  */
-$.fn.zabuto_calendar_defaults = function () {
+$.fn.jis_calendar_defaults = function () {
     var now = new Date();
     var year = now.getFullYear();
     var month = now.getMonth() + 1;
@@ -509,7 +526,7 @@ $.fn.zabuto_calendar_defaults = function () {
  * @param lang
  * @returns {{month_labels: Array, dow_labels: Array}}
  */
-$.fn.zabuto_calendar_language = function (lang) {
+$.fn.jis_calendar_language = function (lang) {
     if (typeof(lang) === 'undefined' || lang === false) {
         lang = 'fr';
     }
@@ -536,5 +553,5 @@ $.fn.zabuto_calendar_language = function (lang) {
  */
 $(document).ready(function () {
     //language=JQuery-CSS
-    $("#my-calendar").zabuto_calendar();
+    $("#my-calendar").jis_calendar();
 });
