@@ -18,9 +18,11 @@
                     <li><a href="{{ path_for('importData.get') }}">Importer</a></li>
                     <li><a href="{{ path_for('utilisateur-enfant') }}">Associer</a></li>
                     <li><a href="{{ path_for('index') }}">Accueil</a></li>
+                    <li><a href="{{ path_for('contact.get') }}">Contact</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="navbar-text">{{ infoUtilisateur.adresse_mail}}</li>
                     <li><a href="{{ path_for('logout-admin') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                 </ul>
                 {% else %}
@@ -33,7 +35,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if infoUtilisateur.id_responsable_legal %}
-                <p class="navbar-text">{{ infoUtilisateur.prenom_rl | capitalize }} {{ infoUtilisateur.nom_rl | capitalize }}</p>
+                <li class="navbar-text">{{ infoUtilisateur.prenom_rl | capitalize }} {{ infoUtilisateur.nom_rl | capitalize }}</li>
                 <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                 {% else %}
                 <li><a href="{{ path_for('login.get') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
