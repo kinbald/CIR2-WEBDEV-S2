@@ -63,6 +63,7 @@
                 }
                 return $response->withJson($nom_fichier);
             }
+            return $response->withJson(array("error"=>"responsable legal inexistant"));
         }
         
         
