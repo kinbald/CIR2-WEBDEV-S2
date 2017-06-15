@@ -115,6 +115,7 @@ class AuthController extends Controllers
      */
     public function sendRecover(Request $request, Response $response, $args)
     {
+        $args["send"] = false;
         if ($request->getParam('email'))
         {
             if(!empty($request->getParam('email')))
@@ -122,8 +123,9 @@ class AuthController extends Controllers
                 (new Token_responsable_legal())->setTokenRecovery($request->getParam('email'));
                 $args["send"] = true;
             }
+        }else{
+
         }
-        $args["send"] = false;
         return $this->view->render($response, 'recover.twig', $args);
     }
 

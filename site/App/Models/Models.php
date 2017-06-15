@@ -119,7 +119,6 @@ abstract class Models
         foreach ($data as $k => $v) {
             //verifie que le champs correspond au type attend et qu'il existe dans la table
             if (!Validateur::estValide($v, $this->champs[$k])) {
-                echo $v;
                 return false;
             }
             $data[$k] = $this->pdo->quote($v);
