@@ -29,9 +29,9 @@
                         <fieldset>
                             <div class="form-group">
                                 Données de contact: Nom-Prénom-Mail
-                                <input class="form-control" placeholder="Nom" name="nom" style="text-align:center; margin: 5px;" type="text" value="{{ infoUtilisateur.nom_rl | capitalize }}" required autofocus>
-                                <input class="form-control" placeholder="Prenom" name="prenom" type="text"  style="text-align:center; margin: 5px;" value="{{ infoUtilisateur.prenom_rl | capitalize }}" required autofocus>
-                                <input class="form-control" placeholder="E-mail" name="email" type="email"  style="text-align:center; margin: 5px;" value="{{ infoUtilisateur.adresse_mail_rl }}" required autofocus>
+                                <input class="form-control formWeb" placeholder="Nom" name="nom"  type="text" value="{{ infoUtilisateur.nom_rl | capitalize }}" required autofocus>
+                                <input class="form-control formWeb" placeholder="Prenom" name="prenom" type="text" value="{{ infoUtilisateur.prenom_rl | capitalize }}" required autofocus>
+                                <input class="form-control formWeb" placeholder="E-mail" name="email" type="email"  value="{{ infoUtilisateur.adresse_mail_rl }}" required autofocus>
                             </div>
 
                             <div class="form-group">

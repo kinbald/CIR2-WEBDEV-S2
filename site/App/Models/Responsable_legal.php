@@ -9,6 +9,8 @@
 namespace App\Models;
 
 
+use App\Utils\Utils;
+
 use App\Utils\Validateur;
 
 class Responsable_legal extends Models
@@ -79,6 +81,15 @@ class Responsable_legal extends Models
      * @param int $id du responsable legal
      * @return 0 si mot de passe ok, -1 sinon, -2 si l'id n'existe pas
      */
+    /**
+     *fonction peremettant de réxuperer les information dur un RL
+     *
+     * @param int $id du responsable legal
+     * @return array contenant les, les clés sont les noms des colonnes
+     */
+    public function  insertResponsable($data){
+        return array("message"=>$this->insert($data));
+    }
 
     public function editPassByAdmin($id,$mot_de_passe){
 
@@ -94,9 +105,25 @@ class Responsable_legal extends Models
         }
 
     }
+    
+    public function recupereRL($nom_rl)
+    {
+        $nom_rl = $this->pdo->quote('%' . $nom_rl . '%');
+        $cond = "nom_rl ILIKE $nom_rl";
+        return $this->select($cond);
+    }
+    
+    
 
 
 
 
 
+    /**
+     * @return bool|\PDOStatement
+     */
+    public function existeRespo($data){
+        if ($this->select($data) == NULL) return false;
+        else return true;
+    }
 }

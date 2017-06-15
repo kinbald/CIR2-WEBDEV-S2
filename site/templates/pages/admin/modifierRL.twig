@@ -1,0 +1,70 @@
+{% extends "layout.twig" %}
+{% import "macro.twig" as m %}
+
+{% block css %}
+    {{ parent() }}
+    {{ m.css("style.css") }}
+{% endblock %}
+
+{% block title %}
+    Regénération d'un compte utilisateur
+{% endblock %}
+
+{% block body %}
+    {{ include('navbar.twig') }}
+    <div class="container firstContainer">
+        <div class="row content">
+            <div class="jumbotron">
+                <div class="jumbotron-contents">
+                    {% if infos %}
+                        <form role="form" action="" method="post">
+                            <fieldset>
+                                <h3>Informations de {{ infos.nom_rl }} {{ infos.prenom_rl }} : </h3>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Nom" name="nom_rl" style="text-align:center; margin: 5px;" type="text" value="{{ infos.nom_rl }}" required autofocus>
+                                    <input class="form-control" placeholder="Prenom" name="prenom_rl" type="text"  style="text-align:center; margin: 5px;" value="{{ infos.prenom_rl }}" required>
+                                    <input class="form-control" placeholder="E-mail" name="adresse_mail_rl" type="email"  style="text-align:center; margin: 5px;" value="{{ infos.adresse_mail_rl }}" required>
+                                    <input class="form-control" placeholder="Complément d'adresse" name="complement_d_adresse" type="text"  style="text-align:center; margin: 5px;" value="{{ infos.complement_d_adresse }}" required>
+                                    <input class="form-control" placeholder="Ville" name="ville" type="text"  style="text-align:center; margin: 5px;" value="{{ infos.ville }}" required>
+                                    <input class="form-control" placeholder="Code Postal" name="code_postal" type="number"  style="text-align:center; margin: 5px;" value="{{ infos.code_postal }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-warning btn-block" type="submit">Modifier</button>
+                                    <button id="regenMDP" class="btn btn-lg btn-primary btn-block" type="button">Générer un nouveau mot de passe</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script_footer %}
+    {{ parent() }}
+    <script type="application/javascript">
+        $(document).ready(function () {
+            $('#regenMDP').on('click', function (e) {
+                ajaxMDP(getIDResponsable());
+            });
+        });
+        function getIDResponsable() {
+            var tabLocation = window.location.href.split('/');
+            return tabLocation[tabLocation.length - 1];
+        }
+
+        function ajaxMDP(id_responsable_legal) {
+            var data = {id_responsable_legal: id_responsable_legal};
+            $.ajax({
+                type: 'POST',
+                url: '/admin/imprimerPassword',
+                data: data,
+                dataType: 'json'
+            }).done(function (response) {
+                $.each(response, function (k, v) {
+                });
+            });
+        }
+    </script>
+
+{% endblock %}
