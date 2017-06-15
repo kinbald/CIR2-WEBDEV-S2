@@ -50,7 +50,6 @@ $app->post('/recover/{token}', App\Controllers\AuthController::class . ':tokenVa
  * route du calendrier
  */
 $app->group('/calendrier/', function () use ($app) {
-    $app->get('{id_enfant}',App\Controllers\CreneauController::class.':calendrier')->setName("calendrier");
     $app->post('ajax/getEvents/{id_enfant}', \App\Controllers\CreneauController::class . ':getMoisEnfant')->setName('AJAX-getMoisEnfant');
     $app->post('ajax/SetDay/{id_enfant}', \App\Controllers\CreneauController::class . ':modifieCreneau')->setName('AJAX-modifieCreneau');
 })->add(new App\Middleware\VerificationRl($container))->add(new \App\Middleware\Authentification($container));
