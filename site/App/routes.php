@@ -12,10 +12,6 @@ $app->get('/', \App\Controllers\UserController::class . ':getIndex')->setName("i
 $app->get('/index-admin', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
 $app->post('/index-admin', App\Controllers\AuthAdminController::class.':insertRespoLegal')->setName('add-user.post');
 
-//todo accessible par tout le monde
-$app->get('/contact', \App\Controllers\ContactController::class.':getContact')->setName("contact.get");
-$app->post('/contact', \App\Controllers\ContactController::class.':postContact')->setName("contact.post");
-
 })->add(new \App\Middleware\Authentification($container));
 
 /**
@@ -79,3 +75,7 @@ $app->group('/admin/', function () use ($app)
 //todo ajouter route administrateur
 $app->get('/importData',\App\Controllers\ImportDataController::class.':getImportData')->setName("importData.get");
 $app->post('/importData',\App\Controllers\ImportDataController::class.':postImportData')->setName("importData.post");
+
+//pages de contact
+$app->get('/contact', \App\Controllers\ContactController::class.':getContact')->setName("contact.get");
+$app->post('/contact', \App\Controllers\ContactController::class.':postContact')->setName("contact.post");
