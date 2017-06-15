@@ -73,6 +73,13 @@ class Responsable_legal extends Models
     }
 
     /**
+     *fonction peremettant de modifier le mot de passe d'un RL
+     * sous conditions: 8 caractères, 1 chiffre/Special mini, 1 lettre mini
+     *
+     * @param int $id du responsable legal
+     * @return 0 si mot de passe ok, -1 sinon, -2 si l'id n'existe pas
+     */
+    /**
      *fonction peremettant de réxuperer les information dur un RL
      *
      * @param int $id du responsable legal
@@ -81,6 +88,25 @@ class Responsable_legal extends Models
     public function  insertResponsable($data){
         return array("message"=>$this->insert($data));
     }
+
+    public function editPassByAdmin($id,$mot_de_passe){
+
+        if(estValidePassword($mot_de_passe) == true){
+            // le mot de passe est valide
+
+            $this->update(array("mot_de_passe_rl"=> hash($mot_de_passe) ), "id_responsable_legal = $id");
+            return 0;
+        }
+        else {
+            return -1;
+            //mot de passe invalide
+        }
+
+    }
+
+
+
+
 
     /**
      * @return bool|\PDOStatement

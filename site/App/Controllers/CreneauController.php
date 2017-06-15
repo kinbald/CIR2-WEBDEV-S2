@@ -12,6 +12,7 @@ namespace App\Controllers;
 use App\Models\Activite;
 use App\Models\ActiviteEnfant;
 use App\Models\Creneau;
+use App\Models\Enfant;
 use App\Models\Est_responsable_de;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -95,9 +96,10 @@ class CreneauController extends Controllers
         $id=$request->getParam('id_enfant');
         $activite=(new ActiviteEnfant())->select(array('annee'=>$anne,'id_enfant'=>$id));
         $res=array();
+        $res["activite"]=array();
         foreach ($activite as $v )
         {
-            array_push($res,array('id_activite'=>$v['id_activite'],'intitule' =>$v['intitule'],'classname'=>$v['classname']));
+            array_push($res["activite"],array('id_activite'=>$v['id_activite'],'intitule' =>$v['intitule'],'classname'=>$v['classname']));
         }
         return $response->withJson($res);
     }
