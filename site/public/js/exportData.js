@@ -13,7 +13,7 @@ function ajaxExportDataGetClasses()
     }).done(function (response) {
         console.log('Traitement de la réponse');
         $("#classe").empty();
-        $("#classe").append('<option value="0" disabled="">Sélectionner Classe</option>');
+        $("#classe").append('<option value="0" >Sélectionner Classe</option>');
         $.each(response, function (key, value) {
             console.log(key,  value);
             $("#classe").append('<option value="' + key + '" >' + value + '</option>');
@@ -32,6 +32,7 @@ function ajaxExportDataGetPlanning()
         dataType: 'json'
     }).always(function (response) {
         console.log('Traitement de la réponse');
+        $("#resultat").empty();
         $("#resultat").append('<table>');
         $("#resultat").append('<tr><td>NOM</td><td>PRENOM</td><td>ACTIVITÉ</td></tr>');
             for(enfant in response){
