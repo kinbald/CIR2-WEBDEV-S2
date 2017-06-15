@@ -53,7 +53,7 @@ class ExportDataController extends Controllers
             $infoClasse = $classe->select(["nom_ecole" => $params['nom_ecole']]);
             $dataRequete = array(
                 'id_classes' => $infoClasse[0]['id_classes'],
-                'date_journee' => $params['date_journee']
+                'date_journee' => date("Y-m-d")
             );
             $planning = new Planning();
             $listeEleves = $planning->select($dataRequete);
