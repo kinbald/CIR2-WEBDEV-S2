@@ -17,6 +17,15 @@
             <div class="jumbotron">
                 <div class="jumbotron-contents">
                     {% if infos %}
+                        {% if messages %}
+                            {% for key,message in messages %}
+                                <div class="alert alert-{{ key }}">
+                                    <div class="text">
+                                        {{ message }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                         <form role="form" action="" method="post">
                             <fieldset>
                                 <h3>Informations de {{ infos.nom_rl }} {{ infos.prenom_rl }} : </h3>

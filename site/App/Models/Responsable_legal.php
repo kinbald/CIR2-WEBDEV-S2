@@ -113,17 +113,19 @@ class Responsable_legal extends Models
         return $this->select($cond);
     }
     
-    
-
-
-
-
-
     /**
      * @return bool|\PDOStatement
      */
     public function existeRespo($data){
         if ($this->select($data) == NULL) return false;
         else return true;
+    }
+    
+    public function metAJourDonnees($donnees, $cond)
+    {
+        if($this->existeRespo($cond))
+        {
+            return $this->update($donnees, $cond);
+        }
     }
 }

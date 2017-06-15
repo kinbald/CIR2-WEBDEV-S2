@@ -68,11 +68,12 @@ $app->group('/admin/', function () use ($app)
     $app->get('regenerer', \App\Controllers\AdminController::class.':getAdminRegenerer')->setName("admin.regenerer");
     $app->post('regenerer', \App\Controllers\AdminController::class.':regenererCompte');
     
-    $app->get('rl/{id_responsable_legal}', \App\Controllers\AdminController::class.':getModifierRL');
+    $app->get('rl/{id_responsable_legal}', \App\Controllers\AdminController::class.':getModifierRL')->setName("getModifierRL");
+    $app->post('rl/{id_responsable_legal}', \App\Controllers\AdminController::class.':postModifierRL');
     
     $app->post('ajax/getUser/', \App\Controllers\AdminController::class.':getUserByName');
     
     $app->get('index', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
     
-    $app->post('imprimerPassword', \App\Controllers\AdminController::class.':getPasswordImpression')->setName("admin.regenerer");
-})->add(new \App\Middleware\AdminAuthentification($container));
+    $app->get('imprimerPassword', \App\Controllers\AdminController::class.':getPasswordImpression')->setName("admin.regenerer");
+})->add(new \App\Middleware\AdminAuthentification($container))->add(new \App\Middleware\FlashMessagesMiddleware($container));
