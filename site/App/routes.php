@@ -18,7 +18,6 @@ $app->group('', function () use ($app) {
 /**
  * Routes de base pour la page de connexion
  */
-//todo ajout middleware refus accès si déja co
 $app->group('', function () use ($app) {
     $app->get('/login', 'AuthController:getLogin')->setName('login.get');
     $app->post('/login', 'AuthController:postLogin')->setName('login.post');
@@ -74,9 +73,13 @@ $app->group('/admin/', function () use ($app) {
 
 })->add(new \App\Middleware\AdminAuthentification($container))->add(new \App\Middleware\FlashMessagesMiddleware($container));
 
-//todo ajouter route administrateur
-
 
 //pages de contact
-$app->get('/contact', \App\Controllers\ContactController::class . ':getContact')->setName("contact.get");
-$app->post('/contact', \App\Controllers\ContactController::class . ':postContact')->setName("contact.post");
+$app->group('/contact', function () use ($app) {
+
+$app->get('', \App\Controllers\ContactController::class . ':getContact')->setName("contact.get");
+$app->post('', \App\Controllers\ContactController::class . ':postContact')->setName("contact.post");
+
+
+})->add(new \App\Middleware\ValidationErreursMiddleware($container))
+    ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));

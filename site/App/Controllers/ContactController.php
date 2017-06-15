@@ -32,9 +32,11 @@ class ContactController extends Controllers
     public function postContact(Request $request, Response $response)
     {
         // Tableau qui contiendra les erreurs
-        $errors = array(null);
+        $args=array();
+        $errors = array();
         // Récupération des paramètres
         $post = $request->getParams();
+        var_dump($post);
         if (empty($post["email"])) {
             // Mail vide ?
             $errors['email'] = "L'e-mail est obligatoire";
@@ -64,14 +66,14 @@ class ContactController extends Controllers
             } catch (Swift_IoException $e) {
                 echo $e;
             }
-            return $response->withRedirect($this->router->pathFor('index'));
+            $args["valid"] = "envoie reussie";
         }
 
         // Il y a des erreurs on les garde dans la session pour l'affichage
         //todo affichage des erreurs?
-        $_SESSION['errors'] = $errors;
+        $this->sessionInstance->write('errors', $errors);
         // Redirection vers le formulaire
-        return $response->withRedirect($this->router->pathFor('contact.get'));
+        return $this->view->render($response, 'contact.twig', $args);
     }
 
 
