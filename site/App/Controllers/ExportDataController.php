@@ -54,7 +54,7 @@ class ExportDataController extends Controllers
             "id_ecole" => $infoEcole[0]["id_ecole"]]);
         //var_dump($infoClasse);
         date_default_timezone_set('UTC');
-        $date = date("Y-m-s");
+        $date = date("Y-m-d");
         $dataRequete = array(
             'id_classes' => $infoClasse[0]['id_classes'],
             'date_journee' => $date
