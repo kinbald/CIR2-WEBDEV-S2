@@ -49,10 +49,12 @@ class AuthAdminController extends Controllers
                     // L'utilisateur n'existe pas
                     $errors['email'] = "Cet admin n'existe pas.";
                 } elseif ($etat > 0) {
+                    $hash=(new Admin())->select(array("adresse_mail"=>$post['email']));
+                    $hash=$hash[0];
                     // Connexion réussie
-                    $this->connectUserAd($etat);
+                    $this->connectUserAd($hash["id_admin"]);
                     if ($post["remember"]) {
-                        (new Token_Admin())->setRememberMe($etat);
+                        (new Token_Admin())->setRememberMe($hash["id_admin"]);
                     }
                     // Redirection vers l'index
                     return $response->withRedirect($this->router->pathFor('index-admin'));
