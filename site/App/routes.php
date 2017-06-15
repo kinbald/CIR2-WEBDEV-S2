@@ -14,6 +14,10 @@ $app->group('', function () use ($app) {
 $app->get('/index-admin', \App\Controllers\UserController::class.':getIndexAd')->setName("index-admin");
 $app->post('/index-admin', App\Controllers\AuthAdminController::class.':insertRespoLegal')->setName('add-user.post');
 
+$app->get('/classe-admin',\App\Controllers\ClasseController::class.':getClasse')->setName("classe-admin.get");
+$app->post('/classe-admin',\App\Controllers\ClasseController::class.':postClasse')->setName("classe-admin.post");
+
+
 $app->get('/contact', \App\Controllers\ContactController::class.':getContact')->setName("contact.get");
 $app->post('/contact', \App\Controllers\ContactController::class.':postContact')->setName("contact.post");
 
@@ -56,6 +60,9 @@ $app->group('/calendrier/', function () use ($app) {
 })->add(new App\Middleware\VerificationRl($container))->add(new \App\Middleware\Authentification($container));
 
 $app->post('/getActivite',\App\Controllers\CreneauController::class.':getActivite');
+
+
+
 
 $app->get('/logout-admin',App\Controllers\AuthAdminController::class.':logoutAd')->setName("logout-admin");
 $app->get('/recover-admin',App\Controllers\AuthAdminController::class.':recoverAd')->setName("recover-admin.get");
