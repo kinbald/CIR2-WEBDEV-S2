@@ -3,7 +3,6 @@
  */
 function ajaxExportData() {
         $("#resultat").html("<p> Teste </p>");
-
         var nom_ecole = $("#ecole").val();
         var nom_classe = $("#classe").val();
         var date_journee = $("#date_journee").text();
