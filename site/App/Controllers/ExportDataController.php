@@ -45,7 +45,7 @@ class ExportDataController extends Controllers
                     var_dump($tmp);
                 }
 
-                //return $response->withJson($json);
+                return $response->withJson($json);
             } else if ($params['nom_ecole'] != 0 && $params['nom_classe'] != 0 && $this->checkInput($params, 'date_journee') ) {
                 $classe = new Classes();
                 $infoClasse = $classe->select(["nom_ecole" => $params['nom_ecole']]);
@@ -71,11 +71,11 @@ class ExportDataController extends Controllers
                 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
                 $objWriter->save('excel/'.$params['nom_classe'].'.xls');
 
-               return $response->withJson($json);
+                var_dump('ici');
+                return $response->withJson($json);
             }
-            return $response;
-
         }
+        return $response->withJson(array('bonjour'=>'thomas'));
     }
 
     private function checkInput($params, $name)
