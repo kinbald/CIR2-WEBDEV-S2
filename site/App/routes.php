@@ -71,11 +71,11 @@ $app->group('/admin/', function () use ($app,$container) {
 
         $app->get('activite', \App\Controllers\ActiviteController::class . ':getActivite')->setName("activite-admin.get");
         $app->post('activite', \App\Controllers\ActiviteController::class . ':postActivite')->setName("activite-admin.post");
+
+        $app->get('enfant', \App\Controllers\EnfantController::class . ':getEnfant')->setName("enfant-admin.get");
+        $app->post('enfant', \App\Controllers\EnfantController::class . ':postEnfant')->setName("enfant-admin.post");
     })->add(new \App\Middleware\ValidationErreursMiddleware($container))
         ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
-
-    $app->get('enfant', \App\Controllers\EnfantController::class . ':getEnfant')->setName("enfant-admin.get");
-    $app->post('enfant', \App\Controllers\EnfantController::class . ':postEnfant')->setName("enfant-admin.post");
 
 
 

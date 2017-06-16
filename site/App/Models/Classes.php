@@ -24,7 +24,7 @@ class Classes extends Models
         $res= $this->select("1=1");
         $tab=array();
         foreach ($res as $k=>$v) {
-            array_push($tab,array('id_ecole'=>$v['id_ecole'], 'nom_classes'=>$v['nom_classes']));
+            array_push($tab,array('nom_classes'=>$v['nom_classes'],'id_classes'=>$v['id_classes']));
         }
         return $tab;
     }

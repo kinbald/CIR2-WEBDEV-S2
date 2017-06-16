@@ -13,10 +13,12 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
                     {% if errors %}
-                        <div class="alert alert-danger firstContainer">
-                            <div class="text">
-                                {{ errors }}
-                            </div>
+                        <div class="alert alert-danger">
+                            {% for error in errors %}
+                                <div class="text">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
                         </div>
                     {% endif %}
                     {% if valid %}
@@ -33,6 +35,16 @@
                                 <input class="form-control formWeb" placeholder="Nom" name="nom_enfant" type="text"  >
                                 <input class="form-control formWeb" placeholder="Prenom" name="prenom_enfant" type="text"   >
                                 <input class="form-control formWeb" placeholder="Date de naissance: 2017-05-24" name="date_naissance_enfant" type="date" >
+                                <label>
+                                    Classes
+                                    <select name="classe" class="selecter_3"
+                                            data-selecter-options='{"cover":"true"}'>
+                                        {% for classe in classes %}
+                                            <option name="id_classes" value="{{ classe.id_classes }}">{{ classe.nom_classes }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-lg btn-success btn-block" type="submit">Envoyer</button>
