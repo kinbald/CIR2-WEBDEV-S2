@@ -6,7 +6,9 @@
 {% endblock %}
 
 {% block body %}
-    <form role="form" action="{{ path_for('recover-admin.post') }}" method="post">
+    <div class="container firstContainer">
+    <div class="row jumbotron">
+    <form role="form" action="{{ path_for('recover-admin.post') }}" method="post" class="jumbotron-contents">
         <fieldset>
             <div class="form-group">
                 <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
@@ -16,6 +18,8 @@
             </div>
         </fieldset>
     </form>
+    </div>
+    </div>
     {% if send == true %}
         <p>Si l'adresse est dans notre base de donnée, un mail a été envoyé</p>
     {% endif %}

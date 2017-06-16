@@ -8,6 +8,20 @@
 {% block body %}
     <div class="container">
         <form  role="form" class="firstContainer" enctype="multipart/form-data" action="{{ path_for('importData.post') }}" method="post">
+            {% if error %}
+                <div class="alert alert-danger">
+                    <div class="text">
+                        {{ error }}
+                    </div>
+                </div>
+            {% endif %}
+            {% if valid %}
+                <div class="alert alert-success">
+                    <div class="text">
+                        {{ valid }}
+                    </div>
+                </div>
+            {% endif %}
             <fieldset>
                 <div class="form-group">
                     <span class="label label-primary col-md-3 center-block info">Séléctionner le fichier</span>
