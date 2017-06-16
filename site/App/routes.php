@@ -5,6 +5,8 @@ $app->group('', function () use ($app) {
 
 // setName permet d'appeler path_for('nom_route',{param}) dans twig
     $app->get('/index', \App\Controllers\UserController::class . ':getIndex')->setName("index");
+    $app->get('/compte', \App\Controllers\UserController::class . ':getCompte')->setName("compte.get");
+    $app->post('/compte', \App\Controllers\UserController::class . ':postCompte')->setName("compte.post");
     $app->get('/', \App\Controllers\UserController::class . ':getIndex')->setName("index");
     $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
 })->add(new \App\Middleware\Authentification($container));
@@ -44,12 +46,14 @@ $app->post('/recover-admin', App\Controllers\AuthAdminController::class . ':send
 $app->get('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenAd')->setName("recoverToken-admin.get");
 $app->post('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenValidationAd')->setName("recoverToken-admin.post");
 
-$app->group('/admin/', function () use ($app,$container) {
+$app->group('/admin/', function () use ($app) {
     $app->get('regenerer', \App\Controllers\AdminController::class . ':getAdminRegenerer')->setName("admin.regenerer");
     $app->post('regenerer', \App\Controllers\AdminController::class . ':regenererCompte');
 
     $app->get('utilisateur-enfant', \App\Controllers\AdminController::class . ':utilisateurEnfant')->setName("utilisateur-enfant");
     $app->post('utilisateur-enfant', \App\Controllers\AdminController::class . ':associe_RL_Enfant')->setName("utilisateur-enfant.post");
+    
+    $app->get('chercherEnfant', \App\Controllers\AdminController::class.':chercherEnfant')->setName('chercherEnfant');
 
     $app->get('rl/{id_responsable_legal}', \App\Controllers\AdminController::class . ':getModifierRL')->setName("getModifierRL");
     $app->post('rl/{id_responsable_legal}', \App\Controllers\AdminController::class . ':postModifierRL');

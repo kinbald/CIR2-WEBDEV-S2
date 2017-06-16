@@ -87,6 +87,7 @@ class Responsable_legal extends Models
      * @internal param int $id du responsable legal
      */
     public function  insertResponsable($data){
+        $data["mot_de_passe_rl"] = password_hash($data["mot_de_passe_rl"],PASSWORD_DEFAULT);
         return array("message"=>$this->insert($data));
     }
 

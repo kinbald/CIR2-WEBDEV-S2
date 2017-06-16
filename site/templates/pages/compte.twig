@@ -1,0 +1,53 @@
+{% extends "layout.twig" %}
+{% import "macro.twig" as m %}
+
+{% block css %}
+    {{ parent() }}
+    {{ m.css("style.css") }}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid text-center firstContainer">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    {% if errors %}
+                        <div class="alert alert-danger firstContainer">
+                            <div class="text">
+                                {{ errors }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if valid %}
+                        <div class="alert alert-success firstContainer">
+                            <div class="text">
+                                {{ valid }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <form role="form" action="" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <span class="label label-primary col-md-12 center-block info">Modifier son mot de passe</span>
+                                <input class="form-control formWeb" placeholder="Nouveau mot de passe" name="new_pass" type="password"   >
+                                <input class="form-control formWeb" placeholder="Confirmer le mot de passe" name="confirm_new_pass" type="password" >
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-lg btn-success btn-block" type="submit">Envoyer</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block footer %}
+    <div id="footer" class="footer-copyright ">
+        <i class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></i> Copyright 2017 Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
+    </div>
+{% endblock %}

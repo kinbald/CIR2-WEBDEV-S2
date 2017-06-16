@@ -22,6 +22,8 @@
                     <li><a href="{{ path_for('classe-admin.get') }}">Classe</a></li>
                     <li><a href="{{ path_for('enfant-admin.get') }}">Enfant</a></li>
                     <li><a href="{{ path_for('activite-admin.get') }}">Activite</a></li>
+                    <li><a href="{{ path_for('regenerer') }}">Modifier un compte</a></li>
+                    <li><a href="{{ path_for('chercherEnfant') }}">Planning Enfant</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -39,7 +41,9 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if infoUtilisateur.id_responsable_legal %}
                 <li class="navbar-text">{{ infoUtilisateur.prenom_rl | capitalize }} {{ infoUtilisateur.nom_rl | capitalize }}</li>
-                <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                    <li><a href="{{ path_for('compte.get') }}">Compte</a></li>
+                    <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+
                 {% else %}
                 <li><a href="{{ path_for('login.get') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
                 {% endif  %}

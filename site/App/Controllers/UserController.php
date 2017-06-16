@@ -10,6 +10,7 @@ namespace App\Controllers;
 
 use App\Models\Enfant;
 use App\Models\Est_responsable_de;
+use App\Models\Responsable_legal;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Views\Twig;
@@ -55,5 +56,27 @@ class UserController extends Controllers
     public function getIndexAd(Request $request, Response $response, $args)
     {
         return $this->view->render($response, 'index-admin.twig', $args);
+    }
+
+    public function getCompte(Request $request, Response $response){
+        return $this->view->render($response, 'compte.twig');
+    }
+
+    public function postCompte(Request $request, Response $response){
+        //var_dump($args);
+
+        $id = $this->sessionInstance->read("RL");
+        //todo ->solidité mot de passe?
+        if ($request->getParam('new_pass') != $request->getParam('confirm_new_pass')) {
+            $args["statut"] = "motDePasseDifferent";
+        } else {
+            //var_dump($request->getParams());
+            (new Responsable_legal())->update(array(
+                "mot_de_passe_rl" => password_hash($request->getParam('new_pass'), PASSWORD_DEFAULT)
+            ), "id_responsable_legal =" . $id);
+            $args["statut"] = "ok";
+        }
+        // Mise à jour du mot de passe
+        return $this->view->render($response, 'compte.twig', $args);
     }
 }
