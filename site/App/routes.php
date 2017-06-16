@@ -39,7 +39,7 @@ $app->post('/recover-admin', App\Controllers\AuthAdminController::class . ':send
 $app->get('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenAd')->setName("recoverToken-admin.get");
 $app->post('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenValidationAd')->setName("recoverToken-admin.post");
 
-
+$app->post('/getActivite', \App\Controllers\CreneauController::class . ':getActivite');
 /**
  * route du calendrier
  */
