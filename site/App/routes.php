@@ -20,6 +20,9 @@ $app->post('/classe-admin',\App\Controllers\ClasseController::class.':postClasse
 $app->get('/enfant-admin',\App\Controllers\EnfantController::class.':getEnfant')->setName("enfant-admin.get");
 $app->post('/enfant-admin',\App\Controllers\EnfantController::class.':postEnfant')->setName("enfant-admin.post");
 
+$app->get('/activite-admin',\App\Controllers\ActiviteController::class.':getActivite')->setName("activite-admin.get");
+$app->post('/activite-admin',\App\Controllers\ActiviteController::class.':postActivite')->setName("activite-admin.post");
+
 
 $app->get('/contact', \App\Controllers\ContactController::class.':getContact')->setName("contact.get");
 $app->post('/contact', \App\Controllers\ContactController::class.':postContact')->setName("contact.post");

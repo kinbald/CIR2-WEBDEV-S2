@@ -32,4 +32,10 @@
                 return ($this->select(array("id_activite" => $id_activite))[0])['classname'];
             }
         }
+
+        public function insertActivite($intitule, $classname){
+            if (!empty($intitule) && !empty($classname)){
+                return $this->insert(array("intitule" => $intitule, "classname" => $classname));
+            }
+        }
     }
