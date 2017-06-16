@@ -47,13 +47,14 @@ class ExportDataController extends Controllers
 
     public function exportDataGetPlanning(Request $request, Response $response)
     {
+        $json = array();
         $ecole = new Ecole();
         $infoEcole = $ecole->select(["nom_ecole" => $request->getParam('nom_ecole')]);
-        if ($infoEcole[0]['id_ecole'] == '') return $response;
+        if ($infoEcole[0]['id_ecole'] == '') return $response->withJson($json);;
         $classe = new Classes();
         $infoClasse = $classe->select(["nom_classes" => $request->getParam('nom_classe'),
             "id_ecole" => $infoEcole[0]["id_ecole"]]);
-        if ($infoClasse[0]['id_classes'] == '') return $response;
+        if ($infoClasse[0]['id_classes'] == '') return$response->withJson($json);;
         date_default_timezone_set('UTC');
         $date = date("Y-m-d");
         $dataRequete = array(
@@ -62,7 +63,7 @@ class ExportDataController extends Controllers
         );
         $planning = new Planning();
         $listeEleves = $planning->select($dataRequete);
-        $json = array();
+
         $entete =array('nom_enfant' => 'Nom',
                 'prenom_enfant' => 'Prénom',
                 'intitule' => 'Intitule');
