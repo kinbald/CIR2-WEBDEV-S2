@@ -1,7 +1,9 @@
 {% extends "layout.twig" %}
 {% import "macro.twig" as m %}
-{% block title %}
-    Index
+
+{% block css %}
+    {{ parent() }}
+    {{ m.css("style.css") }}
 {% endblock %}
 
 {% block body %}
@@ -24,15 +26,13 @@
                             </div>
                         </div>
                     {% endif %}
-                    <form role="form" action="{{ path_for('add-user.post') }}" method="post">
+                    <form role="form" action="" method="post">
                         <fieldset>
                             <div class="form-group">
-                                <span class="label label-primary col-md-5 center-block info">Ajout Utilisateur</span>
-                                <input class="form-control formWeb" placeholder="Nom" name="nom_rl" type="text" value="" required autofocus>
-                                <input class="form-control formWeb" placeholder="Prenom" name="prenom_rl" type="text"  value="">
-                                <input class="form-control formWeb" placeholder="E-mail" name="adresse_mail_rl" type="email" value="">
-                                <input class="form-control formWeb" placeholder="Ville" name="ville" type="text" value="">
-                                <input class="form-control formWeb" placeholder="Code Postal" name="code_postal" type="number" value="">
+                                <span class="label label-primary col-md-12 center-block info">Ajouter un Enfant</span>
+                                <input class="form-control formWeb" placeholder="Nom" name="nom_enfant" type="text"  >
+                                <input class="form-control formWeb" placeholder="Prenom" name="prenom_enfant" type="text"   >
+                                <input class="form-control formWeb" placeholder="Date de naissance: 2017-05-24" name="date_naissance_enfant" type="date" >
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-lg btn-success btn-block" type="submit">Envoyer</button>

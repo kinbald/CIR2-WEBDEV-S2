@@ -64,7 +64,17 @@ $app->group('/admin/', function () use ($app) {
 
     $app->get('importData', \App\Controllers\ImportDataController::class . ':getImportData')->setName("importData.get");
     $app->post('importData', \App\Controllers\ImportDataController::class . ':postImportData')->setName("importData.post");
+
+    $app->get('classe', \App\Controllers\ClasseController::class . ':getClasse')->setName("classe-admin.get");
+    $app->post('classe', \App\Controllers\ClasseController::class . ':postClasse')->setName("classe-admin.post");
+
+    $app->get('enfant', \App\Controllers\EnfantController::class . ':getEnfant')->setName("enfant-admin.get");
+    $app->post('enfant', \App\Controllers\EnfantController::class . ':postEnfant')->setName("enfant-admin.post");
     
+    $app->get('activite', \App\Controllers\ActiviteController::class . ':getActivite')->setName("activite-admin.get");
+    $app->post('activite', \App\Controllers\ActiviteController::class . ':postActivite')->setName("activite-admin.post");
+
+
     $app->post('index', App\Controllers\AuthAdminController::class . ':insertRespoLegal')->setName('add-user.post');
 })->add(new \App\Middleware\AdminAuthentification($container))->add(new \App\Middleware\FlashMessagesMiddleware($container));
 
@@ -72,8 +82,8 @@ $app->group('/admin/', function () use ($app) {
 //pages de contact
 $app->group('/contact', function () use ($app) {
 
-$app->get('', \App\Controllers\ContactController::class . ':getContact')->setName("contact.get");
-$app->post('', \App\Controllers\ContactController::class . ':postContact')->setName("contact.post");
+    $app->get('', \App\Controllers\ContactController::class . ':getContact')->setName("contact.get");
+    $app->post('', \App\Controllers\ContactController::class . ':postContact')->setName("contact.post");
 
 
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))

@@ -34,4 +34,10 @@
             }
             return false;
         }
+
+        public function insertActivite($intitule, $classname){
+            if (!empty($intitule) && !empty($classname)){
+                return $this->insert(array("intitule" => $intitule, "classname" => $classname));
+            }
+        }
     }

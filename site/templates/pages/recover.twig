@@ -7,8 +7,6 @@
 {% endblock %}
 
 {% block body %}
-    {{ parent() }}
-
     <div class="container firstContainer">
         <div class="row jumbotron">
             <form role="form" action="{{ path_for('recover.post') }}" method="post" class="jumbotron-contents">
