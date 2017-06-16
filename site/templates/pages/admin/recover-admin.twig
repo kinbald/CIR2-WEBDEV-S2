@@ -1,16 +1,12 @@
 {% extends "layout.twig" %}
 {% import "macro.twig" as m %}
 
-{% block css %}
-    {{ parent() }}
-{% endblock %}
-
 {% block title %}
     mot de passe oublie
 {% endblock %}
 
 {% block body %}
-    {{ include('navbar.twig') }}
+    {{ parent() }}
 
     <form role="form" action="{{ path_for('recover-admin.post') }}" method="post">
         <fieldset>

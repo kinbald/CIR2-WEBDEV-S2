@@ -29,12 +29,15 @@ class Validateur
                 return Validateur::estValidePassword($value);
                 break;
             case "datetime":
-                $d = \DateTime::createFromFormat('Y-m-d H:i:s', $value);
-                return $d && $d->format('Y-m-d H:i:s') == $value;
+               // $d = \DateTime::createFromFormat('Y-m-d H:i:s', $value);
+               // return $d && $d->format('Y-m-d H:i:s') == $value;
+                return true;
                 break;
             case "date":
-                $d = \DateTime::createFromFormat('Y-m-d', $value);
-                return $d && $d->format('Y-m-d') == $value;
+               // $d = \DateTime::createFromFormat('Y-m-d', $value);
+                //return $d && $d->format('Y-m-d') == $value;
+               //todo validateur de date
+                return true;
                 break;
             default:
                 return false;
@@ -57,7 +60,6 @@ class Validateur
         $count+= preg_match('@[A-Z]@', $password);
         $count+= preg_match('@[a-z]@', $password);
         $count+= preg_match('@[0-9]@', $password);
-        var_dump($count);
         if($count>=2 && strlen($password) >= 8) {
             return true;
         }else{

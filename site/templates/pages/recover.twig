@@ -1,17 +1,13 @@
 {% extends "layout.twig" %}
 {% import "macro.twig" as m %}
 
-{% block css %}
-    {{ parent() }}
-    {{ m.css("style.css") }}
-{% endblock %}
 
 {% block title %}
     Mot de passe oublié
 {% endblock %}
 
 {% block body %}
-    {{ include('navbar.twig') }}
+    {{ parent() }}
 
     <div class="container firstContainer">
         <div class="row jumbotron">

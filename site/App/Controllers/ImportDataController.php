@@ -9,6 +9,12 @@
 namespace App\Controllers;
 
 
+use App\Models\Classes;
+use App\Models\Ecole;
+use App\Models\Enfant;
+use App\Models\Est_dans_classes;
+use App\Models\Est_responsable_de;
+use App\Models\Responsable_legal;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -57,7 +63,7 @@ class ImportDataController extends Controllers
                         $dataEcole = array(
                             "nom_ecole"=>$data[5],
                         );
-                        $ecole = new \App\Models\Ecole();
+                        $ecole = new Ecole();
                         $infoEcole = $ecole->select($dataEcole);
                         if($infoEcole[0]['id_ecole']==null){
                             $ecole->insert($dataEcole);
@@ -70,7 +76,7 @@ class ImportDataController extends Controllers
                             "nom_classes"=>$data[4],
                             "id_ecole"=>$infoEcole[0]['id_ecole']
                         );
-                        $classes = new \App\Models\Classes();
+                        $classes = new Classes();
                         $infoClasses = $classes->select($dataClasses);
                         if($infoClasses[0]['id_classes']== null){
                             $classes->insert($dataClasses);
@@ -79,8 +85,8 @@ class ImportDataController extends Controllers
                         /**
                          * Traitement du Responsable Legal RL
                          */
-                        $RL = new \App\Models\Responsable_legal();
-                        $enfant = new \App\Models\Enfant();
+                        $RL = new Responsable_legal();
+                        $enfant = new Enfant();
                         $infoRL = $RL->select($dataRL);
                         if ($infoRL[0]['id_responsable_legal'] == null) {
                             $RL->insert($dataRL);
@@ -100,23 +106,20 @@ class ImportDataController extends Controllers
                                 "id_enfant" => $infoEnfant[0]['id_enfant'],
                                 "id_responsable_legal" => $infoRL[0]['id_responsable_legal']
                             );
-                            $est_responsable_de = new \App\Models\Est_responsable_de();
+                            $est_responsable_de = new Est_responsable_de();
                             $est_responsable_de->insert($dataEst_responsable_de);
                             //Ajout de la classe à l'enfant
                             $dataEst_dans_classes=array(
                                 "id_classes"=>$infoClasses[0]['id_classes'],
                                 "id_enfant"=>$infoEnfant[0]['id_enfant'],
                             );
-                            $est_dans_classes = new \App\Models\Est_dans_classes();
+                            $est_dans_classes = new Est_dans_classes();
                             $est_dans_classes->insert($dataEst_dans_classes);
-                        } else {
-                            //echo 'Enfant déja existant </br>';
                         }
                     }
                 }
             }
         }
-        //return $response->withRedirect($this->router->pathFor('importData.get'));
     }
 
 

@@ -31,6 +31,12 @@ class Enfant extends Models
         $child = ($this->select(array("id_enfant" => $id_enfant)))[0];
         return $child['prenom_enfant'];
     }
+    public function recupereEnfant($nom_enfant)
+    {
+        $nom_enfant = $this->pdo->quote('%' . $nom_enfant . '%');
+        $cond = "nom_enfant ILIKE $nom_enfant";
+        return $this->select($cond);
+    }
 
     public function insertEnfant($nom_enfant, $prenom_enfant, $date_naissance_enfant){
         if (!empty($nom_enfant) && !empty($prenom_enfant) && !empty($date_naissance_enfant)) {
