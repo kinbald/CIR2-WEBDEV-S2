@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block body %}
-    v
     <div class="container firstContainer">
         <div class="row content">
             <div class="jumbotron">
@@ -82,7 +81,7 @@
             }).done(function (data) {
                 console.log(data);
                 $("#lien").empty();
-                $("#lien").append("<a href=\"../../"+data+"\" target='_blank'>lien de telechargement</a>");
+                $("#lien").append("<a href=\"../../"+data+"\" class='btn btn-success' target='_blank'>Lien de téléchargement</a>");
             });
         }
     </script>

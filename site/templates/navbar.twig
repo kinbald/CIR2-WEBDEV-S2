@@ -14,11 +14,21 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
+                    <li><a href="{{ path_for('index') }}">Accueil</a></li>
+                    <li><a href="{{ path_for('contact.get') }}">Contact</a></li>
                     <li><a href="{{ path_for('index-admin') }}">Ajout Utilisateur</a></li>
                     <li><a href="{{ path_for('importData.get') }}">Importer</a></li>
                     <li><a href="{{ path_for('utilisateur-enfant') }}">Associer</a></li>
-                    <li><a href="{{ path_for('index') }}">Accueil</a></li>
-                    <li><a href="{{ path_for('contact.get') }}">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Autres options <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path_for('classe-admin.get') }}">Classe</a></li>
+                            <li><a href="{{ path_for('enfant-admin.get') }}">Enfant</a></li>
+                            <li><a href="{{ path_for('activite-admin.get') }}">Activite</a></li>
+                            <li><a href="{{ path_for('admin.regenerer') }}">Modifier un compte</a></li>
+                            <li><a href="{{ path_for('chercherEnfant') }}">Planning Enfant</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -36,7 +46,9 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if infoUtilisateur.id_responsable_legal %}
                 <li class="navbar-text">{{ infoUtilisateur.prenom_rl | capitalize }} {{ infoUtilisateur.nom_rl | capitalize }}</li>
-                <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                    <li><a href="{{ path_for('compte.get') }}">Compte</a></li>
+                    <li><a href="{{ path_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+
                 {% else %}
                 <li><a href="{{ path_for('login.get') }}"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
                 {% endif  %}

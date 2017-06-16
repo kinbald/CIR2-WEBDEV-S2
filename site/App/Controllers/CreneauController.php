@@ -98,7 +98,7 @@
          * @param $args
          * @return Response
          */
-        public function getActivite(Request $request,Response $response,$args)
+        public function getActivite(Request $request,Response $response)
         {
             $anne=$request->getParam('annee');
             $id=$request->getParam('id_enfant');

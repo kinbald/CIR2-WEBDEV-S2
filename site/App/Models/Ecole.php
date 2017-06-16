@@ -15,4 +15,14 @@ class Ecole extends Models
         "id_ecole"=>"integer",
         "nom_ecole"=>"string"
     );
+
+
+    public function getNomEcole(){
+        $res= $this->select("1=1");
+        $tab=array();
+        foreach ($res as $k=>$v) {
+            array_push($tab,array('id_ecole'=>$v['id_ecole'], 'nom_ecole'=>$v['nom_ecole']));
+        }
+        return $tab;
+    }
 }
