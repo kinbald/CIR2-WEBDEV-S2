@@ -45,7 +45,7 @@ $app->get('/recover-admin/{token}', App\Controllers\AuthAdminController::class .
 $app->post('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenValidationAd')->setName("recoverToken-admin.post");
 
 $app->group('/admin/', function () use ($app) {
-    $app->get('regenerer', \App\Controllers\AdminController::class . ':getAdminRegenerer')->setName("admin.regenerer");
+    $app->get('regenerer', \App\Controllers\AdminController::class . ':getAdminRegenerer')->setName("regenerer");
     $app->post('regenerer', \App\Controllers\AdminController::class . ':regenererCompte');
 
     $app->get('utilisateur-enfant', \App\Controllers\AdminController::class . ':utilisateurEnfant')->setName("utilisateur-enfant");

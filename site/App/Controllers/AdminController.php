@@ -78,6 +78,7 @@
                     $element['id_responsable_legal'] = $datum['id_responsable_legal'];
                     $element['nom_rl'] = $datum['nom_rl'];
                     $element['prenom_rl'] = $datum['prenom_rl'];
+                    $element['path'] = $this->router->pathFor("getModifierRL", ['id_responsable_legal' => $datum['id_responsable_legal']]);
                     array_push($json, $element);
                 }
                 return $response->withJson($json);

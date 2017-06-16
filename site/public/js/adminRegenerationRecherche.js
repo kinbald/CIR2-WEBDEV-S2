@@ -26,7 +26,7 @@ function ajaxUsers(nom) {
         $.each(response, function (k, v) {
             var $li = $("<li class=\"list-group-item\"></li>");
             $li.append(v.nom_rl + " "  + v.prenom_rl);
-            var $button = $('<button id="rl_' + v.id_responsable_legal +'" class="badge badge-warning">Modifier</button>');
+            var $button = $('<a href="'+ v.path +'" id="rl_' + v.id_responsable_legal +'" class="badge badge-warning">Modifier</a>');
             $li.append($button);
             $('#responseList').append($li);
         });
