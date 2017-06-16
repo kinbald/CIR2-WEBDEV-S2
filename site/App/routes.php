@@ -6,11 +6,6 @@ $app->group('', function () use ($app) {
 // setName permet d'appeler path_for('nom_route',{param}) dans twig
     $app->get('/index', \App\Controllers\UserController::class . ':getIndex')->setName("index");
     $app->get('/', \App\Controllers\UserController::class . ':getIndex')->setName("index");
-
-
-    $app->get('/index-admin', \App\Controllers\UserController::class . ':getIndexAd')->setName("index-admin");
-    $app->post('/index-admin', App\Controllers\AuthAdminController::class . ':insertRespoLegal')->setName('add-user.post');
-
     $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
 })->add(new \App\Middleware\Authentification($container));
 
@@ -65,11 +60,12 @@ $app->group('/admin/', function () use ($app) {
     $app->get('index', \App\Controllers\UserController::class . ':getIndexAd')->setName("index-admin");
 
     $app->post('imprimerPassword', \App\Controllers\AdminController::class . ':getPasswordImpression')->setName("admin.regenerer");
-    $app->get('/logout', App\Controllers\AuthAdminController::class . ':logoutAd')->setName("logout-admin");
+    $app->get('logout', App\Controllers\AuthAdminController::class . ':logoutAd')->setName("logout-admin");
 
     $app->get('importData', \App\Controllers\ImportDataController::class . ':getImportData')->setName("importData.get");
     $app->post('importData', \App\Controllers\ImportDataController::class . ':postImportData')->setName("importData.post");
-
+    
+    $app->post('index', App\Controllers\AuthAdminController::class . ':insertRespoLegal')->setName('add-user.post');
 })->add(new \App\Middleware\AdminAuthentification($container))->add(new \App\Middleware\FlashMessagesMiddleware($container));
 
 
