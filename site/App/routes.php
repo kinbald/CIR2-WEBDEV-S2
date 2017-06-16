@@ -5,12 +5,9 @@ $app->group('', function () use ($app) {
 
 // setName permet d'appeler path_for('nom_route',{param}) dans twig
     $app->get('/index', \App\Controllers\UserController::class . ':getIndex')->setName("index");
+    $app->get('/compte', \App\Controllers\UserController::class . ':getCompte')->setName("compte.get");
+    $app->post('/compte', \App\Controllers\UserController::class . ':postCompte')->setName("compte.post");
     $app->get('/', \App\Controllers\UserController::class . ':getIndex')->setName("index");
-
-
-    $app->get('/index-admin', \App\Controllers\UserController::class . ':getIndexAd')->setName("index-admin");
-    $app->post('/index-admin', App\Controllers\AuthAdminController::class . ':insertRespoLegal')->setName('add-user.post');
-
     $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
 })->add(new \App\Middleware\Authentification($container));
 
@@ -59,6 +56,8 @@ $app->group('/admin/', function () use ($app) {
 
     $app->get('utilisateur-enfant', \App\Controllers\AdminController::class . ':utilisateurEnfant')->setName("utilisateur-enfant");
     $app->post('utilisateur-enfant', \App\Controllers\AdminController::class . ':associe_RL_Enfant')->setName("utilisateur-enfant.post");
+    
+    $app->get('chercherEnfant', \App\Controllers\AdminController::class.':chercherEnfant')->setName('chercherEnfant');
 
     $app->get('rl/{id_responsable_legal}', \App\Controllers\AdminController::class . ':getModifierRL')->setName("getModifierRL");
     $app->post('rl/{id_responsable_legal}', \App\Controllers\AdminController::class . ':postModifierRL');
@@ -69,19 +68,35 @@ $app->group('/admin/', function () use ($app) {
     $app->get('index', \App\Controllers\UserController::class . ':getIndexAd')->setName("index-admin");
 
     $app->post('imprimerPassword', \App\Controllers\AdminController::class . ':getPasswordImpression')->setName("admin.regenerer");
-    $app->get('/logout', App\Controllers\AuthAdminController::class . ':logoutAd')->setName("logout-admin");
+    $app->get('logout', App\Controllers\AuthAdminController::class . ':logoutAd')->setName("logout-admin");
 
     $app->get('importData', \App\Controllers\ImportDataController::class . ':getImportData')->setName("importData.get");
     $app->post('importData', \App\Controllers\ImportDataController::class . ':postImportData')->setName("importData.post");
 
+    $app->group('form/', function () use ($app) {
+        $app->get('classe', \App\Controllers\ClasseController::class . ':getClasse')->setName("classe-admin.get");
+        $app->post('classe', \App\Controllers\ClasseController::class . ':postClasse')->setName("classe-admin.post");
+
+        $app->get('activite', \App\Controllers\ActiviteController::class . ':getActivite')->setName("activite-admin.get");
+        $app->post('activite', \App\Controllers\ActiviteController::class . ':postActivite')->setName("activite-admin.post");
+
+        $app->get('enfant', \App\Controllers\EnfantController::class . ':getEnfant')->setName("enfant-admin.get");
+        $app->post('enfant', \App\Controllers\EnfantController::class . ':postEnfant')->setName("enfant-admin.post");
+    })->add(new \App\Middleware\ValidationErreursMiddleware($container))
+        ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
+
+
+
+
+    $app->post('index', App\Controllers\AuthAdminController::class . ':insertRespoLegal')->setName('add-user.post');
 })->add(new \App\Middleware\AdminAuthentification($container))->add(new \App\Middleware\FlashMessagesMiddleware($container));
 
 
 //pages de contact
 $app->group('/contact', function () use ($app) {
 
-$app->get('', \App\Controllers\ContactController::class . ':getContact')->setName("contact.get");
-$app->post('', \App\Controllers\ContactController::class . ':postContact')->setName("contact.post");
+    $app->get('', \App\Controllers\ContactController::class . ':getContact')->setName("contact.get");
+    $app->post('', \App\Controllers\ContactController::class . ':postContact')->setName("contact.post");
 
 
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))

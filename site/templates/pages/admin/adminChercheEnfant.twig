@@ -3,7 +3,7 @@
 
 
 {% block title %}
-    Regénération d'un compte utilisateur
+    Chercher un enfant
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
         <div class="row content">
             <div class="jumbotron">
                 <div class="jumbotron-contents">
-                    <h3>Veuillez entrer un nom d'utilisateur :</h3>
+                    <h3>Veuillez entrer un nom d'enfant :</h3>
                     <div class="input-group form-search">
                         <input type="text" class="form-control search-query" id="searchUser">
                         <span class="input-group-btn">
@@ -30,5 +30,5 @@
 {% endblock %}
 {% block script_footer %}
     {{ parent() }}
-    {{ m.js('adminRegenerationRecherche.js') }}
+    {{ m.js('adminEnfantRecherche.js') }}
 {% endblock %}
