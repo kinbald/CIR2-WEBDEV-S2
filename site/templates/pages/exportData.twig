@@ -12,24 +12,33 @@
 
 {% block body %}
     {{ include('navbar.twig') }}
-    <div class="firstContainer">
+    <div class="firstContainer container">
+        <div class="col-md-4">
         <form enctype="multipart/form-data" class="firstContainer" method="post">
-            <label for="ecole">
-                <select name="ecole" id="ecole" onchange="ajaxExportDataGetClasses()">
-                    <option value="0">Sélectionner Ecole</option>
-                    {% for ecole in listeEcole %}
-                        <option value={{ ecole['nom_ecole'] }}>{{ ecole['nom_ecole'] }}</option>
-                    {% endfor %}
-                </select>
-            </label>
-            <label for="classe">
-                <select name="classe" id="classe"">
-                    <option value="0" >Sélectionner Classe</option>
-                </select>
-            </label>
-            <button type="button" onclick="ajaxExportDataGetPlanning()">Valider</button>
+            <fieldset>
+                <div class="form-group">
+                    <select name="ecole" id="ecole" class="selecter_3 selecter-element"
+                            onchange="ajaxExportDataGetClasses()">
+                        <option value="0">Sélectionner Ecole</option>
+                        {% for ecole in listeEcole %}
+                            <option value={{ ecole['nom_ecole'] }}>{{ ecole['nom_ecole'] }}</option>
+                        {% endfor %}
+                    </select>
+                        <select name="classe" id="classe" class="selecter_3 selecter-element">
+                            <option value="0">Sélectionner Classe</option>
+                        </select>
+                    <button class="btn" type="button"
+                            onclick="ajaxExportDataGetPlanning()">
+                        Valider
+                    </button>
+                </div>
+            </fieldset>
         </form>
-        <div id="resultat">
+
+
+        <div id="resultat" >
+
+        </div>
         </div>
     </div>
 {% endblock %}

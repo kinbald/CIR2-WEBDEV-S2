@@ -63,18 +63,22 @@ class ExportDataController extends Controllers
         $planning = new Planning();
         $listeEleves = $planning->select($dataRequete);
         $json = array();
+        $entete =array('nom_enfant' => 'Nom',
+                'prenom_enfant' => 'Prénom',
+                'intitule' => 'Intitule');
+        array_push($json, $entete);
         foreach ($listeEleves as $eleve) {
-            $tmp = array(
+             $tmp = array(
                 'nom_enfant' => $eleve['nom_enfant'],
                 'prenom_enfant' => $eleve['prenom_enfant'],
                 'intitule' => $eleve['intitule'],
             );
             array_push($json, $tmp);
         }
-        //Creation du fihier exel
+        //Creation du fihier excel
         $objPHPExcel = new PHPExcel();
         $objWorksheet = $objPHPExcel->getActiveSheet();
-        $objWorksheet->fromArray(array('ARTRU'=>'Thomas'),null,A1,false);
+        $objWorksheet->fromArray($json,null,A1,false);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save(WEBROOT . "/excel/planning.xls");
 

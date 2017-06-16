@@ -32,14 +32,13 @@ function ajaxExportDataGetPlanning() {
         console.log('Traitement de la réponse');
         var $resultat = $("#resultat");
         $resultat.empty();
-        $resultat.append('<table>');
-        $resultat.append('<tr><td>NOM</td><td>PRENOM</td><td>ACTIVITÉ</td></tr>');
+        $resultat.append('<div class="panel panel-default"></div><div class="panel-heading">Planning</div> <table class="table">');
         console.log(response);
         $.each(response, function (key, value) {
             var enfant=response[key];
-            $resultat.append('<tr><td>'+enfant.nom_enfant+'</td><td>'+enfant.prenom_enfant+'</td><td>'+enfant.intitule+'</td></tr>');
+            $resultat.append('<tbody><tr><td>'+enfant.nom_enfant+'</td><td>'+enfant.prenom_enfant+'</td><td>'+enfant.intitule+'</td></tr></tbody>');
         });
-        $resultat.append('</table>');
-        $resultat.append('<a href="../../excel/planning.xls">Télécharger le Planning</a>');
+        $resultat.append('</table></div>');
+        $resultat.append('<div> <a href="../../excel/planning.xls"><button type="button" class="btn">Télécharger</button></a></div>');
     });
 }
