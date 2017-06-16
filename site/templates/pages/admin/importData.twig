@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block body %}
-    {{ parent() }}
     <div class="container">
         <form  role="form" class="firstContainer" enctype="multipart/form-data" action="{{ path_for('importData.post') }}" method="post">
             <fieldset>

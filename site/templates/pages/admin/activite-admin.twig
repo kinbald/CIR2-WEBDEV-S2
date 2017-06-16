@@ -1,13 +1,7 @@
 {% extends "layout.twig" %}
 {% import "macro.twig" as m %}
 
-{% block css %}
-    {{ parent() }}
-    {{ m.css("style.css") }}
-{% endblock %}
-
 {% block body %}
-    {{ include('navbar-admin.twig') }}
     <div class="container-fluid text-center firstContainer" xmlns="http://www.w3.org/1999/html">
         <div class="row">
             <div class="col-md-12">
@@ -31,9 +25,8 @@
                         <fieldset>
                             <div class="form-group">
                                 <span class="label label-primary col-md-12 center-block info">Ajouter un Enfant</span>
-                                <input class="form-control formWeb" placeholder="Nom" name="nom_enfant" type="text"  >
-                                <input class="form-control formWeb" placeholder="Prenom" name="prenom_enfant" type="text"   >
-                                <input class="form-control formWeb" placeholder="Date de naissance: 2017-05-24" name="date_naissance_enfant" type="date" >
+                                <input class="form-control formWeb" placeholder="Nom Activité" name="intitule" type="text"  >
+                                <input class="form-control formWeb" placeholder="Nom de la classe" name="classname" type="text"   >
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-lg btn-success btn-block" type="submit">Envoyer</button>
