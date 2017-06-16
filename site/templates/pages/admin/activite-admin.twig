@@ -2,7 +2,7 @@
 {% import "macro.twig" as m %}
 
 {% block body %}
-    <div class="container-fluid text-center firstContainer" xmlns="http://www.w3.org/1999/html">
+    <div class="container-fluid text-center firstContainer" >
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-4"></div>
@@ -26,7 +26,20 @@
                             <div class="form-group">
                                 <span class="label label-primary col-md-12 center-block info">Ajouter un Enfant</span>
                                 <input class="form-control formWeb" placeholder="Nom Activité" name="intitule" type="text"  >
-                                <input class="form-control formWeb" placeholder="Nom de la classe" name="classname" type="text"   >
+                                <label> Couleur dans le calendrier
+                                    <select name="classname" class="selecter_3">
+                                        <option name="class" value="red">rouge </option>
+                                        <option name="class" value="orange">orange </option>
+                                        <option name="class" value="blue">bleu </option>
+                                        <option name="class" value="green">vert </option>
+                                        <option name="class" value="yellow">jaune </option>
+                                        <option name="class" value="pink">rose </option>
+                                        <option name="class" value="purple">violet </option>
+                                        <option name="class" value="chocolate">chocolat </option>
+                                        <option name="class" value="brown">marron </option>
+                                        <option name="class" value="gray">gris </option>
+                                    </select>
+                                </label>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-lg btn-success btn-block" type="submit">Envoyer</button>

@@ -65,17 +65,19 @@ $app->group('/admin/', function () use ($app,$container) {
     $app->get('importData', \App\Controllers\ImportDataController::class . ':getImportData')->setName("importData.get");
     $app->post('importData', \App\Controllers\ImportDataController::class . ':postImportData')->setName("importData.post");
 
-    $app->group('classe', function () use ($app) {
-        $app->get('', \App\Controllers\ClasseController::class . ':getClasse')->setName("classe-admin.get");
-        $app->post('', \App\Controllers\ClasseController::class . ':postClasse')->setName("classe-admin.post");
+    $app->group('form/', function () use ($app) {
+        $app->get('classe', \App\Controllers\ClasseController::class . ':getClasse')->setName("classe-admin.get");
+        $app->post('classe', \App\Controllers\ClasseController::class . ':postClasse')->setName("classe-admin.post");
+
+        $app->get('activite', \App\Controllers\ActiviteController::class . ':getActivite')->setName("activite-admin.get");
+        $app->post('activite', \App\Controllers\ActiviteController::class . ':postActivite')->setName("activite-admin.post");
     })->add(new \App\Middleware\ValidationErreursMiddleware($container))
         ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
 
     $app->get('enfant', \App\Controllers\EnfantController::class . ':getEnfant')->setName("enfant-admin.get");
     $app->post('enfant', \App\Controllers\EnfantController::class . ':postEnfant')->setName("enfant-admin.post");
 
-    $app->get('activite', \App\Controllers\ActiviteController::class . ':getActivite')->setName("activite-admin.get");
-    $app->post('activite', \App\Controllers\ActiviteController::class . ':postActivite')->setName("activite-admin.post");
+
 
 
     $app->post('index', App\Controllers\AuthAdminController::class . ':insertRespoLegal')->setName('add-user.post');
