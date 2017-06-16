@@ -1,13 +1,10 @@
 {% extends "layout.twig" %}
 {% import "macro.twig" as m %}
 
-{% block css %}
-    {{ parent() }}
-    {{ m.css("style.css") }}
-{% endblock %}
+
 
 {% block body %}
-    <div class="container-fluid text-center firstContainer" xmlns="http://www.w3.org/1999/html">
+    <div class="container-fluid text-center firstContainer lastContainer">
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-4"></div>
@@ -31,20 +28,35 @@
                     <form role="form" action="" method="post">
                         <fieldset>
                             <div class="form-group">
-                                <span class="label label-primary col-md-12 center-block info">Ajouter un Enfant</span>
-                                <input class="form-control formWeb" placeholder="Nom" name="nom_enfant" type="text"  >
-                                <input class="form-control formWeb" placeholder="Prenom" name="prenom_enfant" type="text"   >
-                                <input class="form-control formWeb" placeholder="Date de naissance: 2017-05-24" name="date_naissance_enfant" type="date" >
+                                <span class="label label-primary col-md-12 center-block info">Ajouter une Classe</span>
+                                <input class="form-control formWeb" placeholder="Nom Classe" name="nom_classe"
+                                       type="text">
+                                <input class="form-control formWeb" placeholder="2017" name="annee" type="text">
+                                <input class="form-control formWeb" placeholder="Nom Enseignant" name="nom_enseignant"
+                                       type="text">
                                 <label>
-                                    Classes
-                                    <select name="classe" class="selecter_3"
+                                    Ecole
+                                    <select name="ecole" class="selecter_3"
                                             data-selecter-options='{"cover":"true"}'>
-                                        {% for classe in classes %}
-                                            <option name="id_classes" value="{{ classe.id_classes }}">{{ classe.nom_classes }}
+                                        {% for school in infoEcole %}
+                                            <option name="id_ecole" value="{{ school.id_ecole }}">{{ school.nom_ecole }}
                                             </option>
                                         {% endfor %}
                                     </select>
+                                </label>
+                                <label>
+                                    Section
+                                    <select name="section"
+                                            class=" selecter_3">
 
+                                        {% for section in infoSection %}
+                                            <option name="id_section"
+                                                    value="{{ section.id_section }}">{{ section.nom_section }}
+                                            </option>
+                                            </li>
+                                        {% endfor %}
+                                    </select>
+                                </label>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-lg btn-success btn-block" type="submit">Envoyer</button>
@@ -55,12 +67,5 @@
                 <div class="col-md-4"></div>
             </div>
         </div>
-    </div>
-{% endblock %}
-
-
-{% block footer %}
-    <div id="footer" class="footer-copyright ">
-        <i class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></i> Copyright 2017 Guillaume Desrumaux, Artru Thomas, Meziane Yanis, Herrenschmidt Felix, Billaud William
     </div>
 {% endblock %}

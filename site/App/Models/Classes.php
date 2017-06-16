@@ -19,18 +19,12 @@ class Classes extends Models
         "id_ecole"=>"integer"
     );
 
-    public function insertClasse( $nom_classe, $annee, $enseignant, $id_ecole)
-    {
-        if (!empty($nom_classe) && !empty($id_ecole)) {
-            return $this->insert(array("nom_classes" => $nom_classe,"annee" => $annee, "enseignant" => $enseignant,"id_ecole" => $id_ecole));
-        }
-    }
 
     public function getNomClasse(){
         $res= $this->select("1=1");
         $tab=array();
         foreach ($res as $k=>$v) {
-            array_push($tab,array('id_ecole'=>$v['id_ecole'], 'nom_classes'=>$v['nom_classes']));
+            array_push($tab,array('nom_classes'=>$v['nom_classes'],'id_classes'=>$v['id_classes']));
         }
         return $tab;
     }
