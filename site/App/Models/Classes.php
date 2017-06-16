@@ -19,12 +19,6 @@ class Classes extends Models
         "id_ecole"=>"integer"
     );
 
-    public function insertClasse( $nom_classe, $annee, $enseignant, $id_ecole)
-    {
-        if (!empty($nom_classe) && !empty($id_ecole)) {
-            return $this->insert(array("nom_classes" => $nom_classe,"annee" => $annee, "enseignant" => $enseignant,"id_ecole" => $id_ecole));
-        }
-    }
 
     public function getNomClasse(){
         $res= $this->select("1=1");
