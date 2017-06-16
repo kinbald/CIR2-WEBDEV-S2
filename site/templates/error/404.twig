@@ -3,8 +3,9 @@
     Error 404 (Not found)
 {% endblock %}
 {% block body %}
-    <h1>ERREUR 404</h1>
-    <br>
-    <p>The request URL was not found on this server</p>
-    <a href="{{ path_for('index') }}">back</a>
+    <div style="text-align: center">
+    <h4>ERREUR 404</h4>
+    <p>L'adresse demandée n'a pas été trouvée sur le serveur.</p>
+    <a href="{{ path_for('index') }}">Index</a>
+    </div>
 {% endblock %}
