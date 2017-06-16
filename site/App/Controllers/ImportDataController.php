@@ -37,9 +37,9 @@ class ImportDataController extends Controllers
                 $i = 0;
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     $i++;
-                    var_dump($data);
+                    //var_dump($data);
                     if ($data[0] == "Nom" || $data[0] == "JEUNESSE INTER SERVICES" || empty($data[0]) || $data[0] == "LA CRAU" || $data[3] == "" || $data[5] == "") {
-                        echo 'Ligne non valide: '.$data[0].'</br>';
+                        //echo 'Ligne non valide: '.$data[0].'</br>';
                     } else {
                         $dataRL = array(
                             "nom_rl" => $data[6],
@@ -99,7 +99,7 @@ class ImportDataController extends Controllers
                         if ($infoEnfant[0]['id_enfant'] == null) {
                             $enfant->insert($dataEnfant);
                             $infoEnfant = $enfant->select($dataEnfant);
-                            var_dump($infoEnfant);
+                            //var_dump($infoEnfant);
                             //Ajout du responsable legal à l'enfant
                             $dataEst_responsable_de = array(
                                 "type_rl" => "Responsable Légal",
@@ -116,10 +116,16 @@ class ImportDataController extends Controllers
                             $est_dans_classes = new Est_dans_classes();
                             $est_dans_classes->insert($dataEst_dans_classes);
                         }
+                        $args['valid'] = "Import réussie";
+                        return $this->view->render($response, 'importData.twig', $args);
                     }
                 }
+                $args['error'] = "Echec de l'importation, fichier déjà importé";
+                return $this->view->render($response, 'importData.twig', $args);
             }
         }
+        $args['error'] = "Echec de l'importation";
+        return $this->view->render($response, 'importData.twig', $args);
     }
 
 

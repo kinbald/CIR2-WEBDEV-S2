@@ -175,7 +175,7 @@ abstract class Models
         return $this->execute($sql);
     }
 
-    public function estExistant($id)
+    public function estExistant($id, $params = null)
     {
         if( empty($this->select(array(key($this->champs) => $id))) )
         {
