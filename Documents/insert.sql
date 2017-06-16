@@ -71,7 +71,7 @@ CREATE TABLE public.responsable_legal(
 	adresse_mail_RL      VARCHAR (50)  ,
 	ville                VARCHAR (25)  ,
 	code_postal          INT   ,
-	complement_d_adresse VARCHAR (50)  ,
+	complement_d_adresse VARCHAR (150)  ,
 	mot_de_passe_RL      VARCHAR (256)  ,
 	CONSTRAINT prk_constraint_responsable_legal PRIMARY KEY (id_responsable_legal)
 )WITHOUT OIDS;

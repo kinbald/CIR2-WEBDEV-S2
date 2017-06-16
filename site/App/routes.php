@@ -22,14 +22,24 @@ $app->group('', function () use ($app) {
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container))->add(new App\Middleware\NonAuthentifieMiddleware($container));
 
+$app->get('/exportData', \App\Controllers\ExportDataController::class . ':getExportData')->setName("exportData.get");
+$app->post('/exportData', \App\Controllers\ExportDataController::class . ':postExportData')->setName("exportData.post");
+
+$app->post('/ajax/exportDataGetClasses', \App\Controllers\ExportDataController::class . ':exportDataGetClasses');
+$app->post('/ajax/exportDataGetPlanning', \App\Controllers\ExportDataController::class . ':exportDataGetPlanning');
 
 //route de gestion du compte
 $app->get('/recover', App\Controllers\AuthController::class . ':recover')->setName("recover.get");
 $app->post('/recover', App\Controllers\AuthController::class . ':sendRecover')->setName("recover.post");
 $app->get('/recover/{token}', App\Controllers\AuthController::class . ':token')->setName("recoverToken.get");
 $app->post('/recover/{token}', App\Controllers\AuthController::class . ':tokenValidation')->setName("recoverToken.post");
+$app->get('/logout-admin', App\Controllers\AuthAdminController::class . ':logoutAd')->setName("logout-admin");
+$app->get('/recover-admin', App\Controllers\AuthAdminController::class . ':recoverAd')->setName("recover-admin.get");
+$app->post('/recover-admin', App\Controllers\AuthAdminController::class . ':sendRecoverAd')->setName("recover-admin.post");
+$app->get('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenAd')->setName("recoverToken-admin.get");
+$app->post('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenValidationAd')->setName("recoverToken-admin.post");
 
-
+$app->post('/getActivite', \App\Controllers\CreneauController::class . ':getActivite');
 /**
  * route du calendrier
  */
@@ -39,14 +49,8 @@ $app->group('/calendrier/', function () use ($app) {
     $app->post('ajax/SetDay/{id_enfant}', \App\Controllers\CreneauController::class . ':modifieCreneau')->setName('AJAX-modifieCreneau');
 })->add(new App\Middleware\VerificationRl($container))->add(new \App\Middleware\Authentification($container));
 
-//route permettant de recuperer les activité d'un enfants, à ajouter au dessus?
-$app->post('/getActivite', \App\Controllers\CreneauController::class . ':getActivite');
-$app->get('/recover-admin', App\Controllers\AuthAdminController::class . ':recoverAd')->setName("recover-admin.get");
-$app->post('/recover-admin', App\Controllers\AuthAdminController::class . ':sendRecoverAd')->setName("recover-admin.post");
-$app->get('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenAd')->setName("recoverToken-admin.get");
-$app->post('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenValidationAd')->setName("recoverToken-admin.post");
 
-$app->group('/admin/', function () use ($app) {
+$app->group('/admin/', function () use ($app,$container) {
     $app->get('regenerer', \App\Controllers\AdminController::class . ':getAdminRegenerer')->setName("admin.regenerer");
     $app->post('regenerer', \App\Controllers\AdminController::class . ':regenererCompte');
 

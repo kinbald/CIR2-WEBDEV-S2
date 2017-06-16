@@ -1,0 +1,53 @@
+{% extends "layout.twig" %}
+{% import "macro.twig" as m %}
+
+{% block css %}
+    {{ parent() }}
+    {{ m.css("style.css") }}
+{% endblock %}
+
+{% block title %}
+    Page pour récupérer les données
+{% endblock %}
+
+{% block body %}
+    {{ include('navbar.twig') }}
+    <div class="firstContainer container">
+        <div class="row content">
+            <div class="jumbotron">
+                <div class="jumbotron-contents">
+                    <form enctype="multipart/form-data" class="firstContainer" method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <select name="ecole" id="ecole" class="selecter_3 selecter-element"
+                                        onchange="ajaxExportDataGetClasses()">
+                                    <option value="0">Sélectionner Ecole</option>
+                                    {% for ecole in listeEcole %}
+                                        <option value={{ ecole['nom_ecole'] }}>{{ ecole['nom_ecole'] }}</option>
+                                    {% endfor %}
+                                </select>
+                                <select name="classe" id="classe" class="selecter_3 selecter-element">
+                                    <option value="0">Sélectionner Classe</option>
+                                </select>
+                                <button class="btn" type="button"
+                                        onclick="ajaxExportDataGetPlanning()">
+                                    Valider
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+
+
+                    <div id="resultat">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script_footer %}
+    {{ parent() }}
+    {{ m.js("exportData.js") }}
+{% endblock %}
