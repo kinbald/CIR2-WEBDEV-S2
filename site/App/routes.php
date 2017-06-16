@@ -52,12 +52,6 @@ $app->group('/calendrier/', function () use ($app) {
     $app->post('ajax/SetDay/{id_enfant}', \App\Controllers\CreneauController::class . ':modifieCreneau')->setName('AJAX-modifieCreneau');
 })->add(new App\Middleware\VerificationRl($container))->add(new \App\Middleware\Authentification($container));
 
-//route permettant de recuperer les activité d'un enfants, à ajouter au dessus?
-$app->post('/getActivite', \App\Controllers\CreneauController::class . ':getActivite');
-$app->get('/recover-admin', App\Controllers\AuthAdminController::class . ':recoverAd')->setName("recover-admin.get");
-$app->post('/recover-admin', App\Controllers\AuthAdminController::class . ':sendRecoverAd')->setName("recover-admin.post");
-$app->get('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenAd')->setName("recoverToken-admin.get");
-$app->post('/recover-admin/{token}', App\Controllers\AuthAdminController::class . ':tokenValidationAd')->setName("recoverToken-admin.post");
 
 $app->group('/admin/', function () use ($app) {
     $app->get('regenerer', \App\Controllers\AdminController::class . ':getAdminRegenerer')->setName("admin.regenerer");
