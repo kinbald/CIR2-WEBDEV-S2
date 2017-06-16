@@ -83,7 +83,7 @@ class ContactController extends Controllers
         //todo affichage des erreurs?
         $this->sessionInstance->write('errors', $errors);
         // Redirection vers le formulaire
-        return $this->view->render($response, 'contact.twig');
+        return $this->view->render($response, 'contact.twig', $args);
     }
 
 

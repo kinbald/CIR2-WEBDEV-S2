@@ -21,12 +21,8 @@ $app->group('', function () use ($app) {
     $app->post('/login-admin', App\Controllers\AuthAdminController::class . ':postLoginAd')->setName('login-admin.post');
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container))->add(new App\Middleware\NonAuthentifieMiddleware($container));
+//todo export data
 
-$app->get('/exportData', \App\Controllers\ExportDataController::class . ':getExportData')->setName("exportData.get");
-$app->post('/exportData', \App\Controllers\ExportDataController::class . ':postExportData')->setName("exportData.post");
-
-$app->post('/ajax/exportDataGetClasses', \App\Controllers\ExportDataController::class . ':exportDataGetClasses');
-$app->post('/ajax/exportDataGetPlanning', \App\Controllers\ExportDataController::class . ':exportDataGetPlanning');
 
 //route de gestion du compte
 $app->get('/recover', App\Controllers\AuthController::class . ':recover')->setName("recover.get");
@@ -84,8 +80,11 @@ $app->group('/admin/', function () use ($app,$container) {
         $app->post('enfant', \App\Controllers\EnfantController::class . ':postEnfant')->setName("enfant-admin.post");
     })->add(new \App\Middleware\ValidationErreursMiddleware($container))
         ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));
-
-
+    
+    $app->get('exportData', \App\Controllers\ExportDataController::class . ':getExportData')->setName("exportData.get");
+    $app->post('exportData', \App\Controllers\ExportDataController::class . ':postExportData')->setName("exportData.post");
+    $app->post('ajax/exportDataGetClasses', \App\Controllers\ExportDataController::class . ':exportDataGetClasses');
+    $app->post('ajax/exportDataGetPlanning', \App\Controllers\ExportDataController::class . ':exportDataGetPlanning');
 
 
     $app->post('index', App\Controllers\AuthAdminController::class . ':insertRespoLegal')->setName('add-user.post');
@@ -97,7 +96,7 @@ $app->group('/contact', function () use ($app) {
 
     $app->get('', \App\Controllers\ContactController::class . ':getContact')->setName("contact.get");
     $app->post('', \App\Controllers\ContactController::class . ':postContact')->setName("contact.post");
-
-
+    
+    
 })->add(new \App\Middleware\ValidationErreursMiddleware($container))
     ->add(new \App\Middleware\PersitenceFormulaireMiddleware($container));

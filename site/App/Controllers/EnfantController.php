@@ -25,7 +25,7 @@ class EnfantController extends Controllers
     public function getEnfant(Request $request, Response $response)
     {
         $args['classes']=(new Classes())->getNomClasse();
-        var_dump($args['classes']);
+        //var_dump($args['classes']);
         return $this->view->render($response, 'enfant-admin.twig',$args);
     }
 
