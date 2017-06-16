@@ -50,7 +50,7 @@ $app->group('/calendrier/', function () use ($app) {
 })->add(new App\Middleware\VerificationRl($container))->add(new \App\Middleware\Authentification($container));
 
 
-$app->group('/admin/', function () use ($app) {
+$app->group('/admin/', function () use ($app,$container) {
     $app->get('regenerer', \App\Controllers\AdminController::class . ':getAdminRegenerer')->setName("admin.regenerer");
     $app->post('regenerer', \App\Controllers\AdminController::class . ':regenererCompte');
 
