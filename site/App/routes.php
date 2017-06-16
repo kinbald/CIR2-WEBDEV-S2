@@ -5,6 +5,8 @@ $app->group('', function () use ($app) {
 
 // setName permet d'appeler path_for('nom_route',{param}) dans twig
     $app->get('/index', \App\Controllers\UserController::class . ':getIndex')->setName("index");
+    $app->get('/compte', \App\Controllers\UserController::class . ':getCompte')->setName("compte.get");
+    $app->post('/compte', \App\Controllers\UserController::class . ':postCompte')->setName("compte.post");
     $app->get('/', \App\Controllers\UserController::class . ':getIndex')->setName("index");
     $app->get('/logout', App\Controllers\AuthController::class . ':logout')->setName("logout");
 })->add(new \App\Middleware\Authentification($container));
