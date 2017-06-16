@@ -1,9 +1,26 @@
 /**
- * Zabuto Calendar
- *
- * Dependencies
- * - jQuery (2.0.3)
- * - Twitter Bootstrap (3.0.2)
+ * Copyright (c) 2013 Anke Heijnen <anke@zabuto.com>
+
+ Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
  */
 
 if (typeof jQuery === 'undefined') {
@@ -17,11 +34,11 @@ if (typeof jQuery === 'undefined') {
  * @param options
  * @returns {*}
  */
-$.fn.zabuto_calendar = function (options) {
+$.fn.jis_calendar = function (options) {
     //recupere les options et rajoute les valeurs par defaut
-    var opts = $.extend({}, $.fn.zabuto_calendar_defaults(), options);
+    var opts = $.extend({}, $.fn.jis_calendar_defaults(), options);
     //info du langage du calendrier
-    var languageSettings = $.fn.zabuto_calendar_language(opts.language);
+    var languageSettings = $.fn.jis_calendar_language(opts.language);
     //
     var activite;
 
@@ -29,7 +46,7 @@ $.fn.zabuto_calendar = function (options) {
     this.each(function () {
         var $calendarElement = $(this);
         //id aleatoire genere pour le calendrier (pour eviter les conflit si plusieurs meme page)
-        $calendarElement.attr('id', "zabuto_calendar_" + Math.floor(Math.random() * 99999).toString(36));
+        //$calendarElement.attr('id', "jis_calendar_" + Math.floor(Math.random() * 99999).toString(36));
 
         $calendarElement.data('initYear', opts.year);
         $calendarElement.data('initMonth', opts.month);
@@ -40,7 +57,6 @@ $.fn.zabuto_calendar = function (options) {
         $calendarElement.data('showNext', opts.show_next);
         $calendarElement.data('legendList', opts.legend);
         $calendarElement.data('actionNavFunction', opts.action_nav);
-
         drawCalendar();
 
         /**
@@ -53,26 +69,23 @@ $.fn.zabuto_calendar = function (options) {
             $calendarElement.data('initDate', dateInitObj);
 
             var yeara = dateInitYear;
-            if (dateInitMonth > 07) {
+            if (dateInitMonth > 7) {
                 yeara = yeara + 1;
             }
-            data = {annee: yeara, id_enfant: getIdEnfant()};
+            data = {annee: yeara, id_enfant: opts.id_enfant};
             $.ajax({
                 type: 'POST',
                 url: '/getActivite',
                 data: data,
                 dataType: 'json'
             }).done(function (response) {
-                activite = response;
-                console.log(activite);
-
+                activite = response.activite;
                 var $tableObj = $('<table class="table' + ' table-bordered' + '"></table>');
-                //var $tableObj = $('<table border="1" class="table"></table>');
                 $tableObj = drawTable($calendarElement, $tableObj, dateInitObj.getFullYear(), dateInitObj.getMonth());
 
-                var $legendObj = drawLegend($calendarElement);
+                var $legendObj = drawLegend(activite);
 
-                var $containerHtml = $('<div class="zabuto_calendar" id="' + $calendarElement.attr('id') + '"></div>');
+                var $containerHtml = $('<div class="jis_calendar" id="' + $calendarElement.attr('id') + '"></div>');
                 $containerHtml.append($tableObj);
                 $containerHtml.append($legendObj);
 
@@ -95,53 +108,14 @@ $.fn.zabuto_calendar = function (options) {
             return $tableObj;
         }
 
-        function drawLegend($calendarElement) {
+        function drawLegend(activite) {
             var $legendObj = $('<div class="legend" id="' + $calendarElement.attr('id') + '_legend"></div>');
-            var legend = $calendarElement.data('legendList');
-            if (typeof(legend) === 'object' && legend.length > 0) {
-                $(legend).each(function (index, item) {
-                    if (typeof(item) === 'object') {
-                        if ('type' in item) {
-                            var itemLabel = '';
-                            if ('label' in item) {
-                                itemLabel = item.label;
-                            }
-                            switch (item.type) {
-                                case 'text':
-                                    if (itemLabel !== '') {
-                                        var itemBadge = '';
-                                        $legendObj.append('<span class="legend-' + item.type + '">' + itemBadge + itemLabel + '</span>');
-                                    }
-                                    break;
-                                case 'block':
-                                    if (itemLabel !== '') {
-                                        itemLabel = '<span>' + itemLabel + '</span>';
-                                    }
-                                    var listClassName;
-                                    if (typeof(item.classname) === 'undefined') {
-                                        listClassName = 'event';
-                                    } else {
-                                        listClassName = 'event-styled ' + item.classname;
-                                    }
-                                    $legendObj.append('<span class="legend-' + item.type + '"><ul class="legend"><li class="' + listClassName + '"></li></u>' + itemLabel + '</span>');
-                                    break;
-                                case 'list':
-                                    if ('list' in item && typeof(item.list) === 'object' && item.list.length > 0) {
-                                        var $legendUl = $('<ul class="legend"></u>');
-                                        $(item.list).each(function (listIndex, listClassName) {
-                                            $legendUl.append('<li class="' + listClassName + '"></li>');
-                                        });
-                                        $legendObj.append($legendUl);
-                                    }
-                                    break;
-                                case 'spacer':
-                                    $legendObj.append('<span class="legend-' + item.type + '"> </span>');
-                                    break;
+            for (var key in activite) {
+                var item=activite[key];
+                var itemLabel=item.intitule;
+                var listClassName='event-styled '+item.classname;
+                $legendObj.append('<span class="legend-block"><ul class="legend"><li class="' + listClassName + '"></li></u>' + itemLabel + '</span>');
 
-                            }
-                        }
-                    }
-                });
             }
 
             return $legendObj;
@@ -274,7 +248,7 @@ $.fn.zabuto_calendar = function (options) {
                         $dowElement.append($dayUL);
 
                         //TODO ajout liste des options de façon automatique
-                        var Activite =activite;
+                        var Activite = activite;
                         for (var key in Activite) {
                             var $Li = $('<li></li>');
                             var $a = $('<a id="' + Activite[key].id_activite + '_' + dateAsString(year, month, currDayOfMonth) + '" href="#">' + Activite[key].intitule + '</a>');
@@ -283,7 +257,7 @@ $.fn.zabuto_calendar = function (options) {
                                 var $id = $(this).attr('id');
                                 var type = $id.split("_")[0];
                                 var date = $id.split("_")[1];
-                                ajaxInsert($calendarElement, getIdEnfant(), type, date);
+                                ajaxInsert($calendarElement, opts.id_enfant, type, date);
                             });
                             $Li.append($a);
                             $dayUL.append($Li);
@@ -301,16 +275,13 @@ $.fn.zabuto_calendar = function (options) {
                         firstDow = 0;
                     }
                 }
-
                 $tableObj.append($dowRow);
             }
             return $tableObj;
         }
 
         function ajaxInsert($calendarElement, id, type, date) {
-
             var data = {date: date, id_activite: type};
-
 
             $.ajax({
                 type: 'POST',
@@ -345,7 +316,7 @@ $.fn.zabuto_calendar = function (options) {
             //effecture requete ajax
             $.ajax({
                 type: 'POST',
-                url: '/calendrier/ajax/getEvents/' + getIdEnfant(),
+                url: '/calendrier/ajax/getEvents/' + opts.id_enfant,
                 data: data,
                 dataType: 'json'
             }).done(function (response) {
@@ -384,7 +355,7 @@ $.fn.zabuto_calendar = function (options) {
                     } else {
                         $dowElement.addClass('event-styled');
                         //todo list class possible
-                        $dayElement.removeClass('red green blue');
+                        $dayElement.removeClass('red green blue yellow pink purple orange chocolate brown gray');
                         $dayElement.addClass(value.classname);
                     }
                 });
@@ -465,11 +436,6 @@ $.fn.zabuto_calendar = function (options) {
     return this;
 };
 
-function getIdEnfant() {
-    var tabLocation = window.location.href.split('/');
-    return tabLocation[tabLocation.length - 1];
-}
-
 /**
  * Default settings
  *
@@ -484,7 +450,7 @@ function getIdEnfant() {
  *   action:            function
  *   action_nav:        function
  */
-$.fn.zabuto_calendar_defaults = function () {
+$.fn.jis_calendar_defaults = function () {
     var now = new Date();
     var year = now.getFullYear();
     var month = now.getMonth() + 1;
@@ -492,10 +458,9 @@ $.fn.zabuto_calendar_defaults = function () {
         language: false,
         year: year,
         month: month,
-        show_previous: true,
+        show_previous: false,
         show_next: true,
         nav_icon: false,
-        data: false,
         legend: false,
         action: false,
         action_nav: false
@@ -508,7 +473,7 @@ $.fn.zabuto_calendar_defaults = function () {
  * @param lang
  * @returns {{month_labels: Array, dow_labels: Array}}
  */
-$.fn.zabuto_calendar_language = function (lang) {
+$.fn.jis_calendar_language = function (lang) {
     if (typeof(lang) === 'undefined' || lang === false) {
         lang = 'fr';
     }
@@ -535,5 +500,31 @@ $.fn.zabuto_calendar_language = function (lang) {
  */
 $(document).ready(function () {
     //language=JQuery-CSS
-    $("#my-calendar").zabuto_calendar();
+    $('a.id_enfant_bouton').click(function (e) {
+        e.preventDefault();
+        var id = this.getAttribute('id');
+        id =  id.split("_")[1];
+        var calendar = $("#my-calendar");
+        calendar.empty();
+        calendar.append("<h5>Calendrier de " + this.text + " :");
+        var a = $(document.createElement('a'));
+        a.addClass("btn btn-primary");
+        a.attr("href", this.getAttribute('href'));
+        a.attr("target", "_blank");
+        a.text("Voir sur une page séparée");
+        calendar.append(a);
+        calendar.jis_calendar(
+            {id_enfant: id}
+        );
+    });
+
+    var calendar = $("#calendar");
+    calendar.jis_calendar(
+        {id_enfant: getIdEnfant()}
+    );
+
+    function getIdEnfant() {
+        var tabLocation = window.location.href.split('/');
+        return tabLocation[tabLocation.length - 1];
+    }
 });

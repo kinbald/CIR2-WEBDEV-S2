@@ -16,6 +16,7 @@
 
 /* Set black background color, white text and some padding */
 footer {
+    position: fixed;
     bottom: 0;
     width: 100%;
     background-color: #555;
@@ -56,3 +57,15 @@ footer {
     font-size: 20px;
 }
 
+body
+{
+    background-color: rgb(241, 242, 246);
+}
+.formWeb{
+    text-align:center;
+    margin: 5px;
+}
+
+.lastContainer{
+    margin-bottom: 50px;
+}

@@ -1,0 +1,62 @@
+{% extends "layout.twig" %}
+{% import "macro.twig" as m %}
+
+{% block title %}
+    Association d'un utilisateur à son enfant
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container firstContainer">
+        {% if errors %}
+            <div class="alert alert-danger firstContainer">
+                <div class="text">
+                    {{ errors }}
+                </div>
+            </div>
+        {% endif %}
+        {% if valid %}
+            <div class="alert alert-success firstContainer">
+                <div class="text">
+                    {{ valid }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="row content">
+            <div class="jumbotron">
+                <div class="jumbotron-contents">
+                    <form role="form" action="{{ path_for('utilisateur-enfant.post') }}" method="post">
+                        <h4>Associer un utilisateur :</h4>
+                        <div class="input-group form-search">
+                            <input type="text" placeholder="Utilisateur" class="form-control search-query" id="searchUser">
+                            <span class="input-group-btn">
+                            <button id="button-search" type="button" class="btn btn-primary" data-type="last">Rechercher</button>
+                        </span>
+                        </div>
+                        <hr>
+                        <div>
+                            <ul class="list-group" id="responseList"></ul>
+                        </div>
+                        <div class="input-group form-search">
+                            <input type="text" placeholder="Enfant" class="form-control search-query" id="searchEnfant">
+                            <span class="input-group-btn">
+                            <button id="button-search-enfant" type="button" class="btn btn-primary" data-type="last">Rechercher</button>
+                        </span>
+                        </div>
+                        <hr>
+                        <div>
+                            <ul class="list-group" id="responseListEnfant"></ul>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-success btn-block" type="submit">Envoyer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script_footer %}
+    {{ parent() }}
+    {{ m.js('adminAssociationRecherche.js') }}
+{% endblock %}

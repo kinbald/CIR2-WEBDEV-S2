@@ -5,3 +5,7 @@
 {% macro js(nom) %}
     <script src="{{ base_url() }}/js/{{ nom }}"></script>
 {% endmacro js %}
+
+{% macro img(nom) %}
+    {{ base_url() }}/img/{{ nom }}
+{% endmacro img %}

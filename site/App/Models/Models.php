@@ -8,6 +8,7 @@
 
 namespace App\Models;
 
+use App\Utils\Validateur;
 use PDO;
 use PDOException;
 use Psr\Container\ContainerInterface;
@@ -118,7 +119,6 @@ abstract class Models
         foreach ($data as $k => $v) {
             //verifie que le champs correspond au type attend et qu'il existe dans la table
             if (!Validateur::estValide($v, $this->champs[$k])) {
-                echo $v;
                 return false;
             }
             $data[$k] = $this->pdo->quote($v);
@@ -175,7 +175,7 @@ abstract class Models
         return $this->execute($sql);
     }
 
-    public function estExistant($id, $params = null)
+    public function estExistant($id)
     {
         if( empty($this->select(array(key($this->champs) => $id))) )
         {
