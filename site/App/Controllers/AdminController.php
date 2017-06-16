@@ -98,6 +98,7 @@
                     $element['id_enfant'] = $datum['id_enfant'];
                     $element['nom_enfant'] = $datum['nom_enfant'];
                     $element['prenom_enfant'] = $datum['prenom_enfant'];
+                    $element['path'] = $this->router->pathFor('calendrier', ['id_enfant' => $datum['id_enfant']]);
                     array_push($json, $element);
                 }
                 return $response->withJson($json);
@@ -188,5 +189,10 @@
 
         public function utilisateurEnfant(Request $request, Response $response, $args){
             return $this->view->render($response, 'utilisateur-enfant.twig', $args);
+        }
+        
+        public function chercherEnfant(Request $request, Response $response)
+        {
+            return $this->view->render($response, 'adminChercheEnfant.twig');
         }
     }

@@ -50,6 +50,8 @@ $app->group('/admin/', function () use ($app) {
 
     $app->get('utilisateur-enfant', \App\Controllers\AdminController::class . ':utilisateurEnfant')->setName("utilisateur-enfant");
     $app->post('utilisateur-enfant', \App\Controllers\AdminController::class . ':associe_RL_Enfant')->setName("utilisateur-enfant.post");
+    
+    $app->get('chercherEnfant', \App\Controllers\AdminController::class.':chercherEnfant')->setName('chercherEnfant');
 
     $app->get('rl/{id_responsable_legal}', \App\Controllers\AdminController::class . ':getModifierRL')->setName("getModifierRL");
     $app->post('rl/{id_responsable_legal}', \App\Controllers\AdminController::class . ':postModifierRL');
